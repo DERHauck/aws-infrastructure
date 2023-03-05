@@ -21,6 +21,9 @@ module "karpenter" {
   # we can re-use the role that was created for the node group
   create_iam_role = false
   iam_role_arn    = module.eks.eks_managed_node_groups["karpenter"].iam_role_arn
+  tags = {
+    "kateops:environment" = var.cluster_name
+  }
 }
 //*/
 
@@ -31,7 +34,7 @@ resource "helm_release" "karpenter" {
   name                = "karpenter"
   repository          = "oci://public.ecr.aws/karpenter"
   chart               = "karpenter"
-  version             = "v0.24.0"
+  version             = "v0.26.0"
 
   values = [
     templatefile("${path.module}/karpenter/values.yaml", {
@@ -61,49 +64,12 @@ resource "helm_release" "karpenter" {
 
 }
 
-resource "kubectl_manifest" "karpenter_provisioner" {
-  yaml_body = <<-YAML
-    apiVersion: karpenter.sh/v1alpha5
-    kind: Provisioner
-    metadata:
-      name: default
-    spec:
-      requirements:
-        - key: karpenter.sh/capacity-type
-          operator: In
-          values: ["spot"]
-        - key: "topology.kubernetes.io/zone"
-          operator: In
-          values: ["eu-central-1a", "eu-central-1b"]
-      limits:
-        resources:
-          cpu: 100
-      providerRef:
-        name: default
-      consolidation:
-        enabled: true
-      ttlSecondsUntilExpired: 2592000
-  YAML
-
-  depends_on = [
-    helm_release.karpenter
-  ]
-}
-
-resource "kubectl_manifest" "karpenter_node_template" {
-  yaml_body = <<-YAML
-    apiVersion: karpenter.k8s.aws/v1alpha1
-    kind: AWSNodeTemplate
-    metadata:
-      name: default
-    spec:
-      subnetSelector:
-        karpenter.sh/discovery: "true"
-      securityGroupSelector:
-        karpenter.sh/discovery: ${module.eks.cluster_name}
-      tags:
-        karpenter.sh/discovery: ${module.eks.cluster_name}
-  YAML
+resource "kubectl_manifest" "this" {
+  for_each = { for v in fileset("${path.module}/manifests", "*"): "${path.module}/manifests/${v}" => "${path.module}/manifests/${v}" }
+  yaml_body = templatefile(each.value, {
+    cluster_name = module.eks.cluster_name
+    availability_zones = [distinct([ for  num, subnet in data.aws_subnet.private : subnet.availability_zone ])[0]]
+  })
 
   depends_on = [
     helm_release.karpenter

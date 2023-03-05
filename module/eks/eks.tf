@@ -10,28 +10,6 @@ module "eks" {
   subnet_ids = var.subnet_id_list
   control_plane_subnet_ids = var.subnet_id_list
 
-  // create_cluster_security_group = true
-  // create_node_security_group    = true
-
-  cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent              = true
-      before_compute           = true
-      configuration_values = jsonencode({
-        env = {
-          # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
-          ENABLE_PREFIX_DELEGATION = "true"
-          WARM_PREFIX_TARGET       = "1"
-        }
-      })
-    }
-  }
   # Required for Karpenter role below
   enable_irsa = true
   /*
@@ -118,8 +96,54 @@ module "eks" {
   node_security_group_tags = {
     "karpenter.sh/discovery" = var.cluster_name
   }
+
+  tags = {
+    "kateops:environment" = var.cluster_name
+  }
 }
 
 data "aws_iam_roles" "admin" {
   name_regex = "AWSReservedSSO_AdministratorAccess.*"
+}
+
+resource "aws_eks_addon" "vpc_cni" {
+  cluster_name = module.eks.cluster_name
+  addon_name = "vpc-cni"
+  resolve_conflicts    = "OVERWRITE"
+  configuration_values = jsonencode({
+    env = {
+      # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
+      ENABLE_PREFIX_DELEGATION = "true"
+      WARM_PREFIX_TARGET       = "1"
+    }
+  })
+  tags = {
+    "kateops:environment" = var.cluster_name
+  }
+}
+
+
+resource "aws_eks_addon" "coredns" {
+  cluster_name = module.eks.cluster_name
+  addon_name = "coredns"
+  resolve_conflicts    = "OVERWRITE"
+  depends_on = [
+    helm_release.karpenter,
+  ]
+
+  tags = {
+    "kateops:environment" = var.cluster_name
+  }
+}
+
+resource "aws_eks_addon" "kube_proxy" {
+  cluster_name = module.eks.cluster_name
+  addon_name = "kube-proxy"
+  resolve_conflicts    = "OVERWRITE"
+  depends_on = [
+    helm_release.karpenter,
+  ]
+  tags = {
+    "kateops:environment" = var.cluster_name
+  }
 }

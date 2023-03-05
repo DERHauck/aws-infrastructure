@@ -1,0 +1,25 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: default-spot
+spec:
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["spot"]
+    - key: "topology.kubernetes.io/zone"
+      operator: In
+      values:
+%{ for az in availability_zones ~}
+        - ${az}
+%{ endfor ~}
+
+  limits:
+    resources:
+      cpu: 100
+  providerRef:
+    name: default-spot
+  consolidation:
+    enabled: true
+  ttlSecondsUntilExpired: 2592000
+  weight: 100
