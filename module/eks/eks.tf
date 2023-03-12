@@ -7,8 +7,8 @@ module "eks" {
   cluster_version = "1.24"
 
   vpc_id     = var.vpc_id
-  subnet_ids = var.subnet_id_list
-  control_plane_subnet_ids = var.subnet_id_list
+  subnet_ids = [ for key, id in var.subnet_id_map: id ]
+  control_plane_subnet_ids = [ for key, id in var.subnet_id_map: id ]
 
   # Required for Karpenter role below
   enable_irsa = true
@@ -94,12 +94,9 @@ module "eks" {
 
   }
   node_security_group_tags = {
-    "karpenter.sh/discovery" = var.cluster_name
+    "karpenter.sh/discovery" = local.cluster_name
   }
-
-  tags = {
-    "kateops:environment" = var.cluster_name
-  }
+  tags = local.tags
 }
 
 data "aws_iam_roles" "admin" {
@@ -117,9 +114,7 @@ resource "aws_eks_addon" "vpc_cni" {
       WARM_PREFIX_TARGET       = "1"
     }
   })
-  tags = {
-    "kateops:environment" = var.cluster_name
-  }
+  tags = local.tags
 }
 
 
@@ -131,9 +126,7 @@ resource "aws_eks_addon" "coredns" {
     helm_release.karpenter,
   ]
 
-  tags = {
-    "kateops:environment" = var.cluster_name
-  }
+  tags = local.tags
 }
 
 resource "aws_eks_addon" "kube_proxy" {
@@ -143,7 +136,21 @@ resource "aws_eks_addon" "kube_proxy" {
   depends_on = [
     helm_release.karpenter,
   ]
-  tags = {
-    "kateops:environment" = var.cluster_name
-  }
+  tags = local.tags
+}
+
+
+resource "aws_eks_addon" "ebs_cni" {
+  cluster_name = module.eks.cluster_name
+  addon_name        = "aws-ebs-csi-driver"
+  resolve_conflicts = "OVERWRITE"
+  configuration_values = jsonencode({
+    node = {
+      tolerations = []
+    }
+  })
+  depends_on = [
+    helm_release.karpenter,
+  ]
+  tags = local.tags
 }

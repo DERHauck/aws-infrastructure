@@ -1,0 +1,20 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: production
+spec:
+  acme:
+    email: ${email}
+    privateKeySecretRef:
+      name: ${secret_name}
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+#      %{for id, domain in hosted_zones}
+      - dns01:
+          route53:
+            hostedZoneID: ${id}
+            region: eu-central-1
+        selector:
+          dnsZones:
+            - ${domain}
+#      %{ endfor }
