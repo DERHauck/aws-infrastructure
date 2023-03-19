@@ -1,0 +1,6 @@
+
+tcp:
+%{ for port, service in tcp }
+  ${port}: ${service}
+%{ endfor ~}
+

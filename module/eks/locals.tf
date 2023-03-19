@@ -4,7 +4,7 @@ locals {
   # Used to determine correct partition (i.e. - `aws`, `aws-gov`, `aws-cn`, etc.)
   partition = data.aws_partition.current.partition
 
-  vpc_cidr = "10.0.0.0/16"
+  vpc_cidr = "10.0.0.0/8"
   azs      = slice(data.aws_availability_zones.available.names, 0, 3)
   eks_oidc_issuer               = trimprefix(module.eks.cluster_oidc_issuer_url, "https://")
   system_namespace = "kube-system"

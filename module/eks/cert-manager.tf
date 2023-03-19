@@ -25,10 +25,11 @@ resource "kubectl_manifest" "cert_manager" {
     hosted_zones = var.hosted_zones
     email = var.cert_email
     secret_name = "${local.cluster_name}-cert-manager-tls"
+    namespace = local.system_namespace
   })
 
   depends_on = [
-    helm_release.karpenter
+    helm_release.cert_manager
   ]
 }
 

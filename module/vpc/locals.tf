@@ -7,4 +7,8 @@ locals {
   public_cluster_tags = {
     "kubernetes.io/role/elb" = 1
   }
+
+
+
+  subnet_list = cidrsubnets("10.1.0.0/16",2, 2, 3, 3, 3, 3)
 }

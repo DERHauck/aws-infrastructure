@@ -1,8 +1,3 @@
-locals {
-  subnet_list = cidrsubnets("10.1.0.0/16",1, 2, 3, 3)
-}
-
-
 resource "aws_subnet" "private" {
   vpc_id = aws_vpc.this.id
   availability_zone = local.availability_zones[0]

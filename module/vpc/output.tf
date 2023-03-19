@@ -16,3 +16,10 @@ output "subnets" {
     aws_vpc_endpoint.this,
   ]
 }
+
+output "db_subnet_groups" {
+  value = {
+    "rds" = aws_db_subnet_group.this
+    "elasticache" = aws_elasticache_subnet_group.this
+  }
+}

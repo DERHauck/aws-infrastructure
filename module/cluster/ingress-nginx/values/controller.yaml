@@ -1,0 +1,44 @@
+---
+controller:
+  ingressClassByName: false
+  podAnnotations:
+    prometheus.io/scrape: true
+    prometheus.io/port: 10254
+  ingressClassResource:
+    default: true
+    enabled: true
+    name: ${lb_scheme}
+    controllerValue: k8s.io/${lb_scheme}
+  watchIngressWithoutClass: true
+  extraArgs:
+    ingress-class: ${lb_scheme}
+  metrics:
+    enabled: true
+  config:
+    enable-real-ip: "true"
+    use-forwarded-headers: "true"
+    use-proxy-protocol: "true"
+  minAvailable: 1
+  resources:
+    requests:
+      cpu: 100m
+      memory: 500Mi
+  autoscaling:
+    enabled: true
+    minReplicas: 1
+    maxReplicas: 20
+    targetCPUUtilizationPercentage: 75
+    targetMemoryUtilizationPercentage: 75
+  service:
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-backend-protocol: tcp
+      service.beta.kubernetes.io/aws-load-balancer-healthcheck-protocol: tcp
+      service.beta.kubernetes.io/aws-load-balancer-ip-address-type: ipv4
+      service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
+      service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
+      service.beta.kubernetes.io/aws-load-balancer-scheme: ${lb_scheme}
+      service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true,deregistration_delay.connection_termination.enabled=true,preserve_client_ip.enabled=true
+      service.beta.kubernetes.io/aws-load-balancer-type: external
+    type: LoadBalancer
+    ipFamilies:
+      - ${ip_family}

@@ -32,6 +32,17 @@ resource "kubernetes_service_account" "loadbalancer" {
   }
 }
 
+resource "kubernetes_secret_v1" "loadbalancer" {
+  metadata {
+    name = "aws-loadbalancer-controller-sa-token"
+    namespace = local.system_namespace
+    annotations = {
+      "kubernetes.io/service-account.name" = kubernetes_service_account.loadbalancer.metadata[0].name
+    }
+  }
+  type = "kubernetes.io/service-account-token"
+}
+
 
 resource "aws_iam_policy" "loadbalancer" {
   policy = jsonencode(
