@@ -1,0 +1,182 @@
+global:
+  psql:
+    password:
+      secret: ${postgresql_password_secret_name}
+      key: ${secret_key_name}
+      useSecret: true
+
+  serviceAccount:
+    enabled: true
+    create: true
+
+  edition: ee
+
+  minio:
+    enabled: false
+
+  grafana:
+    enabled: false
+
+  hosts:
+    domain: ${gitlab_host_domain}
+    https: true
+    gitlab:
+      name: ${gitlab_domain_name}
+      https: true
+    registry:
+      name: ${gitlab_registry_domain_name}
+      https: true
+    ssh: ${gitlab_domain_name}
+
+  ingress:
+    enabled: true
+    configureCertmanager: false
+    class: "none"
+    tls:
+      enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt-production
+      kubernetes.io/ingress.class: nginx
+
+  shell:
+    authToken:
+      secret: ${shell_password_secret_name}
+      key: ${secret_key_name}
+    tcp:
+      proxyProtocol: true
+
+  redis:
+    password:
+      enabled: false
+#      secret: $${redis_secret_name}
+#      key: $${redis_secret_key}
+    host: ${redis_host}
+
+  pages:
+    enabled: false
+    accessControl: false
+    host: ${pages_host}
+    objectStore:
+      enabled: true
+      bucket: ${pages_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+
+  appConfig:
+    enableUsagePing: true
+    usernameChangingEnabled: false
+    enableImpersonation: true
+    defaultCanCreateGroup: false
+    defaultProjectsFeatures:
+      issues: true
+      mergeRequests: true
+      wiki: false
+      snippets: true
+      builds: true
+    cron_jobs:
+      stuck_ci_jobs_worker:
+        cron: "0 * * * *"
+      pipeline_schedule_worker:
+        cron: "19 * * * *"
+      expire_build_artifacts_worker:
+        cron: "*/7 * * * *"
+      repository_check_worker:
+        cron: "20 * * * *"
+      pseudonymizer_worker:
+        cron: "0 * * * *"
+      schedule_migrate_external_diffs_worker:
+        cron: "15 * * * *"
+      ldap_sync_worker:
+        cron: "30 1 * * *"
+      ldap_group_sync_worker:
+        cron: "0 * * * *"
+      historical_data_worker:
+        cron: "0 12 * * *"
+      loose_foreign_keys_cleanup_worker_cron:
+        cron: "*/5 * * * *"
+    backups:
+      bucket: ${backups_bucket_name}
+      tmpBucket: ${backups_tmp_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    registry:
+      bucket: ${registry_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    artifacts:
+      bucket: ${artifacts_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    uploads:
+      bucket: ${uploads_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    lfs:
+      enabled: true
+      proxy_download: true
+      bucket: ${lfs_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    packages:
+      bucket: ${packages_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    #    pseudonymizer:
+    #      bucket: $${pseudonymizer_bucket_name}
+    #      connection:
+    #        secret: ${s3_connection_secret_name}
+    #        key: #${secret_key_name}
+    terraformState:
+      enabled: true
+      bucket: ${terraform_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    dependencyProxy:
+      enabled: true
+      bucket: ${dependency_proxy_bucket_name}
+      connection:
+        secret: ${s3_connection_secret_name}
+        key: ${secret_key_name}
+    kas:
+      enabled: false
+      service:
+        apiExternalPort: 8153
+    omniauth:
+      enabled: true
+      allowSingleSignOn:
+        - "openid_connect"
+      autoSignInWithProvider: "openid_connect"
+      providers:
+        - secret: ${oidc_provider_secret}
+          key: ${secret_key_name}
+    sentry:
+      enabled: false
+      #dsn: "https://4488692201914a2ca67fd96e5b6d482b@sentry.fly-internal.de/2"
+      #clientside_dsn: "https://b0d25ab013264208815ecd5aff5cb7cc@sentry.fly-internal.de/3"
+      #environment: "production"
+
+  smtp:
+    enabled: true
+    port: 465
+    authentication: plain
+    tls: true
+    openssl_verify_mode: "none"
+  # user_name -> secret
+  # address -> secret
+    password:
+      secret: ${smtp_password_secret_name}
+      key: ${secret_key_name}
+
+  email:
+    display_name: ${email_display_name}
+    from: ${email_from_address}
+    reply_to: ${email_reply_to}
+

@@ -1,0 +1,18 @@
+
+nginx-ingress:
+  enabled: false
+
+prometheus:
+  install: false
+
+redis:
+  install: false
+
+gitlab-runner:
+  install: false
+
+certmanager:
+  install: false
+
+postgresql:
+  install: false

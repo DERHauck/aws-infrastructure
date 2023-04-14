@@ -1,0 +1,14 @@
+
+registry:
+  enabled: true
+  hpa:
+    minReplicas: 1
+    maxReplicas: 10
+    cpu:
+      targetAverageUtilization: 75
+  ingress:
+    tls:
+      secretName: gitlab-registry-tls
+  storage:
+    secret: ${s3_connection_registry_secret_name}
+    key: ${secret_key_name}

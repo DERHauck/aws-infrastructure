@@ -9,7 +9,7 @@ module "eks" {
   vpc_id     = var.vpc_id
   subnet_ids = [ for key, id in var.subnet_id_map: id ]
   control_plane_subnet_ids = [ for key, id in var.subnet_id_map: id ]
-
+  create_cloudwatch_log_group = false
   # Required for Karpenter role below
   enable_irsa = true
   /*
@@ -72,13 +72,18 @@ module "eks" {
         groups = ["system:masters"]
     }
   ]
+  iam_role_additional_policies = {
+
+  }
 
   eks_managed_node_groups = {
     karpenter = {
       instance_types = ["t3a.micro"]
       # Not required nor used - avoid tagging two security groups with same tag as well
       create_security_group = false
-
+      iam_role_additional_policies = {
+        ebs = "arn:aws:iam::aws:policy/service-role/AmazonEBSCSIDriverPolicy"
+      }
       # Ensure enough capacity to run 2 Karpenter pods
       min_size     = 1
       max_size     = 3
@@ -124,6 +129,7 @@ resource "aws_eks_addon" "coredns" {
   resolve_conflicts    = "OVERWRITE"
   depends_on = [
     helm_release.karpenter,
+    aws_eks_addon.vpc_cni,
   ]
 
   tags = local.tags
@@ -135,6 +141,7 @@ resource "aws_eks_addon" "kube_proxy" {
   resolve_conflicts    = "OVERWRITE"
   depends_on = [
     helm_release.karpenter,
+    aws_eks_addon.coredns,
   ]
   tags = local.tags
 }
@@ -151,6 +158,7 @@ resource "aws_eks_addon" "ebs_cni" {
   })
   depends_on = [
     helm_release.karpenter,
+    aws_eks_addon.coredns,
   ]
   tags = local.tags
 }

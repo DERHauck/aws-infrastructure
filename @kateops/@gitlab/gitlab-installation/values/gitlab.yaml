@@ -1,0 +1,86 @@
+
+gitlab:
+  toolbox:
+    backups:
+      cron:
+        enabled: true
+        schedule: "0 * * * *"
+  #      extraArgs: "--maximum-backups 180" # --storage-class ONEZONE_IA"
+        persistence:
+          enabled: true
+          accessMode: ReadWriteOnce
+          size: 15Gi
+          storageClass: ${storage_class}
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1G
+      objectStorage:
+        backend: s3
+        config:
+          secret: ${s3_connection_secret_name}
+          key: ${backup_secret_key_name}
+    annotations:
+  gitlab-shell:
+    minReplicas: 1
+    maxReplicas: 10
+    hpa:
+      cpu:
+        targetAverageValue: 100m
+  webservice:
+    ingress:
+      annotations:
+        cert-manager.io/cluster-issuer: production
+      tls:
+        secretName: gitlab-gitlab-tls
+    resources:
+      limits:
+        cpu: 1.5
+        memory: 3.5G
+      requests:
+        cpu: 400m
+        memory: 3.3G
+    minReplicas: 1
+    maxReplicas: 10
+    hpa:
+      cpu:
+        targetAverageValue: 1.5
+    deployment:
+      terminationGracePeriodSeconds: 100
+      livenessProbe:
+        initialDelaySeconds: 60
+        successThreshold: 1
+        periodSeconds: 60
+      readinessProbe:
+        initialDelaySeconds: 10
+        successThreshold: 4
+    metrics:
+      serviceMonitor:
+        enabled: true
+        additionalLabels:
+          logging: grafana-agent
+  sidekiq:
+    resources:
+      limits:
+        cpu: 1.1
+        memory: 3Gi
+      requests:
+        cpu: 400m
+        memory: 2Gi
+    hpa:
+      cpu:
+        targetAverageValue: 1000m
+    minReplicas: 1
+    maxReplicas: 10
+    annotations:
+  migrations:
+    psql:
+      password:
+        secret: ${postgresql_password_secret_name}
+        key: ${secret_key_name}
+  gitlab-pages:
+    ingress:
+      tls:
+        secretName: gitlab-pages-tls
+  workhorse:
+    shutdownTimeout: 2min

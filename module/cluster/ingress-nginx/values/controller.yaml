@@ -37,7 +37,7 @@ controller:
       service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: ip
       service.beta.kubernetes.io/aws-load-balancer-proxy-protocol: '*'
       service.beta.kubernetes.io/aws-load-balancer-scheme: ${lb_scheme}
-      service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true,deregistration_delay.connection_termination.enabled=true,preserve_client_ip.enabled=true
+      service.beta.kubernetes.io/aws-load-balancer-target-group-attributes: proxy_protocol_v2.enabled=true,deregistration_delay.connection_termination.enabled=true,preserve_client_ip.enabled=false
       service.beta.kubernetes.io/aws-load-balancer-type: external
     type: LoadBalancer
     ipFamilies:

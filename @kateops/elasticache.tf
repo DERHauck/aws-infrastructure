@@ -1,5 +1,5 @@
 locals {
-  elasticache_port = 5432
+  elasticache_port = 6379
 }
 
 

@@ -1,0 +1,9 @@
+
+terraformState:
+  enabled: true
+  object_store:
+    enabled: true
+    remote_directory: ${terraform_bucket_name}
+    connection:
+      provider: "AWS"
+      region: ${default_region}

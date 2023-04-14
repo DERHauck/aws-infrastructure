@@ -1,0 +1,7 @@
+s3:
+  bucket: ${registry_bucket_name}
+  accesskey: ${access_key_id}
+  secretkey: ${secret_access_key}
+  region: ${region}
+  v4auth: true
+  regionendpoint: ${host}

@@ -1,0 +1,13 @@
+---
+buckets:
+  - name: gitlab-dependency-proxy
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: dependency-proxy
+    lifecycle:
+      - prefix: "*"
+        expiration:
+          days: 100
+        enabled: true

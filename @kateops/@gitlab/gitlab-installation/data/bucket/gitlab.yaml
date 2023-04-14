@@ -1,0 +1,106 @@
+---
+buckets:
+  - name: gitlab-lfs
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: lfs
+    lifecycle:
+      - prefix: "*"
+        expiration:
+          days: 100
+        enabled: true
+  - name: gitlab-pages
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: storage
+    lifecycle:
+      - prefix: "*"
+        expiration:
+          days: 100
+        enabled: true
+  - name: gitlab-cache
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: cache
+    lifecycle:
+      - enabled: true
+        prefix: "runner/"
+        expiration:
+          days: 1
+  - name: gitlab-backup
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: backup
+    lifecycle:
+      - enabled: true
+        prefix: "*"
+        expiration:
+          days: 30
+  - name: gitlab-backup-tmp
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: backup
+    lifecycle:
+      - enabled: true
+        prefix: "*"
+        expiration:
+          days: 3
+  - name: gitlab-state
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: state
+  - name: gitlab-registry
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: registry
+    lifecycle:
+      - enabled: true
+        prefix: "*"
+        expiration:
+          days: 300
+  - name: gitlab-artifacts
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: artifacts
+    lifecycle:
+      - enabled: true
+        expiration:
+          days: 30
+  - name: gitlab-uploads
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: uploads
+    lifecycle:
+      - enabled: true
+        prefix: "*"
+        expiration:
+          days: 30
+  - name: gitlab-packages
+    versioning: false
+    tags:
+      resource: gitlab
+      namespace: devops
+      type: packages
+    lifecycle:
+      - enabled: true
+        prefix: "*"
+        transition:
+          days: 300
