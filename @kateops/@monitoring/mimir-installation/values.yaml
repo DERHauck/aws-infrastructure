@@ -1,0 +1,394 @@
+# Grafana Enterprise Metrics specific values and features are found after the `enterprise:` key
+#
+# The default values specified in this file are enough to deploy all of the
+# Grafana Mimir or Grafana Enterprise Metrics microservices but are not suitable for
+# production load.
+# To configure the resources for production load, refer to the the small.yaml or
+# large.yaml values files.
+
+# -- Overrides the version used to determine compatibility of resources with the target Kubernetes cluster.
+# This is useful when using `helm template`, because then helm will use the client version of kubectl as the Kubernetes version,
+# which may or may not match your cluster's server version. Example: 'v1.24.4'. Set to null to use the version that helm
+# devises.
+kubeVersionOverride: null
+
+# -- Overrides the chart's name. Used to change mimir/enterprise-metrics infix in the resource names. E.g. myRelease-mimir-ingester-1 to myRelease-nameOverride-ingester-1.
+# This option is used to align resource names with Cortex, when doing a migration from Cortex to Grafana Mimir.
+# Note: Grafana provided dashboards rely on the default naming and will need changes.
+nameOverride: null
+
+# -- Overrides the chart's computed fullname. Used to change the full prefix of resource names. E.g. myRelease-mimir-ingester-1 to fullnameOverride-ingester-1.
+# Note: Grafana provided dashboards rely on the default naming and will need changes.
+fullnameOverride: null
+
+image:
+  # -- Grafana Mimir container image repository. Note: for Grafana Enterprise Metrics use the value 'enterprise.image.repository'
+  repository: grafana/mimir
+  # -- Grafana Mimir container image tag. Note: for Grafana Enterprise Metrics use the value 'enterprise.image.tag'
+  tag: r205-f2ad133
+  # -- Container pull policy - shared between Grafana Mimir and Grafana Enterprise Metrics
+  pullPolicy: IfNotPresent
+  # -- Optionally specify an array of imagePullSecrets - shared between Grafana Mimir and Grafana Enterprise Metrics
+  # Secrets must be manually created in the namespace.
+  # ref: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
+  # pullSecrets:
+  #   - myRegistryKeySecretName
+
+
+serviceAccount:
+  # -- Whether to create a service account or not. In case 'create' is false, do set 'name' to an existing service account name.
+  create: true
+  # -- Override for the generated service account name.
+  name:
+  annotations: {}
+
+# -- Configuration is loaded from the secret called 'externalConfigSecretName'. If 'useExternalConfig' is true, then the configuration is not generated, just consumed.
+useExternalConfig: false
+
+# -- Defines what kind of object stores the configuration, a ConfigMap or a Secret.
+# In order to move sensitive information (such as credentials) from the ConfigMap/Secret to a more secure location (e.g. vault), it is possible to use [environment variables in the configuration](https://grafana.com/docs/mimir/latest/operators-guide/configuring/reference-configuration-parameters/#use-environment-variables-in-the-configuration).
+# Such environment variables can be then stored in a separate Secret and injected via the global.extraEnvFrom value. For details about environment injection from a Secret please see [Secrets](https://kubernetes.io/docs/concepts/configuration/secret/#use-case-as-container-environment-variables).
+configStorageType: ConfigMap
+
+# -- Name of the Secret or ConfigMap that contains the configuration (used for naming even if config is internal).
+externalConfigSecretName: '{{ include "mimir.resourceName" (dict "ctx" . "component" "config") }}'
+
+# -- When 'useExternalConfig' is true, then changing 'externalConfigVersion' triggers restart of services - otherwise changes to the configuration cause a restart.
+externalConfigVersion: '0'
+
+# runtimeConfig provides a reloadable runtime configuration file for some specific configuration.
+runtimeConfig: {}
+
+# RBAC configuration
+rbac:
+  create: true
+  # For GKE/EKS/AKS use 'type: psp'. For OpenShift use 'type: scc'
+  type: psp
+
+
+memcached:
+  image:
+    # -- Memcached Docker image repository
+    repository: memcached
+    # -- Memcached Docker image tag
+    tag: 1.6.16-alpine
+    # -- Memcached Docker image pull policy
+    pullPolicy: IfNotPresent
+
+  # -- The SecurityContext for memcached pods
+  podSecurityContext:
+    fsGroup: 11211
+    runAsGroup: 11211
+    runAsNonRoot: true
+    runAsUser: 11211
+
+  # -- The name of the PriorityClass for memcached pods
+  priorityClassName: null
+
+  # -- The SecurityContext for memcached containers
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    allowPrivilegeEscalation: false
+
+
+chunks-cache:
+  # -- Specifies whether memcached based chunks-cache should be enabled
+  enabled: false
+
+  # -- Total number of chunks-cache replicas
+  replicas: 1
+
+  # -- Port of the chunks-cache service
+  port: 11211
+
+  # -- Amount of memory allocated to chunks-cache for object storage (in MB).
+  allocatedMemory: 8192
+
+  # -- Maximum item memory for chunks-cache (in MB).
+  maxItemMemory: 1
+
+  # -- Extra init containers for chunks-cache pods
+  initContainers: []
+
+  # -- Annotations for the chunks-cache pods
+  annotations: {}
+  # -- Node selector for chunks-cache pods
+  nodeSelector: {}
+  # -- Affinity for chunks-cache pods
+  affinity: {}
+
+  # -- topologySpreadConstraints allows to customize part of the default topologySpreadConstraints. labelSelectors
+  # is generated by the chart using the same selectors as for services.
+  topologySpreadConstraints: {}
+  #  maxSkew: 1
+  #  topologyKey: kubernetes.io/hostname
+  #  whenUnsatisfiable: ScheduleAnyway
+
+  # -- Tolerations for chunks-cache pods
+  tolerations: []
+  # -- Pod Disruption Budget
+  podDisruptionBudget: {}
+  # -- The name of the PriorityClass for chunks-cache pods
+  priorityClassName: null
+  # -- Labels for chunks-cache pods
+  podLabels: {}
+  # -- Annotations for chunks-cache pods
+  podAnnotations: {}
+  # -- Management policy for chunks-cache pods
+  podManagementPolicy: Parallel
+  # -- Grace period to allow the chunks-cache to shutdown before it is killed
+  terminationGracePeriodSeconds: 60
+
+  # -- Stateful chunks-cache strategy
+  statefulStrategy:
+    type: RollingUpdate
+
+  # -- Additional CLI args for chunks-cache
+  extraArgs: {}
+
+  # -- Additional containers to be added to the chunks-cache pod.
+  extraContainers: []
+
+  # -- Resource requests and limits for the chunks-cache
+  # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
+  resources: null
+
+  # -- Service annotations and labels
+  service:
+    annotations: {}
+    labels: {}
+
+index-cache:
+  # -- Specifies whether memcached based index-cache should be enabled
+  enabled: false
+
+  # -- Total number of index-cache replicas
+  replicas: 1
+
+  # -- Port of the index-cache service
+  port: 11211
+
+  # -- Amount of memory allocated to index-cache for object storage (in MB).
+  allocatedMemory: 2048
+
+  # -- Maximum item index-cache for memcached (in MB).
+  maxItemMemory: 15
+
+  # -- Extra init containers for index-cache pods
+  initContainers: []
+
+  # -- Annotations for the index-cache pods
+  annotations: {}
+  # -- Node selector for index-cache pods
+  nodeSelector: {}
+  # -- Affinity for index-cache pods
+  affinity: {}
+
+  # -- topologySpreadConstraints allows to customize part of the default topologySpreadConstraints. labelSelectors
+  # is generated by the chart using the same selectors as for services.
+  topologySpreadConstraints: {}
+  #  maxSkew: 1
+  #  topologyKey: kubernetes.io/hostname
+  #  whenUnsatisfiable: ScheduleAnyway
+
+  # -- Tolerations for index-cache pods
+  tolerations: []
+  # -- Pod Disruption Budget
+  podDisruptionBudget: {}
+  # -- The name of the PriorityClass for index-cache pods
+  priorityClassName: null
+  # -- Labels for index-cache pods
+  podLabels: {}
+  # -- Annotations for index-cache pods
+  podAnnotations: {}
+  # -- Management policy for index-cache pods
+  podManagementPolicy: Parallel
+  # -- Grace period to allow the index-cache to shutdown before it is killed
+  terminationGracePeriodSeconds: 60
+
+  # -- Stateful index-cache strategy
+  statefulStrategy:
+    type: RollingUpdate
+
+  # -- Additional CLI args for index-cache
+  extraArgs: {}
+
+  # -- Additional containers to be added to the index-cache pod.
+  extraContainers: []
+
+  # -- Resource requests and limits for the index-cache
+  # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
+  resources: null
+
+  # -- Service annotations and labels
+  service:
+    annotations: {}
+    labels: {}
+
+metadata-cache:
+  # -- Specifies whether memcached based metadata-cache should be enabled
+  enabled: false
+
+  # -- Total number of metadata-cache replicas
+  replicas: 1
+
+  # -- Port of the metadata-cache service
+  port: 11211
+
+  # -- Amount of memory allocated to metadata-cache for object storage (in MB).
+  allocatedMemory: 512
+
+  # -- Maximum item metadata-cache for memcached (in MB).
+  maxItemMemory: 1
+
+  # -- Extra init containers for metadata-cache pods
+  initContainers: []
+
+  # -- Annotations for the metadata-cache pods
+  annotations: {}
+  # -- Node selector for metadata-cache pods
+  nodeSelector: {}
+  # -- Affinity for metadata-cache pods
+  affinity: {}
+
+  # -- topologySpreadConstraints allows to customize part of the default topologySpreadConstraints. labelSelectors
+  # is generated by the chart using the same selectors as for services.
+  topologySpreadConstraints: {}
+  #  maxSkew: 1
+  #  topologyKey: kubernetes.io/hostname
+  #  whenUnsatisfiable: ScheduleAnyway
+
+  # -- Tolerations for metadata-cache pods
+  tolerations: []
+  # -- Pod Disruption Budget
+  podDisruptionBudget: {}
+  # -- The name of the PriorityClass for metadata-cache pods
+  priorityClassName: null
+  # -- Labels for metadata-cache pods
+  podLabels: {}
+  # -- Annotations for metadata-cache pods
+  podAnnotations: {}
+  # -- Management policy for metadata-cache pods
+  podManagementPolicy: Parallel
+  # -- Grace period to allow the metadata-cache to shutdown before it is killed
+  terminationGracePeriodSeconds: 60
+
+  # -- Stateful metadata-cache strategy
+  statefulStrategy:
+    type: RollingUpdate
+
+  # -- Additional CLI args for metadata-cache
+  extraArgs: {}
+
+  # -- Additional containers to be added to the metadata-cache pod.
+  extraContainers: []
+
+  # -- Resource requests and limits for the metadata-cache
+  # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
+  resources: null
+
+  # -- Service annotations and labels
+  service:
+    annotations: {}
+    labels: {}
+
+results-cache:
+  # -- Specifies whether memcached based results-cache should be enabled
+  enabled: false
+
+  # -- Total number of results-cache replicas
+  replicas: 1
+
+  # -- Port of the results-cache service
+  port: 11211
+
+  # -- Amount of memory allocated to results-cache for object storage (in MB).
+  allocatedMemory: 512
+
+  # -- Maximum item results-cache for memcached (in MB).
+  maxItemMemory: 1
+
+  # -- Extra init containers for results-cache pods
+  initContainers: []
+
+  # -- Annotations for the results-cache pods
+  annotations: {}
+  # -- Node selector for results-cache pods
+  nodeSelector: {}
+  # -- Affinity for results-cache pods
+  affinity: {}
+
+  # -- topologySpreadConstraints allows to customize part of the default topologySpreadConstraints. labelSelectors
+  # is generated by the chart using the same selectors as for services.
+  topologySpreadConstraints: {}
+  #  maxSkew: 1
+  #  topologyKey: kubernetes.io/hostname
+  #  whenUnsatisfiable: ScheduleAnyway
+
+  # -- Tolerations for results-cache pods
+  tolerations: []
+  # -- Pod Disruption Budget
+  podDisruptionBudget: {}
+  # -- The name of the PriorityClass for results-cache pods
+  priorityClassName: null
+  # -- Labels for results-cache pods
+  podLabels: {}
+  # -- Annotations for results-cache pods
+  podAnnotations: {}
+  # -- Management policy for results-cache pods
+  podManagementPolicy: Parallel
+  # -- Grace period to allow the results-cache to shutdown before it is killed
+  terminationGracePeriodSeconds: 60
+
+  # -- Stateful results-cache strategy
+  statefulStrategy:
+    type: RollingUpdate
+
+  # -- Additional CLI args for results-cache
+  extraArgs: {}
+
+  # -- Additional containers to be added to the results-cache pod.
+  extraContainers: []
+
+  # -- Resource requests and limits for the results-cache
+  # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
+  resources: null
+
+  # -- Service annotations and labels
+  service:
+    annotations: {}
+    labels: {}
+
+metaMonitoring:
+  # ServiceMonitor configuration for monitoring Kubernetes Services with Prometheus Operator and/or Grafana Agent
+  serviceMonitor:
+    # -- If enabled, ServiceMonitor resources for Prometheus Operator are created
+    enabled: false
+    # -- To disable setting a 'cluster' label in metrics, set to 'null'.
+    # To overwrite the 'cluster' label with your own value, set to a non-empty string.
+    # Keep empty string "" to have the default value in the 'cluster' label, which is the helm release name for Mimir and the actual cluster name for Enterprise Metrics.
+    clusterLabel: ""
+    # -- Alternative namespace for ServiceMonitor resources
+    # If left unset, the default is to install the ServiceMonitor resources in the namespace where the chart is installed, i.e. the namespace specified for the helm command.
+    namespace: null
+    # -- Namespace selector for ServiceMonitor resources
+    # If left unset, the default is to select the namespace where the chart is installed, i.e. the namespace specified for the helm command.
+    namespaceSelector: null
+    # -- ServiceMonitor annotations
+    annotations: {}
+    # -- Additional ServiceMonitor labels
+    labels: {}
+    # -- ServiceMonitor scrape interval
+    interval: null
+    # -- ServiceMonitor scrape timeout in Go duration format (e.g. 15s)
+    scrapeTimeout: null
+    # -- ServiceMonitor relabel configs to apply to samples before scraping
+    # https://github.com/prometheus-operator/prometheus-operator/blob/master/Documentation/api.md#relabelconfig
+    relabelings: []
+    # -- ServiceMonitor will use http by default, but you can pick https as well
+    scheme: http
+    # -- ServiceMonitor will use these tlsConfig settings to make the health check requests
+    tlsConfig: null

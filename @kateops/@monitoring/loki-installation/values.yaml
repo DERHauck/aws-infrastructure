@@ -1,0 +1,363 @@
+
+
+
+# Configuration for the index-gateway
+indexGateway:
+  # -- Specifies whether the index-gateway should be enabled
+  enabled: false
+  # -- Number of replicas for the index-gateway
+  replicas: 1
+  image:
+    # -- The Docker registry for the index-gateway image. Overrides `loki.image.registry`
+    registry: null
+    # -- Docker image repository for the index-gateway image. Overrides `loki.image.repository`
+    repository: null
+    # -- Docker image tag for the index-gateway image. Overrides `loki.image.tag`
+    tag: null
+  # -- The name of the PriorityClass for index-gateway pods
+  priorityClassName: null
+  # -- Labels for index-gateway pods
+  podLabels: {}
+  # -- Annotations for index-gateway pods
+  podAnnotations: {}
+  # -- Labels for index-gateway service
+  serviceLabels: {}
+  # -- Additional CLI args for the index-gateway
+  extraArgs: []
+  # -- Environment variables to add to the index-gateway pods
+  extraEnv: []
+  # -- Environment variables from secrets or configmaps to add to the index-gateway pods
+  extraEnvFrom: []
+  # -- Volume mounts to add to the index-gateway pods
+  extraVolumeMounts: []
+  # -- Volumes to add to the index-gateway pods
+  extraVolumes: []
+  # -- Resource requests and limits for the index-gateway
+  resources: {}
+  # -- Containers to add to the index-gateway pods
+  extraContainers: []
+  # -- Grace period to allow the index-gateway to shutdown before it is killed.
+  terminationGracePeriodSeconds: 300
+  # -- Affinity for index-gateway pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.indexGatewaySelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.indexGatewaySelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for index-gateway pods
+  nodeSelector: {}
+  # -- Tolerations for index-gateway pods
+  tolerations: []
+  persistence:
+    # -- Enable creating PVCs which is required when using boltdb-shipper
+    enabled: false
+    # -- Size of persistent disk
+    size: 10Gi
+    # -- Storage class to be used.
+    # If defined, storageClassName: <storageClass>.
+    # If set to "-", storageClassName: "", which disables dynamic provisioning.
+    # If empty or set to null, no storageClassName spec is
+    # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
+    storageClass: null
+
+memcached:
+  readinessProbe:
+    tcpSocket:
+      port: http
+    initialDelaySeconds: 5
+    timeoutSeconds: 1
+  livenessProbe:
+    tcpSocket:
+      port: http
+    initialDelaySeconds: 10
+  image:
+    # -- The Docker registry for the memcached
+    registry: docker.io
+    # -- Memcached Docker image repository
+    repository: memcached
+    # -- Memcached Docker image tag
+    tag: 1.6.7-alpine
+    # -- Memcached Docker image pull policy
+    pullPolicy: IfNotPresent
+  # -- Labels for memcached pods
+  podLabels: {}
+  # -- The SecurityContext for memcached pods
+  podSecurityContext:
+    fsGroup: 11211
+    runAsGroup: 11211
+    runAsNonRoot: true
+    runAsUser: 11211
+  # -- The SecurityContext for memcached containers
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    allowPrivilegeEscalation: false
+  # -- Common annotations for all memcached services
+  serviceAnnotations: {}
+  # -- Adds the appProtocol field to the memcached services. This allows memcached to work with istio protocol selection. Ex: "http" or "tcp"
+  appProtocol: ""
+
+memcachedExporter:
+  # -- Specifies whether the Memcached Exporter should be enabled
+  enabled: false
+  image:
+    # -- The Docker registry for the Memcached Exporter
+    registry: docker.io
+    # -- Memcached Exporter Docker image repository
+    repository: prom/memcached-exporter
+    # -- Memcached Exporter Docker image tag
+    tag: v0.6.0
+    # -- Memcached Exporter Docker image pull policy
+    pullPolicy: IfNotPresent
+  # -- Labels for memcached-exporter pods
+  podLabels: {}
+  # -- Memcached Exporter resource requests and limits
+  resources: {}
+  # -- The SecurityContext for memcachedExporter containers
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    allowPrivilegeEscalation: false
+
+memcachedChunks:
+  # -- Specifies whether the Memcached chunks cache should be enabled
+  enabled: false
+  # -- Number of replicas for memcached-chunks
+  replicas: 1
+  # -- The name of the PriorityClass for memcached-chunks pods
+  priorityClassName: null
+  # -- Labels for memcached-chunks pods
+  podLabels: {}
+  # -- Annotations for memcached-chunks pods
+  podAnnotations: {}
+  # -- Labels for memcached-chunks service
+  serviceLabels: {}
+  # -- Additional CLI args for memcached-chunks
+  extraArgs:
+    - -I 32m
+  # -- Environment variables to add to memcached-chunks pods
+  extraEnv: []
+  # -- Environment variables from secrets or configmaps to add to memcached-chunks pods
+  extraEnvFrom: []
+  # -- Resource requests and limits for memcached-chunks
+  resources: {}
+  # -- Containers to add to the memcached-chunks pods
+  extraContainers: []
+  # -- Grace period to allow memcached-chunks to shutdown before it is killed
+  terminationGracePeriodSeconds: 30
+  # -- Affinity for memcached-chunks pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.memcachedChunksSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.memcachedChunksSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for memcached-chunks pods
+  nodeSelector: {}
+  # -- Tolerations for memcached-chunks pods
+  tolerations: []
+
+memcachedFrontend:
+  # -- Specifies whether the Memcached frontend cache should be enabled
+  enabled: false
+  # -- Number of replicas for memcached-frontend
+  replicas: 1
+  # -- The name of the PriorityClass for memcached-frontend pods
+  priorityClassName: null
+  # -- Labels for memcached-frontend pods
+  podLabels: {}
+  # -- Annotations for memcached-frontend pods
+  podAnnotations: {}
+  # -- Labels for memcached-frontend service
+  serviceLabels: {}
+  # -- Additional CLI args for memcached-frontend
+  extraArgs:
+    - -I 32m
+  # -- Environment variables to add to memcached-frontend pods
+  extraEnv: []
+  # -- Environment variables from secrets or configmaps to add to memcached-frontend pods
+  extraEnvFrom: []
+  # -- Resource requests and limits for memcached-frontend
+  resources: {}
+  # -- Containers to add to the memcached-frontend pods
+  extraContainers: []
+  # -- Grace period to allow memcached-frontend to shutdown before it is killed
+  terminationGracePeriodSeconds: 30
+  # -- Affinity for memcached-frontend pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.memcachedFrontendSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.memcachedFrontendSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for memcached-frontend pods
+  nodeSelector: {}
+  # -- Tolerations for memcached-frontend pods
+  tolerations: []
+
+memcachedIndexQueries:
+  # -- Specifies whether the Memcached index queries cache should be enabled
+  enabled: false
+  # -- Number of replicas for memcached-index-queries
+  replicas: 1
+  # -- The name of the PriorityClass for memcached-index-queries pods
+  priorityClassName: null
+  # -- Labels for memcached-index-queries pods
+  podLabels: {}
+  # -- Annotations for memcached-index-queries pods
+  podAnnotations: {}
+  # -- Labels for memcached-index-queries service
+  serviceLabels: {}
+  # -- Additional CLI args for memcached-index-queries
+  extraArgs:
+    - -I 32m
+  # -- Environment variables to add to memcached-index-queries pods
+  extraEnv: []
+  # -- Environment variables from secrets or configmaps to add to memcached-index-queries pods
+  extraEnvFrom: []
+  # -- Resource requests and limits for memcached-index-queries
+  resources: {}
+  # -- Containers to add to the memcached-index-queries pods
+  extraContainers: []
+  # -- Grace period to allow memcached-index-queries to shutdown before it is killed
+  terminationGracePeriodSeconds: 30
+  # -- Affinity for memcached-index-queries pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.memcachedIndexQueriesSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.memcachedIndexQueriesSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for memcached-index-queries pods
+  nodeSelector: {}
+  # -- Tolerations for memcached-index-queries pods
+  tolerations: []
+
+memcachedIndexWrites:
+  # -- Specifies whether the Memcached index writes cache should be enabled
+  enabled: false
+  # -- Number of replicas for memcached-index-writes
+  replicas: 1
+  # -- The name of the PriorityClass for memcached-index-writes pods
+  priorityClassName: null
+  # -- Labels for memcached-index-writes pods
+  podLabels: {}
+  # -- Annotations for memcached-index-writes pods
+  podAnnotations: {}
+  # -- Labels for memcached-index-writes service
+  serviceLabels: {}
+  # -- Additional CLI args for memcached-index-writes
+  extraArgs:
+    - -I 32m
+  # -- Environment variables to add to memcached-index-writes pods
+  extraEnv: []
+  # -- Environment variables from secrets or configmaps to add to memcached-index-writes pods
+  extraEnvFrom: []
+  # -- Resource requests and limits for memcached-index-writes
+  resources: {}
+  # -- Containers to add to the memcached-index-writes pods
+  extraContainers: []
+  # -- Grace period to allow memcached-index-writes to shutdown before it is killed
+  terminationGracePeriodSeconds: 30
+  # -- Affinity for memcached-index-writes pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.memcachedIndexWritesSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.memcachedIndexWritesSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for memcached-index-writes pods
+  nodeSelector: {}
+  # -- Tolerations for memcached-index-writes pods
+  tolerations: []
+
+networkPolicy:
+  # -- Specifies whether Network Policies should be created
+  enabled: false
+  metrics:
+    # -- Specifies the Pods which are allowed to access the metrics port.
+    # As this is cross-namespace communication, you also need the namespaceSelector.
+    podSelector: {}
+    # -- Specifies the namespaces which are allowed to access the metrics port
+    namespaceSelector: {}
+    # -- Specifies specific network CIDRs which are allowed to access the metrics port.
+    # In case you use namespaceSelector, you also have to specify your kubelet networks here.
+    # The metrics ports are also used for probes.
+    cidrs: []
+  ingress:
+    # -- Specifies the Pods which are allowed to access the http port.
+    # As this is cross-namespace communication, you also need the namespaceSelector.
+    podSelector: {}
+    # -- Specifies the namespaces which are allowed to access the http port
+    namespaceSelector: {}
+  alertmanager:
+    # -- Specify the alertmanager port used for alerting
+    port: 9093
+    # -- Specifies the alertmanager Pods.
+    # As this is cross-namespace communication, you also need the namespaceSelector.
+    podSelector: {}
+    # -- Specifies the namespace the alertmanager is running in
+    namespaceSelector: {}
+  externalStorage:
+    # -- Specify the port used for external storage, e.g. AWS S3
+    ports: []
+    # -- Specifies specific network CIDRs you want to limit access to
+    cidrs: []
+  discovery:
+    # -- Specify the port used for discovery
+    port: null
+    # -- Specifies the Pods labels used for discovery.
+    # As this is cross-namespace communication, you also need the namespaceSelector.
+    podSelector: {}
+    # -- Specifies the namespace the discovery Pods are running in
+    namespaceSelector: {}

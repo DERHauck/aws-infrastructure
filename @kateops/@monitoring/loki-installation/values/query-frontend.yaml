@@ -1,0 +1,78 @@
+
+
+# Configuration for the query-frontend
+queryFrontend:
+  # -- Number of replicas for the query-frontend
+  replicas: 1
+  autoscaling:
+    # -- Enable autoscaling for the query-frontend
+    enabled: false
+    # -- Minimum autoscaling replicas for the query-frontend
+    minReplicas: 1
+    # -- Maximum autoscaling replicas for the query-frontend
+    maxReplicas: 3
+    # -- Target CPU utilisation percentage for the query-frontend
+    targetCPUUtilizationPercentage: 60
+    # -- Target memory utilisation percentage for the query-frontend
+    targetMemoryUtilizationPercentage:
+  image:
+    # -- The Docker registry for the query-frontend image. Overrides `loki.image.registry`
+    registry: null
+    # -- Docker image repository for the query-frontend image. Overrides `loki.image.repository`
+    repository: null
+    # -- Docker image tag for the query-frontend image. Overrides `loki.image.tag`
+    tag: null
+  # -- The name of the PriorityClass for query-frontend pods
+  priorityClassName: null
+  # -- Labels for query-frontend pods
+  podLabels: {}
+  # -- Annotations for query-frontend pods
+  podAnnotations: {}
+  # -- Labels for query-frontend service
+  serviceLabels: {}
+  # -- Additional CLI args for the query-frontend
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key: ${access_key_name}
+    - name: SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key: ${secret_key_name}
+  # -- Environment variables from secrets or configmaps to add to the query-frontend pods
+  extraEnvFrom: []
+  # -- Volume mounts to add to the query-frontend pods
+  extraVolumeMounts: []
+  # -- Volumes to add to the query-frontend pods
+  extraVolumes: []
+  # -- Resource requests and limits for the query-frontend
+  resources: {}
+  # -- Containers to add to the query-frontend pods
+  extraContainers: []
+  # -- Grace period to allow the query-frontend to shutdown before it is killed
+  terminationGracePeriodSeconds: 30
+  # -- Affinity for query-frontend pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.queryFrontendSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.queryFrontendSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for query-frontend pods
+  nodeSelector: {}
+  # -- Tolerations for query-frontend pods
+  tolerations: []

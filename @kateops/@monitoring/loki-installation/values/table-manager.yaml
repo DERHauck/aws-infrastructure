@@ -1,0 +1,67 @@
+
+# Configuration for the table-manager
+tableManager:
+  # -- Specifies whether the table-manager should be enabled
+  enabled: true
+  image:
+    # -- The Docker registry for the table-manager image. Overrides `loki.image.registry`
+    registry: null
+    # -- Docker image repository for the table-manager image. Overrides `loki.image.repository`
+    repository: null
+    # -- Docker image tag for the table-manager image. Overrides `loki.image.tag`
+    tag: null
+  # -- The name of the PriorityClass for table-manager pods
+  priorityClassName: null
+  # -- Labels for table-manager pods
+  podLabels: {}
+  # -- Annotations for table-manager pods
+  podAnnotations: {}
+  # -- Labels for table-manager service
+  serviceLabels: {}
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key: ${access_key_name}
+    - name: SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key:
+            ${secret_key_name}
+  extraEnvFrom: []
+  extraVolumes:
+    - name: tablemanager
+      emptyDir: { }
+  extraVolumeMounts:
+    - name: tablemanager
+      mountPath: /var/loki
+  # -- Resource requests an limits for the table-manager
+  resources: {}
+  # -- Containers to add to the table-manager pods
+  extraContainers: []
+  # -- Grace period to allow the table-manager to shutdown before it is killed
+  terminationGracePeriodSeconds: 30
+  # -- Affinity for table-manager pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.tableManagerSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.tableManagerSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for table-manager pods
+  nodeSelector: {}
+  # -- Tolerations for table-manager pods
+  tolerations: []

@@ -1,0 +1,21 @@
+
+memcachedExporter:
+  # -- Whether memcached metrics should be exported
+  enabled: true
+
+  image:
+    repository: prom/memcached-exporter
+    tag: v0.6.0
+    pullPolicy: IfNotPresent
+
+  resources:
+    requests: {}
+    limits: {}
+
+  # -- The SecurityContext for memcached exporter containers
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+    allowPrivilegeEscalation: false

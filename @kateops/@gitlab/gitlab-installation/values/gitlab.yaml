@@ -29,8 +29,6 @@ gitlab:
         targetAverageValue: 100m
   webservice:
     ingress:
-      annotations:
-        cert-manager.io/cluster-issuer: production
       tls:
         secretName: gitlab-gitlab-tls
     resources:

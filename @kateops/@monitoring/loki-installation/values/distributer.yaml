@@ -1,0 +1,77 @@
+
+# Configuration for the distributor
+distributor:
+  # -- Number of replicas for the distributor
+  replicas: 1
+  autoscaling:
+    # -- Enable autoscaling for the distributor
+    enabled: false
+    # -- Minimum autoscaling replicas for the distributor
+    minReplicas: 1
+    # -- Maximum autoscaling replicas for the distributor
+    maxReplicas: 3
+    # -- Target CPU utilisation percentage for the distributor
+    targetCPUUtilizationPercentage: 60
+    # -- Target memory utilisation percentage for the distributor
+    targetMemoryUtilizationPercentage:
+  image:
+    # -- The Docker registry for the distributor image. Overrides `loki.image.registry`
+    registry: null
+    # -- Docker image repository for the distributor image. Overrides `loki.image.repository`
+    repository: null
+    # -- Docker image tag for the distributor image. Overrides `loki.image.tag`
+    tag: null
+  # -- The name of the PriorityClass for distributor pods
+  priorityClassName: null
+  # -- Labels for distributor pods
+  podLabels: {}
+  # -- Annotations for distributor pods
+  podAnnotations: {}
+  # -- Labels for distributor service
+  serviceLabels: {}
+  # -- Additional CLI args for the distributor
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key: ${access_key_name}
+    - name: SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key: ${secret_key_name}
+  # -- Environment variables from secrets or configmaps to add to the distributor pods
+  extraEnvFrom: []
+  # -- Volume mounts to add to the distributor pods
+  extraVolumeMounts: []
+  # -- Volumes to add to the distributor pods
+  extraVolumes: []
+  # -- Resource requests and limits for the distributor
+  resources: {}
+  # -- Containers to add to the distributor pods
+  extraContainers: []
+  # -- Grace period to allow the distributor to shutdown before it is killed
+  terminationGracePeriodSeconds: 30
+  # -- Affinity for distributor pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.distributorSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.distributorSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for distributor pods
+  nodeSelector: {}
+  # -- Tolerations for distributor pods
+  tolerations: []

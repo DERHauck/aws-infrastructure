@@ -14,8 +14,8 @@ module "vault_secrets" {
   k8_zone                 = ""
   keycloak_admin_password = module.rs_cluster.outputs.keycloak.keycloak_admin_password
   keycloak_admin_username = module.rs_cluster.outputs.keycloak.keycloak_admin_username
-  keycloak_client_id      = ""
-  keycloak_client_secret  = ""
+  keycloak_client_id      = module.keycloak_setup.vault_client_id
+  keycloak_client_secret  = module.keycloak_setup.vault_client_secret
   keycloak_realm          = "master"
   access_key              = var.aws_access_key
   secret_key              = var.aws_secret_key

@@ -1,0 +1,82 @@
+
+# Configuration for the ingester
+ingester:
+  # -- Kind of deployment [StatefulSet/Deployment]
+  kind: StatefulSet
+  # -- Number of replicas for the ingester
+  replicas: 1
+  image:
+    # -- The Docker registry for the ingester image. Overrides `loki.image.registry`
+    registry: null
+    # -- Docker image repository for the ingester image. Overrides `loki.image.repository`
+    repository: null
+    # -- Docker image tag for the ingester image. Overrides `loki.image.tag`
+    tag: null
+  # -- The name of the PriorityClass for ingester pods
+  priorityClassName: null
+  # -- Labels for ingester pods
+  podLabels: {}
+  # -- Annotations for ingester pods
+  podAnnotations: {}
+  # -- Labels for ingestor service
+  serviceLabels: {}
+  # -- Additional CLI args for the ingester
+  extraArgs:
+    - "-config.expand-env=true"
+  extraEnv:
+    - name: ACCESS_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key: ${access_key_name}
+    - name: SECRET_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${s3_credentials_name}
+          key: ${secret_key_name}
+
+  # -- Environment variables from secrets or configmaps to add to the ingester pods
+  extraEnvFrom: []
+  # -- Volume mounts to add to the ingester pods
+  extraVolumeMounts: []
+  # -- Volumes to add to the ingester pods
+  extraVolumes: []
+  # -- Resource requests and limits for the ingester
+  resources: {}
+  # -- Containers to add to the ingester pods
+  extraContainers: []
+  # -- Grace period to allow the ingester to shutdown before it is killed. Especially for the ingestor,
+  # this must be increased. It must be long enough so ingesters can be gracefully shutdown flushing/transferring
+  # all data and to successfully leave the member ring on shutdown.
+  terminationGracePeriodSeconds: 300
+  # -- Affinity for ingester pods. Passed through `tpl` and, thus, to be configured as string
+  # @default -- Hard node and soft zone anti-affinity
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.ingesterSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                {{- include "loki.ingesterSelectorLabels" . | nindent 12 }}
+            topologyKey: failure-domain.beta.kubernetes.io/zone
+  # -- Node selector for ingester pods
+  nodeSelector: {}
+  # -- Tolerations for ingester pods
+  tolerations: []
+  persistence:
+    # -- Enable creating PVCs which is required when using boltdb-shipper
+    enabled: true
+    # -- Size of persistent disk
+    size: 1Gi
+    # -- Storage class to be used.
+    # If defined, storageClassName: <storageClass>.
+    # If set to "-", storageClassName: "", which disables dynamic provisioning.
+    # If empty or set to null, no storageClassName spec is
+    # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
+    storageClass: ${storage_class}

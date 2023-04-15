@@ -1,0 +1,6 @@
+smtp:
+  # `existingSecret` is a reference to an existing secret containing the smtp configuration
+  # for Grafana.
+  existingSecret: "${grafana_smtp_secret_name}"
+  userKey: "${smtp_username_key}"
+  passwordKey: "${smtp_password_key}"

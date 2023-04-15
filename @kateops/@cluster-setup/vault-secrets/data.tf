@@ -1,6 +1,6 @@
 data "vault_policy_document" "admin" {
   rule {
-    path         = "/*"
+    path         = "*"
     capabilities = ["create", "update", "delete", "sudo", "read", "list"]
   }
 }
