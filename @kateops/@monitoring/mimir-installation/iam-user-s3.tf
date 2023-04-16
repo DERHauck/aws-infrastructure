@@ -29,7 +29,7 @@ resource "aws_iam_policy" "mimir" {
           "s3:AbortMultipartUpload",
         ]
         Effect = "Allow"
-        Resource = [ aws_s3_bucket.this.arn ]
+        Resource = [ "${aws_s3_bucket.this.arn}/*" ]
       }
     ]
   })
@@ -39,3 +39,12 @@ resource "aws_iam_user_policy_attachment" "mimir" {
   policy_arn = aws_iam_policy.mimir.arn
   user       = aws_iam_user.mimir.name
 }
+
+#resource "aws_iam_role" "mimir" {
+#  assume_role_policy = ""
+#}
+#
+#resource "aws_iam_policy_attachment" "mimir" {
+#  name       = aws_iam_role.mimir.name
+#  policy_arn = aws_iam_policy.mimir.arn
+#}

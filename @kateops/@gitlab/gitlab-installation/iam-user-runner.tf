@@ -29,7 +29,7 @@ resource "aws_iam_policy" "runner" {
           "s3:AbortMultipartUpload",
         ]
         Effect = "Allow"
-        Resource = [ for buckets in aws_s3_bucket.this : buckets.arn ]
+        Resource = [ for buckets in aws_s3_bucket.this : "${buckets.arn}/*" ]
       }
     ]
   })

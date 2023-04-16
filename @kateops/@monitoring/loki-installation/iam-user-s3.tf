@@ -29,7 +29,7 @@ resource "aws_iam_policy" "loki" {
           "s3:AbortMultipartUpload",
         ]
         Effect = "Allow"
-        Resource = [ aws_s3_bucket.this.arn ]
+        Resource = [ "${aws_s3_bucket.this.arn}/*" ]
       }
     ]
   })

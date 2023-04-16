@@ -6,7 +6,7 @@ resource "helm_release" "runner" {
   repository = "https://charts.gitlab.io/"
   values = local.templates
   timeout = 600
-  version = "0.43.1"
+  version = "0.50.1"
   depends_on = [
   ]
 }

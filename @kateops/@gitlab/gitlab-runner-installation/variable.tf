@@ -10,17 +10,17 @@ variable "concurrency" {
 
 variable "access_key" {
   type = string
-  description = "Scaleway Api Access Key"
+  description = "Runner IAM Api Access Key"
 }
 
 variable "secret_key" {
   type = string
-  description = "Scaleway Api Secret Key"
+  description = "Runner IAM Api Secret Key"
 }
 
 variable "region" {
   type = string
-  default = "fr-par"
+  default = "eu-central-1"
   description = "Scaleway region default (fr-par)"
 }
 

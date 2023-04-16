@@ -1,0 +1,519 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": {
+          "type": "grafana",
+          "uid": "-- Grafana --"
+        },
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "graphTooltip": 0,
+  "id": 7,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 8,
+      "title": "HTTP code",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "displayName": "2XX",
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 11,
+        "x": 0,
+        "y": 1
+      },
+      "id": 12,
+      "options": {
+        "bucketOffset": 0,
+        "combine": false,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        }
+      },
+      "pluginVersion": "9.0.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "sum(\nsum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 200 | http_status < 300))\n)",
+          "legendFormat": "",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "2XX",
+      "type": "histogram"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 7,
+        "w": 13,
+        "x": 11,
+        "y": 1
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.0.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "sum(\nsum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 500 | http_status < 600))\n)",
+          "hide": false,
+          "legendFormat": "5XX",
+          "queryType": "range",
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "sum(\nsum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 400 | http_status < 500))\n)",
+          "hide": false,
+          "legendFormat": "4XX",
+          "queryType": "range",
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "sum(\nsum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 300 | http_status < 400))\n)",
+          "hide": false,
+          "legendFormat": "3XX",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "sum(\nsum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 200))\n)",
+          "hide": false,
+          "legendFormat": "1XX",
+          "queryType": "range",
+          "refId": "D"
+        }
+      ],
+      "title": "Bad",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 8
+      },
+      "id": 6,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom"
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "\nsum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[1m] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 600))\n",
+          "legendFormat": "{{http_status}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Status per Minute",
+      "type": "timeseries"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 4,
+      "panels": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "gridPos": {
+            "h": 10,
+            "w": 24,
+            "x": 0,
+            "y": 17
+          },
+          "id": 2,
+          "options": {
+            "dedupStrategy": "none",
+            "enableLogDetails": true,
+            "prettifyLogMessage": false,
+            "showCommonLabels": false,
+            "showLabels": false,
+            "showTime": false,
+            "sortOrder": "Descending",
+            "wrapLogMessage": false
+          },
+          "pluginVersion": "9.0.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki-default"
+              },
+              "editorMode": "builder",
+              "expr": "{app=\"ingress-nginx\"} | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]`",
+              "legendFormat": "",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Logs",
+          "type": "logs"
+        }
+      ],
+      "title": "Logs",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "id": 10,
+      "panels": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 28
+          },
+          "id": 15,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "none",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.0.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki-default"
+              },
+              "editorMode": "code",
+              "expr": "\nsum by (service) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 600 |service!=\"\"))\n",
+              "legendFormat": "{{service}}",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Requests by Services",
+          "type": "stat"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "fieldConfig": {
+            "defaults": {
+              "color": {
+                "mode": "thresholds"
+              },
+              "mappings": [],
+              "thresholds": {
+                "mode": "absolute",
+                "steps": [
+                  {
+                    "color": "green",
+                    "value": null
+                  },
+                  {
+                    "color": "yellow",
+                    "value": 10
+                  },
+                  {
+                    "color": "orange",
+                    "value": 100
+                  },
+                  {
+                    "color": "red",
+                    "value": 1000
+                  },
+                  {
+                    "color": "dark-red",
+                    "value": 10000
+                  }
+                ]
+              }
+            },
+            "overrides": []
+          },
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 37
+          },
+          "id": 17,
+          "options": {
+            "colorMode": "background",
+            "graphMode": "area",
+            "justifyMode": "center",
+            "orientation": "auto",
+            "reduceOptions": {
+              "calcs": [
+                "lastNotNull"
+              ],
+              "fields": "",
+              "values": false
+            },
+            "textMode": "auto"
+          },
+          "pluginVersion": "9.0.5",
+          "targets": [
+            {
+              "datasource": {
+                "type": "loki",
+                "uid": "loki-default"
+              },
+              "editorMode": "code",
+              "expr": "\nsum by (service) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 300 or http_status < 200 |service!=\"\"))\n",
+              "legendFormat": "{{service}}",
+              "queryType": "range",
+              "refId": "A"
+            }
+          ],
+          "title": "Errors",
+          "type": "stat"
+        }
+      ],
+      "title": "Services",
+      "type": "row"
+    }
+  ],
+  "schemaVersion": 36,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "Logs",
+  "uid": "BMMc7jOVk",
+  "version": 4,
+  "weekStart": ""
+}

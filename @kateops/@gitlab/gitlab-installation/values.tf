@@ -12,17 +12,17 @@ locals {
     s3_connection_secret_name: kubernetes_secret.gitlab_s3_storage_credentials.metadata[0].name
     default_region: var.region
     s3_connection_registry_secret_name: kubernetes_secret.gitlab_s3_registry_credentials.metadata[0].name
-    registry_bucket_name: aws_s3_bucket.this["gitlab-registry"].bucket
+    registry_bucket_name: aws_s3_bucket.this["gitlab-registry"].id
     smtp_password_secret_name: kubernetes_secret.smtp_secret.metadata[0].name
-    pages_bucket_name: aws_s3_bucket.this["gitlab-pages"].bucket
-    backups_bucket_name: aws_s3_bucket.this["gitlab-backup"].bucket
-    backups_tmp_bucket_name: aws_s3_bucket.this["gitlab-backup-tmp"].bucket
-    artifacts_bucket_name: aws_s3_bucket.this["gitlab-artifacts"].bucket
-    uploads_bucket_name: aws_s3_bucket.this["gitlab-uploads"].bucket
-    packages_bucket_name:  aws_s3_bucket.this["gitlab-packages"].bucket
-    terraform_bucket_name: aws_s3_bucket.this["gitlab-state"].bucket
-    lfs_bucket_name: aws_s3_bucket.this["gitlab-lfs"].bucket
-    dependency_proxy_bucket_name: aws_s3_bucket.this["gitlab-dependency-proxy"].bucket
+    pages_bucket_name: aws_s3_bucket.this["gitlab-pages"].id
+    backups_bucket_name: aws_s3_bucket.this["gitlab-backup"].id
+    backups_tmp_bucket_name: aws_s3_bucket.this["gitlab-backup-tmp"].id
+    artifacts_bucket_name: aws_s3_bucket.this["gitlab-artifacts"].id
+    uploads_bucket_name: aws_s3_bucket.this["gitlab-uploads"].id
+    packages_bucket_name:  aws_s3_bucket.this["gitlab-packages"].id
+    terraform_bucket_name: aws_s3_bucket.this["gitlab-state"].id
+    lfs_bucket_name: aws_s3_bucket.this["gitlab-lfs"].id
+    dependency_proxy_bucket_name: aws_s3_bucket.this["gitlab-dependency-proxy"].id
     email_display_name: local.email_display_name
     email_reply_to: local.email_from_address
     email_from_address: local.email_from_address

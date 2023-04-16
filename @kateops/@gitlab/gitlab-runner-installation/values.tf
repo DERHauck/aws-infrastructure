@@ -1,4 +1,7 @@
 locals {
+  labels = {
+    "type/pressure" = var.pressure
+  }
   vars = {
     concurrency: var.concurrency
     s3_connection_secret_name: kubernetes_secret.gitlab_s3_storage_credentials.metadata[0].name
@@ -6,9 +9,7 @@ locals {
     s3_cache_bucket_name: var.s3_cache_bucket_name
     s3_default_host: var.s3_default_host
     pressure: var.pressure
-    node_selector = {
-      "k8s.scaleway.com/type" = var.pressure
-    }
+    node_selector = local.labels
 
 
   }

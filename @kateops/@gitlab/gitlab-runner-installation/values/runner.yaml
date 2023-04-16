@@ -11,7 +11,9 @@ runners:
         namespace = "{{.Release.Namespace}}"
         image = "alpine:latest"
       [runners.kubernetes.node_tolerations]
-        "k8s.scaleway.com/pressure=${pressure}" = "NoSchedule"
+%{ for key,value in node_selector }
+        "${key}=${value}" = "NoExecute"
+%{ endfor }
         [runners.cache]
           Type = "s3"
           Path = "runner"

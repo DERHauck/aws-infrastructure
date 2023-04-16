@@ -8,7 +8,7 @@ provider "aws" {
       "kateops:iam" = "terraform"
       "kateops:iac" = "Terraform"
       "kateops:account" = "Kateops"
-      "kateops:state" = "kateops/cluster"
+      "kateops:state" = "kateops/gitlab"
     }
   }
 }
