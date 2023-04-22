@@ -29,3 +29,7 @@ output "cluster_name" {
 output "oidc_issuer_arn" {
   value = module.eks.oidc_provider_arn
 }
+
+output "efs_id" {
+  value = aws_efs_file_system.this.id
+}

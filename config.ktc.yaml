@@ -1,0 +1,113 @@
+---
+pipelines:
+#################################################
+# Init States - First Level
+#################################################
+
+
+  - type: terraform
+    path: @kateops
+    id: kateops
+
+#################################################
+# Second Level
+#################################################
+
+  - type: terraform
+    path: @kateops/@cluster
+    id: cluster
+    needs:
+      - pipeline:
+          id: kateops
+          stage: deploy
+        targetStage: build
+
+
+  - type: terraform
+    path: @kateops/@cluster-setup
+    id: cluster-setup
+    needs:
+      - pipeline:
+          id: cluster-setup
+          stage: deploy
+        targetStage: build
+
+#################################################
+# Third Level
+#################################################
+
+  - type: terraform
+    path: @kateops/@monitoring
+    id: monitoring
+    needs:
+      - pipeline:
+          id: cluster-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: @kateops/@monitoring-setup
+    id: monitoring-setup
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
+#################################################
+# Fourth Level
+#################################################
+
+  - type: terraform
+    path: @kateops/@gitlab
+    id: gitlab
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: @kateops/@gitlab-setup
+    id: gitlab-setup
+    needs:
+      - pipeline:
+          id: gitlab-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: @kateops/@administration
+    id: administration
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: @kateops/@service
+    id: service
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
+
+
+#################################################
+# Terraform Modules
+#################################################
+
+  - type: terraform-module
+    path: module/cluster/ingress-nginx
+    moduleName: helm-ingress-nginx
+
+  - type: terraform-module
+    path: module/cluster/openproxy
+    moduleName: helm-openproxy
+
+  - type: terraform-module
+    path: module/terraform/default-rds
+    moduleName: default-rds

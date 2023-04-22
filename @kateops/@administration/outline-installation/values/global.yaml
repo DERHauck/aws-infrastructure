@@ -1,0 +1,25 @@
+name: outline
+image:
+  repository: outlinewiki/outline
+  tag: 0.63.0
+  pullPolicy: IfNotPresent
+replicas: 1
+env:
+# SLACK_KEY: "slack key in slack oidc context"
+# SLACK_SECRET: "slack secret in slack oidc context"
+envSecrets:
+  DATABASE_URL: ${connection_secret_name}
+  REDIS_URL: ${connection_secret_name}
+  OIDC_CLIENT_ID: ${oidc_secret_name}
+  OIDC_CLIENT_SECRET: ${oidc_secret_name}
+  OIDC_AUTH_URI: ${oidc_secret_name}
+  OIDC_TOKEN_URI: ${oidc_secret_name}
+  OIDC_USERINFO_URI: ${oidc_secret_name}
+  OIDC_DISPLAY_NAME: ${oidc_secret_name}
+secretKey: "5974e36f82085f057223565ac2d0d01427a90248ade611108b4b937672649bd4" # MUST be replaced! Generate a hex-encoded 32-byte random key. You should use `openssl rand -hex 32`
+utilsSecret: "8c5a14973325ba56694a99856e6be330812b875e5f683dd37022cf76444774bb" # Generate a unique random key. The format is not important but you could still use `openssl rand -hex 32`
+
+
+
+
+

@@ -1,0 +1,3 @@
+extraArgs:
+  - '--enable-insecure-login'
+  - '--enable-skip-login'

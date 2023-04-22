@@ -1,0 +1,18 @@
+
+kubecostFrontend:
+  image: "gcr.io/kubecost1/frontend"
+  imagePullPolicy: Always
+  # extraEnv:
+  # - name: NGINX_ENTRYPOINT_WORKER_PROCESSES_AUTOTUNE
+  #   value: "1"
+  resources:
+    requests:
+      cpu: "10m"
+      memory: "55Mi"
+    limits:
+      cpu: "100m"
+      memory: "256Mi"
+#  api:
+#    fqdn: kubecost-api.kubecost.svc.cluster.local:9001
+#  model:
+#    fqdn: kubecost-model.kubecost.svc.cluster.local:9003

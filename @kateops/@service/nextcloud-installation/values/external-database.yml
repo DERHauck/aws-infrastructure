@@ -1,0 +1,18 @@
+
+##
+## External database configuration
+##
+externalDatabase:
+  enabled: true
+  ## Supported database engines: mysql or postgresql
+  type: postgresql
+  ## Database host
+  host: ${pq_host}:${pq_port}
+  ## Database name
+  database: ${pq_db}
+  ## Use a existing secret
+  existingSecret:
+    enabled: true
+    secretName: ${postgres_secret_name}
+    usernameKey: ${pq_username}
+    passwordKey: ${pq_password}

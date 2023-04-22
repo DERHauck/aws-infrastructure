@@ -1,0 +1,12 @@
+ingress:
+  enabled: true
+  hosts:
+    - host: ${host_domain}
+      paths:
+        - path: /
+  annotations:
+    cert-manager.io/cluster-issuer: production
+  tls:
+    - hosts:
+        - ${host_domain}
+      secretName: ${host_domain}-tls

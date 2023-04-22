@@ -1,0 +1,9 @@
+## Official nextcloud image version
+## ref: https://hub.docker.com/r/library/nextcloud/tags/
+##
+image:
+  repository: nextcloud
+  #tag: 24.0.7-apache #25.0.1-fpm-alpine
+  pullPolicy: IfNotPresent
+  # pullSecrets:
+  #   - myRegistrKeySecretName

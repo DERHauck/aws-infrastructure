@@ -1,0 +1,12 @@
+# Kubecost Metrics deploys a separate pod which will emit kubernetes specific metrics required
+# by the cost-model. This pod is designed to remain active and decoupled from the cost-model itself.
+# Howeve
+nodeSelector: {}
+
+tolerations: []
+#  - key: "key"
+#    operator: "Equal|Exists"
+#    value: "value"
+#    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+
+affinity: {}

@@ -1,0 +1,6 @@
+
+redis:
+  enabled: false
+  auth:
+    enabled: true
+    password: 'changeme'
