@@ -3,9 +3,9 @@ module "opencost" {
   namespace = kubernetes_namespace.this.metadata[0].name
 
   host_domain = "opencost.kateops.com"
-  fqdn_prometheus_service = "http://prometheus-kube-prometheus-prometheus:9090"
+  fqdn_prometheus_service = "http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus"
   grafana_service = "grafana-default"
-  storage_class = "efc-sc"
+  storage_class = "efs-sc"
 }
 
 module "opencost-openproxy" {

@@ -37,8 +37,8 @@ locals {
     postgresql_port: var.rdbs.port
     postgresql_username: var.rdbs.username
     postgresql_database: var.rdbs.database
-    smtp_address: var.smtp_host
-    smtp_user_name: var.smtp_username
+    smtp_address: module.ses.host
+    smtp_user_name: module.ses.username
   }
   open_templates = [for v in fileset("${path.module}/values","*.yaml"): templatefile("${path.module}/values/${v}", local.vars)]
   secret_templates = [for v in fileset("${path.module}/values","*.yml"): templatefile("${path.module}/values/${v}", local.secrets)]

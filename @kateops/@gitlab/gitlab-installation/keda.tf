@@ -25,3 +25,11 @@ resource "kubectl_manifest" "gitaly" {
     kind = "StatefulSet"
   }))
 }
+
+
+resource "kubectl_manifest" "sidekiq" {
+  yaml_body = templatefile("${path.module}/keda/scaleobject.yaml", merge(local.keda_default, {
+    name = "gitlab-sidekiq-all-in-1-v2"
+    namespace: var.namespace
+  }))
+}
