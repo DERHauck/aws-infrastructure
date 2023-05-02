@@ -427,8 +427,8 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": " (sum by (container) (container_cpu_usage_seconds_total{namespace=\"$namespace\"})) / (sum by (container) (container_cpu_allocation{namespace=\"$namespace\"}))",
-          "hide": true,
+          "expr": "\n       sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (container) \n      / (sum by (container) (container_cpu_allocation{namespace=\"$namespace\"}))",
+          "hide": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -452,7 +452,7 @@
           },
           "editorMode": "code",
           "expr": "\n       sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (container) \n      /\n  \n\n      (sum by (container) (kube_pod_container_resource_requests{namespace=\"$namespace\"}) / 1000000000)\n\n",
-          "hide": false,
+          "hide": true,
           "legendFormat": "__auto",
           "range": true,
           "refId": "C"
@@ -472,288 +472,6 @@
       ],
       "title": "Service CPU used/allocated",
       "type": "timeseries"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 36
-      },
-      "id": 11,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "mimir-default"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 2,
-              "mappings": [],
-              "max": 100,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 65
-                  },
-                  {
-                    "color": "dark-red",
-                    "value": 90
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 4,
-            "x": 0,
-            "y": 20
-          },
-          "id": 9,
-          "maxPerRow": 6,
-          "options": {
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true
-          },
-          "pluginVersion": "9.4.7",
-          "repeat": "pvc",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "mimir-default"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "100 * sum(kubelet_volume_stats_used_bytes{persistentvolumeclaim=~\"$pvc\"}) by (persistentvolumeclaim)\r\n  /\r\nsum(kubelet_volume_stats_capacity_bytes{persistentvolumeclaim=~\"$pvc\"}) by (persistentvolumeclaim)\r\n",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "$pvc",
-          "transformations": [],
-          "type": "gauge"
-        }
-      ],
-      "title": "Storage - PVC",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 37
-      },
-      "id": 23,
-      "panels": [
-        {
-          "datasource": {},
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 2,
-              "mappings": [],
-              "max": 100,
-              "min": 0,
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 65
-                  },
-                  {
-                    "color": "dark-red",
-                    "value": 90
-                  }
-                ]
-              },
-              "unit": "percent"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 6,
-            "w": 5,
-            "x": 0,
-            "y": 43
-          },
-          "id": 28,
-          "maxPerRow": 6,
-          "options": {
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "showThresholdLabels": false,
-            "showThresholdMarkers": true
-          },
-          "pluginVersion": "9.0.5",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "mimir-default"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "100 * sum(kubelet_volume_stats_used_bytes{persistentvolumeclaim=~\"$pvc\"}) by (persistentvolumeclaim)\r\n  /\r\nsum(kubelet_volume_stats_capacity_bytes{persistentvolumeclaim=~\"$pvc\"}) by (persistentvolumeclaim)\r\n",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "legendFormat": "__auto",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "$pvc",
-          "transformations": [],
-          "type": "gauge"
-        },
-        {
-          "datasource": {},
-          "description": "",
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "decimals": 2,
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green"
-                  }
-                ]
-              },
-              "unit": "bytes"
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 6,
-            "w": 6,
-            "x": 5,
-            "y": 43
-          },
-          "id": 41,
-          "interval": "15s",
-          "maxDataPoints": 30000,
-          "options": {
-            "colorMode": "background",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "vertical",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "text": {},
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.0.5",
-          "repeatDirection": "h",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "mimir-default"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "sum(kubelet_volume_stats_capacity_bytes{persistentvolumeclaim=~\"$pvc\"}) by (persistentvolumeclaim)\r\n - sum(kubelet_volume_stats_available_bytes{persistentvolumeclaim=~\"$pvc\"}) by (persistentvolumeclaim)\r\n",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "legendFormat": "Used",
-              "range": true,
-              "refId": "B"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "mimir-default"
-              },
-              "editorMode": "code",
-              "expr": "sum(max_over_time(kubelet_volume_stats_capacity_bytes{persistentvolumeclaim=~\"$pvc\"}[$__interval])) by (persistentvolumeclaim)\n - sum(min_over_time(kubelet_volume_stats_available_bytes{persistentvolumeclaim=~\"$pvc\"}[$__interval])) by (persistentvolumeclaim)\n",
-              "hide": false,
-              "legendFormat": "Max Used",
-              "range": true,
-              "refId": "C"
-            },
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "mimir-default"
-              },
-              "editorMode": "code",
-              "exemplar": false,
-              "expr": "sum(kubelet_volume_stats_capacity_bytes{persistentvolumeclaim=~\"$pvc\"}) by (persistentvolumeclaim)\r\n",
-              "format": "time_series",
-              "hide": false,
-              "instant": false,
-              "interval": "",
-              "legendFormat": "Capacity",
-              "range": true,
-              "refId": "A"
-            }
-          ],
-          "title": "Storage",
-          "transformations": [],
-          "type": "stat"
-        }
-      ],
-      "repeat": "pvc",
-      "repeatDirection": "h",
-      "title": "Storage - $pvc",
-      "type": "row"
     }
   ],
   "refresh": "5s",
@@ -767,35 +485,8 @@
   "templating": {
     "list": [
       {
-        "allValue": "All",
         "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "mimir-default"
-        },
-        "definition": "label_values(kubelet_volume_stats_capacity_bytes, persistentvolumeclaim)",
-        "hide": 0,
-        "includeAll": true,
-        "multi": false,
-        "name": "pvc",
-        "options": [],
-        "query": {
-          "query": "label_values(kubelet_volume_stats_capacity_bytes, persistentvolumeclaim)",
-          "refId": "StandardVariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "skipUrlSync": false,
-        "sort": 1,
-        "type": "query"
-      },
-      {
-        "current": {
-          "selected": true,
+          "selected": false,
           "text": "monitoring",
           "value": "monitoring"
         },
@@ -830,6 +521,6 @@
   "timezone": "",
   "title": "K8-Cluster Mimir",
   "uid": "2qI55jPVz",
-  "version": 6,
+  "version": 13,
   "weekStart": ""
 }
