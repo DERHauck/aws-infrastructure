@@ -38,67 +38,73 @@ pipelines:
 #################################################
 # Third Level
 #################################################
-#
-#  - type: terraform
-#    path: @kateops/@monitoring
-#    id: monitoring
-#    needs:
-#      - pipeline:
-#          id: cluster-setup
-#          stage: deploy
-#        targetStage: build
-#
-#  - type: terraform
-#    path: @kateops/@monitoring-setup
-#    id: monitoring-setup
-#    needs:
-#      - pipeline:
-#          id: monitoring-setup
-#          stage: deploy
-#        targetStage: build
-#
+
+  - type: terraform
+    path: '@kateops/@monitoring'
+    stateName: kateops/monitoring
+    id: monitoring
+    needs:
+      - pipeline:
+          id: cluster-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: '@kateops/@monitoring-setup'
+    id: monitoring-setup
+    stateName: kateops/monitoring-setup
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
 ##################################################
 ## Fourth Level
 ##################################################
-#
-#  - type: terraform
-#    path: @kateops/@gitlab
-#    id: gitlab
-#    needs:
-#      - pipeline:
-#          id: monitoring-setup
-#          stage: deploy
-#        targetStage: build
-#
-#  - type: terraform
-#    path: @kateops/@gitlab-setup
-#    id: gitlab-setup
-#    needs:
-#      - pipeline:
-#          id: gitlab-setup
-#          stage: deploy
-#        targetStage: build
-#
-#  - type: terraform
-#    path: @kateops/@administration
-#    id: administration
-#    needs:
-#      - pipeline:
-#          id: monitoring-setup
-#          stage: deploy
-#        targetStage: build
-#
-#  - type: terraform
-#    path: @kateops/@service
-#    id: service
-#    needs:
-#      - pipeline:
-#          id: monitoring-setup
-#          stage: deploy
-#        targetStage: build
-#
-#
-#
+
+  - type: terraform
+    path: '@kateops/@gitlab'
+    stateName: kateops/gitlab
+    id: gitlab
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: '@kateops/@gitlab-setup'
+    stateName: kateops/gitlab-setup
+    id: gitlab-setup
+    needs:
+      - pipeline:
+          id: gitlab-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: '@kateops/@administration'
+    stateName: kateops/administration
+    id: administration
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
+  - type: terraform
+    path: '@kateops/@service'
+    stateName: kateops/service
+    id: service
+    needs:
+      - pipeline:
+          id: monitoring-setup
+          stage: deploy
+        targetStage: build
+
+
+
 ##################################################
 ## Terraform Modules
 ##################################################
