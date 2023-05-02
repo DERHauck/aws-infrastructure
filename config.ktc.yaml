@@ -6,7 +6,7 @@ pipelines:
 
 
   - type: terraform
-    path: @kateops
+    path: '@kateops'
     id: kateops
     stateName: kateops
 
@@ -15,7 +15,7 @@ pipelines:
 #################################################
 
   - type: terraform
-    path: @kateops/@cluster
+    path: '@kateops/@cluster'
     stateName: kateops/cluster
     id: cluster
     needs:
@@ -26,7 +26,7 @@ pipelines:
 
 
   - type: terraform
-    path: @kateops/@cluster-setup
+    path: '@kateops/@cluster-setup'
     id: cluster-setup
     stateName: kateops/cluster-setup
     needs:
