@@ -19,11 +19,9 @@ pipelines:
     stateName: kateops/cluster
     id: cluster
     needs:
-      - pipeline:
-          id: kateops
-          stage: deploy
+      - id: kateops
+        stage: deploy
         targetStage: build
-        onChanges: true
 
 
   - type: terraform
@@ -31,11 +29,9 @@ pipelines:
     id: cluster-setup
     stateName: kateops/cluster-setup
     needs:
-      - pipeline:
-          id: cluster
-          stage: deploy
+      - id: cluster
+        stage: deploy
         targetStage: build
-        onChanges: true
 
 #################################################
 # Third Level
@@ -46,22 +42,18 @@ pipelines:
     stateName: kateops/monitoring
     id: monitoring
     needs:
-      - pipeline:
-          id: cluster-setup
-          stage: deploy
+      - id: cluster-setup
+        stage: deploy
         targetStage: build
-        onChanges: true
 
   - type: terraform
     path: '@kateops/@monitoring-setup'
     id: monitoring-setup
     stateName: kateops/monitoring-setup
     needs:
-      - pipeline:
-          id: monitoring
-          stage: deploy
+      - id: monitoring
+        stage: deploy
         targetStage: build
-        onChanges: true
 
 ##################################################
 ## Fourth Level
@@ -72,44 +64,36 @@ pipelines:
     stateName: kateops/gitlab
     id: gitlab
     needs:
-      - pipeline:
-          id: monitoring-setup
-          stage: deploy
+      - id: monitoring-setup
+        stage: deploy
         targetStage: build
-        onChanges: true
 
   - type: terraform
     path: '@kateops/@gitlab-setup'
     stateName: kateops/gitlab-setup
     id: gitlab-setup
     needs:
-      - pipeline:
-          id: gitlab
-          stage: deploy
+      - id: gitlab
+        stage: deploy
         targetStage: build
-        onChanges: true
 
   - type: terraform
     path: '@kateops/@administration'
     stateName: kateops/administration
     id: administration
     needs:
-      - pipeline:
-          id: monitoring-setup
-          stage: deploy
+      - id: monitoring-setup
+        stage: deploy
         targetStage: build
-        onChanges: true
 
   - type: terraform
     path: '@kateops/@service'
     stateName: kateops/service
     id: service
     needs:
-      - pipeline:
-          id: monitoring-setup
-          stage: deploy
+      - id: monitoring-setup
+        stage: deploy
         targetStage: build
-        onChanges: true
 
 
 
