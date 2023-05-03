@@ -11,6 +11,8 @@ module "eks" {
     (aws_route53_zone.kateops.zone_id) = aws_route53_zone.kateops.name
     (aws_route53_zone.netzwolke.zone_id) = aws_route53_zone.netzwolke.name
   }
+  aws_access_key = var.aws_access_key
+  aws_secret_key = var.aws_secret_key
 }
 
 //*/

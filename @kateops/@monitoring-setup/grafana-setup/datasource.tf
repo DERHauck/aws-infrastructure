@@ -18,7 +18,7 @@ resource "grafana_data_source" "mimir" {
   uid = "mimir-default"
   is_default = true
 }
-
+#
 #resource "grafana_data_source" "redis" {
 #  name = "Redis"
 #  type = "redis-datasource"
@@ -29,10 +29,10 @@ resource "grafana_data_source" "mimir" {
 #  }
 #}
 
-resource "grafana_data_source" "prometheus" {
-  name = "Prometheus"
-  type = "prometheus"
-  url = "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
-  uid = "prometheus-default"
-  is_default = true
-}
+#resource "grafana_data_source" "prometheus" {
+#  name = "Prometheus"
+#  type = "prometheus"
+#  url = "http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"
+#  uid = "prometheus-default"
+#  is_default = true
+#}

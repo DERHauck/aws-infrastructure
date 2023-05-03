@@ -1,0 +1,5 @@
+
+serviceMonitor:
+  enabled: true
+  additionalLabels:
+    logging: grafana-agent

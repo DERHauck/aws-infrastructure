@@ -1,0 +1,11 @@
+## Name of Priority Class of pods
+# priorityClassName: ""
+
+## Pod resource requests & limits
+resources:
+  requests:
+    cpu: 100m
+    memory: 200Mi
+  limits:
+    cpu: 2
+    memory: 300Mi

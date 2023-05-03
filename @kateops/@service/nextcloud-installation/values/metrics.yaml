@@ -1,0 +1,40 @@
+
+## Prometheus Exporter / Metrics
+##
+metrics:
+  enabled: true
+
+  replicaCount: 1
+  # The metrics exporter needs to know how you serve Nextcloud either http or https
+  https: false
+  # Use API token if set, otherwise fall back to password authentication
+  # https://github.com/xperimental/nextcloud-exporter#token-authentication
+  # Currently you still need to set the token manually in your nextcloud install
+  token: ""
+  timeout: 5s
+
+  image:
+    repository: xperimental/nextcloud-exporter
+    tag: 0.5.1
+    pullPolicy: IfNotPresent
+
+  ## Metrics exporter resource requests and limits
+  ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
+  ##
+  # resources: {}
+
+  ## Metrics exporter pod Annotation and Labels
+  # podAnnotations: {}
+
+  # podLabels: {}
+
+  service:
+    type: ClusterIP
+    ## Use serviceLoadBalancerIP to request a specific static IP,
+    ## otherwise leave blank
+    # loadBalancerIP:
+    annotations:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "9205"
+    labels: {}
+

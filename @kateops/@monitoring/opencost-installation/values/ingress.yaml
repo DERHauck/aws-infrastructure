@@ -1,0 +1,13 @@
+
+  # Basic Kubecost ingress, more examples available at https://github.com/kubecost/docs/blob/master/ingress-examples.md
+  ingress:
+    enabled: true
+    # className: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/auth-url: "https://$host/oauth2/auth"
+      nginx.ingress.kubernetes.io/auth-signin: "https://$host/oauth2/start?rd=$escaped_request_uri"
+    paths: ["/"] # There's no need to route specifically to the pods-- we have an nginx deployed that handles routing
+    pathType: ImplementationSpecific
+    hosts:
+      - ${host_domain}
+

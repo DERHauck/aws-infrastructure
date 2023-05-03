@@ -1,0 +1,9 @@
+
+serviceMonitor:
+  # Whether or not to create a Prometheus Operator service monitor.
+  enabled: true
+  ## Here labels can be added to the serviceMonitor
+  labels:
+    logging: grafana-agent
+  ## Here annotations can be added to the serviceMonitor
+  annotations: {}

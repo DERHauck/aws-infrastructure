@@ -60,23 +60,6 @@ variable "region" {
   description = "Scaleway region default eu-central-1"
 }
 
-variable "smtp_password" {
-  type = string
-  default = ""
-  description = "SMTP mail server login address"
-}
-
-variable "smtp_host" {
-  type = string
-  default = ""
-  description = "SMTP mail server endpoint"
-}
-
-variable "smtp_username" {
-  type = string
-  default = ""
-  description = "SMTP mail server login username"
-}
 
 variable "rdbs" {
   type = object({

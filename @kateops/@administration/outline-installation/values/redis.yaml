@@ -1,0 +1,9 @@
+
+redis:
+  enabled: false
+  architecture: "standalone"
+  persistence:
+    size: 2Gi
+    storageClass: ""
+  auth:
+    enabled: false

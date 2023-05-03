@@ -1,4 +1,4 @@
-resource "helm_release" "promtail" {
+resource "helm_release" "node_exporter" {
   name      = "node-exporter"
   namespace = var.namespace
 

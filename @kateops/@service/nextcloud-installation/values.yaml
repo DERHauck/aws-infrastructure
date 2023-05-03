@@ -1,0 +1,110 @@
+
+
+nameOverride: ""
+fullnameOverride: ""
+podAnnotations: {}
+deploymentAnnotations: {}
+
+# Number of replicas to be deployed
+replicaCount: 1
+
+# Allow configuration of lifecycle hooks
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/attach-handler-lifecycle-event/
+lifecycle: {}
+  # postStartCommand: []
+# preStopCommand: []
+
+phpClientHttpsFix:
+  enabled: false
+  protocol: https
+
+
+
+##
+## MariaDB chart configuration
+##
+mariadb:
+  ## Whether to deploy a mariadb server to satisfy the applications database requirements. To use an external database set this to false and configure the externalDatabase parameters
+  enabled: false
+
+  auth:
+    database: nextcloud
+    username: nextcloud
+    password: changeme
+
+  architecture: standalone
+
+  ## Enable persistence using Persistent Volume Claims
+  ## ref: http://kubernetes.io/docs/user-guide/persistent-volumes/
+  ##
+  primary:
+    persistence:
+      enabled: false
+      # storageClass: ""
+      accessMode: ReadWriteOnce
+      size: 8Gi
+
+##
+## PostgreSQL chart configuration
+## for more options see https://github.com/bitnami/charts/tree/master/bitnami/postgresql
+##
+postgresql:
+  enabled: false
+  global:
+    postgresql:
+      auth:
+        username: nextcloud
+        password: changeme
+        database: nextcloud
+  primary:
+    persistence:
+      enabled: false
+      # storageClass: ""
+
+##
+## Redis chart configuration
+## for more options see https://github.com/bitnami/charts/tree/master/bitnami/redis
+##
+
+
+service:
+  type: ClusterIP
+  port: 8080
+  loadBalancerIP: nil
+  nodePort: nil
+
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #  cpu: 100m
+  #  memory: 128Mi
+  # requests:
+  #  cpu: 100m
+#  memory: 128Mi
+
+
+## Enable pod autoscaling using HorizontalPodAutoscaler
+## ref: https://kubernetes.io/docs/tasks/run-application/horizontal-pod-autoscale/
+##
+hpa:
+  enabled: false
+  cputhreshold: 60
+  minPods: 1
+  maxPods: 10
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+
+rbac:
+  enabled: false
+  serviceaccount:
+    create: true
+    name: nextcloud-serviceaccount
+    annotations: {}

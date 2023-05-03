@@ -18,7 +18,7 @@ resource "gitlab_group_access_token" "docker_base" {
 }
 
 resource "vault_generic_secret" "docker_base_service_token" {
-  path      = "kateops/instance/base/service"
+  path      = "kateops/gitlab/instance/base/service"
   data_json = jsonencode({
     token: gitlab_group_access_token.docker_base.token
   })
