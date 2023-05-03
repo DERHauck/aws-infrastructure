@@ -31,7 +31,7 @@ pipelines:
     stateName: kateops/cluster-setup
     needs:
       - pipeline:
-          id: cluster-setup
+          id: cluster
           stage: deploy
         targetStage: build
 
@@ -55,7 +55,7 @@ pipelines:
     stateName: kateops/monitoring-setup
     needs:
       - pipeline:
-          id: monitoring-setup
+          id: monitoring
           stage: deploy
         targetStage: build
 
@@ -79,7 +79,7 @@ pipelines:
     id: gitlab-setup
     needs:
       - pipeline:
-          id: gitlab-setup
+          id: gitlab
           stage: deploy
         targetStage: build
 
