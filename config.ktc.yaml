@@ -23,6 +23,7 @@ pipelines:
           id: kateops
           stage: deploy
         targetStage: build
+        onChanges: true
 
 
   - type: terraform
@@ -34,6 +35,7 @@ pipelines:
           id: cluster
           stage: deploy
         targetStage: build
+        onChanges: true
 
 #################################################
 # Third Level
@@ -48,6 +50,7 @@ pipelines:
           id: cluster-setup
           stage: deploy
         targetStage: build
+        onChanges: true
 
   - type: terraform
     path: '@kateops/@monitoring-setup'
@@ -58,6 +61,7 @@ pipelines:
           id: monitoring
           stage: deploy
         targetStage: build
+        onChanges: true
 
 ##################################################
 ## Fourth Level
@@ -72,6 +76,7 @@ pipelines:
           id: monitoring-setup
           stage: deploy
         targetStage: build
+        onChanges: true
 
   - type: terraform
     path: '@kateops/@gitlab-setup'
@@ -82,6 +87,7 @@ pipelines:
           id: gitlab
           stage: deploy
         targetStage: build
+        onChanges: true
 
   - type: terraform
     path: '@kateops/@administration'
@@ -92,6 +98,7 @@ pipelines:
           id: monitoring-setup
           stage: deploy
         targetStage: build
+        onChanges: true
 
   - type: terraform
     path: '@kateops/@service'
@@ -102,6 +109,7 @@ pipelines:
           id: monitoring-setup
           stage: deploy
         targetStage: build
+        onChanges: true
 
 
 
