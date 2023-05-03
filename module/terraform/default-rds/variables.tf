@@ -22,3 +22,9 @@ variable "state_name" {
   type = string
   description = "AWS default state name"
 }
+
+variable "password_special" {
+  type = bool
+  description = "Password use special characters"
+  default = true
+}

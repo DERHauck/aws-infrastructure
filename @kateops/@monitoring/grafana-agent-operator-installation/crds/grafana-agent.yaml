@@ -6,9 +6,9 @@ metadata:
   labels:
     logging: grafana-agent
 spec:
-  image: grafana/agent:v0.28.0
+  image: grafana/agent:v0.32.1
   logLevel: info
-  serviceAccountName: prometheus-kube-prometheus-prometheus
+  serviceAccountName: grafana-agent-operator
   metrics:
     instanceSelector:
       matchLabels:

@@ -18,7 +18,7 @@ resource "gitlab_group_access_token" "this" {
 }
 
 resource "vault_generic_secret" "docker_base_service_token" {
-  path      = "kateops/instance/oss/service"
+  path      = "kateops/gitlab/instance/oss/service"
   data_json = jsonencode({
     token: gitlab_group_access_token.this.token
   })

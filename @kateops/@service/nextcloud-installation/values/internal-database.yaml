@@ -1,0 +1,4 @@
+
+internalDatabase:
+  enabled: false
+  name: nextcloud

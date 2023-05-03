@@ -4,4 +4,3 @@ s3:
   secretkey: ${secret_access_key}
   region: ${region}
   v4auth: true
-  regionendpoint: ${host}

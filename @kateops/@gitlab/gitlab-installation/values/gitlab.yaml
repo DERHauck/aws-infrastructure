@@ -4,7 +4,7 @@ gitlab:
     backups:
       cron:
         enabled: true
-        schedule: "0 * * * *"
+        schedule: "0 6-23 * * *"
   #      extraArgs: "--maximum-backups 180" # --storage-class ONEZONE_IA"
         persistence:
           enabled: true
@@ -27,6 +27,13 @@ gitlab:
     hpa:
       cpu:
         targetAverageValue: 100m
+    resources:
+      requests:
+        cpu: 50m
+        memory: 6M
+      limits:
+        cpu: 80m
+        memory: 20M
   webservice:
     ingress:
       tls:

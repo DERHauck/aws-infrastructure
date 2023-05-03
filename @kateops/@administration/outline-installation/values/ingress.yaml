@@ -1,0 +1,7 @@
+
+ingress:
+  host: ${host_domain}
+  annotations: # set your custom ingress annotations here
+    cert-manager.io/cluster-issuer: production
+  tls:
+    enabled: true

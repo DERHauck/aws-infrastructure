@@ -9,7 +9,7 @@ terraform {
     }
     gitlab = {
       source = "gitlabhq/gitlab"
-      version = "3.17.0"
+      version = "15.11.0"
     }
   }
 }

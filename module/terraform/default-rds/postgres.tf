@@ -19,10 +19,10 @@ resource "postgresql_role" "this" {
 resource "random_password" "this" {
   length = 15
   min_lower = 1
-  min_numeric = 1
+  min_numeric = var.password_special ? 1 : 0
   min_special = 1
   min_upper = 1
-  special = true
+  special = var.password_special
   numeric = true
   lower = true
   upper = true

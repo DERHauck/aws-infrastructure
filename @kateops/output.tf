@@ -11,9 +11,7 @@ output "postgres" {
 }
 
 output "elasticache" {
-  value = {
-    address = aws_elasticache_cluster.elasticache.cache_nodes[0].address
-  }
+  value = aws_elasticache_cluster.elasticache.cache_nodes[0]
   sensitive = true
 }
 

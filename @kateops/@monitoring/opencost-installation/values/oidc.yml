@@ -1,0 +1,8 @@
+
+oidc:
+  enabled: false
+  clientID: "$${oidc_id}" # application/client client_id paramter obtained from provider, used to make requests to server
+  secretName: "$${oidc_secret_name}" # k8s secret where clientsecret will be stored
+  authURL: "https://$${sso_domain}/realms/master/protocol/openid-connect/auth" # endpoint for login to auth servertre
+  loginRedirectURL: "https://$${host_domain}/model/oidc/authorize" # Kubecost url configured in provider for redirect after authentication
+  discoveryURL: "https://$${sso_domain}/realms/master/.well-known/openid-configuration" # url for OIDC endpoint discovery

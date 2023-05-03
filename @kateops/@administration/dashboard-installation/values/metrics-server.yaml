@@ -1,0 +1,8 @@
+
+metrics-server:
+  enabled: false
+  ## Example for additional args
+  # args:
+  #  - --kubelet-preferred-address-types=InternalIP
+  #  - --kubelet-insecure-tls
+

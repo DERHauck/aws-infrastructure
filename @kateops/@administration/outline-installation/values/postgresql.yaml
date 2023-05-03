@@ -1,0 +1,12 @@
+
+postgresql:
+  enabled: false
+  architecture: "standalone"
+  postgresqlDatabase: "outline"
+  postgresqlUsername: "outline"
+  postgresqlPassword: "vh4rf^q32BcvtFqFVjny4pnM" # MUST be replaced with some secret password! Don't use this in production
+  postgresqlPostgresPassword: "Ma#wXFMz6jFqXUr^qP&K66XQbd" # MUST be replaced with some secret password! Don't use this in production
+  persistence:
+    enabled: true
+    storageClass: ""
+    size: 1Gi

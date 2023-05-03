@@ -1,0 +1,7 @@
+# Define persistence volume for cost-analyzer, more information at https://github.com/kubecost/docs/blob/master/storage.md
+persistentVolume:
+  size: 3Gi
+  dbSize: 3.0Gi
+  enabled: true # Note that setting this to false means configurations will be wiped out on pod restart.
+  storageClass: ${storage_class} #
+  # existingClaim: kubecost-cost-analyzer # a claim in the same namespace as kubecost

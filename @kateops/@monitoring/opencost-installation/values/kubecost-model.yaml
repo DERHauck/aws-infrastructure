@@ -1,0 +1,36 @@
+
+kubecostModel:
+  image: "gcr.io/kubecost1/cost-model"
+  imagePullPolicy: Always
+  # extraEnv:
+  # - name: SOME_VARIABLE
+  #   value: "some_value"
+  # Enables the emission of the kubecost_cloud_credit_total and
+  # kubecost_cloud_expense_total metrics
+  outOfClusterPromMetricsEnabled: false
+  # Build local cost allocation cache
+  warmCache: false
+  # Build local savings cache
+  warmSavingsCache: true
+  # Run allocation ETL pipelines
+  etl: true
+  # Enable the ETL filestore backing storage
+  etlFileStoreEnabled: true
+  # The total number of days the ETL pipelines will build
+  # Set to 0 to disable daily ETL (not recommended)
+  etlDailyStoreDurationDays: 91
+  # The total number of hours the ETL pipelines will build
+  # Set to 0 to disable hourly ETL (not recommended)
+  etlHourlyStoreDurationHours: 49
+  # For deploying kubecost in a cluster that does not self-monitor
+  etlReadOnlyMode: false
+  # max number of concurrent Prometheus queries
+  maxQueryConcurrency: 5
+  resources:
+    requests:
+      cpu: "100m"
+      memory: "264Mi"
+    limits:
+      cpu: "120m"
+      memory: "356Mi"
+  extraArgs: []

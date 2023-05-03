@@ -1,0 +1,45 @@
+kubecostMetrics:
+  # emitPodAnnotations: false
+  # emitNamespaceAnnotations: false
+  # emitKsmV1Metrics: true # emit all KSM metrics in KSM v1.
+  # emitKsmV1MetricsOnly: false # emit only the KSM metrics missing from KSM v2. Advanced users only.
+
+  # Optional
+  # The metrics exporter is a separate deployment and service (for prometheus scrape auto-discovery)
+  # which emits metrics cost-model relies on. Enabling this deployment also removes the KSM dependency
+  # from the cost-model. If the deployment is not enabled, the metrics will continue to be emitted from
+  # the cost-model.
+  exporter:
+    enabled: false
+    port: 9005
+    # Adds the default Prometheus scrape annotations to the metrics exporter service.
+    # Set to false and use service.annotations (below) to set custom scrape annotations.
+    prometheusScrape: true
+    resources: {}
+      # requests:
+    #  cpu: "200m"
+    #  memory: "55Mi"
+    ## Node tolerations for server scheduling to nodes with taints
+    ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
+    tolerations: []
+
+    #  - key: "key"
+    #    operator: "Equal|Exists"
+    #    value: "value"
+    #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
+    affinity: {}
+
+    service:
+      annotations: {}
+
+    # Service Monitor for Kubecost Metrics
+    serviceMonitor:
+      enabled: false
+      additionalLabels: {}
+
+    ## PriorityClassName
+    ## Ref: https://kubernetes.io/docs/concepts/configuration/pod-priority-preemption/#priorityclass
+    priorityClassName: []
+    additionalLabels: {}
+    nodeSelector: {}
+    extraArgs: []

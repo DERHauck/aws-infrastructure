@@ -6,12 +6,12 @@ resource "gitlab_project" "this" {
   shared_runners_enabled = true
   visibility_level = "public"
   wiki_enabled = false
-  wiki_access_level = "enabled"
+  wiki_access_level = "disabled"
   allow_merge_on_skipped_pipeline = false
   autoclose_referenced_issues = true
   issues_enabled = true
-  merge_pipelines_enabled = true
-  merge_trains_enabled = true
+  merge_pipelines_enabled = false
+  merge_trains_enabled = false
   only_allow_merge_if_pipeline_succeeds = true
   only_allow_merge_if_all_discussions_are_resolved = true
   namespace_id = var.group_id

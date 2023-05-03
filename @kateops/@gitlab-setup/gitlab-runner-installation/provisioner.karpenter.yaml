@@ -1,0 +1,29 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: runner-${pressure}
+spec:
+  requirements:
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["spot", "on-demand"]
+
+  labels:
+%{ for key,value in labels }
+    ${key}: ${value}
+%{ endfor }
+  taints:
+%{ for key,value in labels }
+    - key: ${key}
+      effect: NoExecute
+      value: "${value}"
+%{ endfor }
+
+  limits:
+    resources:
+      cpu: 10
+  providerRef:
+    name: default-spot
+  ttlSecondsAfterEmpty: 600
+  ttlSecondsUntilExpired: 2592000
+  weight: 100

@@ -12,40 +12,33 @@ module "eks" {
   create_cloudwatch_log_group = false
   # Required for Karpenter role below
   enable_irsa = true
-  /*
+  cluster_enabled_log_types = []
+/*
   cluster_security_group_additional_rules = {
+
+  }
+//*/
+
+  node_security_group_additional_rules = {
     egress_https = {
-      description = "Control Plane Access"
+      description = "Cluster wide Access"
       protocol = "tcp"
       from_port = 0
       to_port = 65535
       type = "egress"
       self = true
-      source_cluster_security_group = true
     }
     ingress_https = {
-      description = "Control Plane Access"
+      description = "Cluster wide Access"
       protocol = "tcp"
       from_port = 0
       to_port = 65535
       type = "ingress"
       self = true
-      source_cluster_security_group = true
-    }
-  }
-  /*
-  node_security_group_additional_rules = {
-    ingress_nodes_karpenter_port = {
-      description                   = "Cluster API to Node group for Karpenter webhook"
-      protocol                      = "tcp"
-      from_port                     = 8443
-      to_port                       = 8443
-      type                          = "ingress"
-      source_cluster_security_group = true
     }
   }
 
-
+/*
    initial = {
       instance_types = ["t3a.micro"]
       # Not required nor used - avoid tagging two security groups with same tag as well

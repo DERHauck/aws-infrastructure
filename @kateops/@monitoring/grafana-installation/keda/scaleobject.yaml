@@ -23,13 +23,13 @@ spec:
         start: 0 7 * * *
         end: 0 1 * * *
         desiredReplicas: "1"
-    - type: prometheus
+    - type: mimir
       metadata:
-        serverAddress: http://prometheus-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+        serverAddress: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
         metricName: container_memory_max_usage_bytes
         threshold: '0.5'
         activationThreshold: '0.4'
-        query: (sum by (container) (container_memory_usage_bytes{container="${container_name}"})) / (sum by (container) (container_memory_allocation_bytes{container="${container_name}"}))
+        query: (sum by (container) (container_memory_working_set_bytes{container="${container_name}"})) / (sum by (container) (container_memory_allocation_bytes{container="${container_name}"}))
 
 #    - type: memory
 #      metricType: Utilization

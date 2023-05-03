@@ -72,7 +72,7 @@ resource "kubernetes_secret" "smtp_secret" {
     namespace = var.namespace
   }
   data = {
-    (var.secret_key_name): var.smtp_password
+    (var.secret_key_name): module.ses.password
   }
 }
 
