@@ -23,16 +23,3 @@ module "gitlab_db" {
   state_name = "kateops"
   username = "gitlab_user"
 }
-
-module "gitlab_runner" {
-  for_each = toset(["medium", "high"])
-  source = "./gitlab-runner-installation"
-  access_key = module.gitlab.runner_access_key_id
-  secret_key = module.gitlab.runner_access_key_secret
-  concurrency = 100
-  namespace   = kubernetes_namespace.gitlab.metadata[0].name
-  pressure = each.value
-  registration_token = module.gitlab.runner_registration_token
-  s3_cache_bucket_name = module.gitlab.runner_bucket
-  s3_default_host = "s3.amazonaws.com"
-}
