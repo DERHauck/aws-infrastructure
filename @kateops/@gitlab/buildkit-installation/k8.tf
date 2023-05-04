@@ -18,6 +18,16 @@ resource "kubernetes_deployment" "buildkit" {
       }
       spec {
         container {
+          resources {
+            limits = {
+              cpu = "3000m"
+              memory = "3G"
+            }
+            requests = {
+              cpu = "1000m"
+              memory = "1G"
+            }
+          }
           name = local.app
           image = "moby/buildkit:master-rootless"
           image_pull_policy = "Always"
