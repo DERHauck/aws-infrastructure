@@ -22,6 +22,7 @@ pipelines:
       - id: kateops
         stage: deploy
         targetStage: build
+        onChanges: false
 
 
   - type: terraform
@@ -100,15 +101,15 @@ pipelines:
 ##################################################
 ## Terraform Modules
 ##################################################
-#
-#  - type: terraform-module
-#    path: module/cluster/ingress-nginx
-#    moduleName: helm-ingress-nginx
-#
-#  - type: terraform-module
-#    path: module/cluster/openproxy
-#    moduleName: helm-openproxy
-#
-#  - type: terraform-module
-#    path: module/terraform/default-rds
-#    moduleName: default-rds
+
+  - type: terraform-module
+    path: module/cluster/ingress-nginx
+    moduleName: helm-ingress-nginx
+
+  - type: terraform-module
+    path: module/cluster/openproxy
+    moduleName: helm-openproxy
+
+  - type: terraform-module
+    path: module/terraform/default-rds
+    moduleName: default-rds
