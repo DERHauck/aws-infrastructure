@@ -126,7 +126,10 @@ extraEnv: []
 resources:
   requests:
     cpu: 10m
-    memory: 32Mi
+    memory: 60M
+  limits:
+    cpu: 15m
+    memory: 70M
 
 # Pod Security Context
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -300,10 +303,13 @@ webhook:
   # Path to a file containing a WebhookConfiguration object used to configure the webhook
   # - --config=<path-to-config-file>
 
-  resources: {}
-    # requests:
-  #   cpu: 10m
-  #   memory: 32Mi
+  resources:
+   requests:
+     cpu: 5m
+     memory: 10Mi
+   limit:
+     cpu: 10m
+     memory: 15Mi
 
   ## Liveness and readiness probe values
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#container-probes
@@ -459,8 +465,11 @@ cainjector:
 
   resources:
     requests:
+      cpu: 5m
+      memory: 50Mi
+    limits:
       cpu: 10m
-      memory: 32Mi
+      memory: 60Mi
 
   nodeSelector:
     kubernetes.io/os: linux
@@ -569,7 +578,9 @@ startupapicheck:
     requests:
       cpu: 10m
       memory: 32Mi
-
+    limits:
+      cpu: 10m
+      memory: 32Mi
   nodeSelector:
     kubernetes.io/os: linux
 
