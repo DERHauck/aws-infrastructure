@@ -307,7 +307,7 @@ webhook:
    requests:
      cpu: 5m
      memory: 10Mi
-   limit:
+   limits:
      cpu: 10m
      memory: 15Mi
 
