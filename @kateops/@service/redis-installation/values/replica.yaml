@@ -122,11 +122,11 @@ replica:
     # resources, such as Minikube. If you do want to specify resources, uncomment the following
     # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
     limits:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 100m
+      memory: 128Mi
     requests:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 50m
+      memory: 100Mi
   ## Configure Pods Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod
   ## @param replica.podSecurityContext.enabled Enabled Redis&reg; replicas pods' Security Context

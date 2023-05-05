@@ -29,10 +29,10 @@ gitlab:
         targetAverageValue: 100m
     resources:
       requests:
-        cpu: 50m
-        memory: 6M
+        cpu: 10m
+        memory: 10M
       limits:
-        cpu: 80m
+        cpu: 20m
         memory: 20M
   webservice:
     ingress:
@@ -40,11 +40,11 @@ gitlab:
         secretName: gitlab-gitlab-tls
     resources:
       limits:
-        cpu: 1.5
-        memory: 3.5G
+        cpu: 600m
+        memory: 3G
       requests:
-        cpu: 400m
-        memory: 3.3G
+        cpu: 300m
+        memory: 2.5G
     minReplicas: 1
     maxReplicas: 10
     hpa:
@@ -67,11 +67,11 @@ gitlab:
   sidekiq:
     resources:
       limits:
-        cpu: 1.1
-        memory: 3Gi
+        cpu: 300m
+        memory: 2.0Gi
       requests:
-        cpu: 400m
-        memory: 2Gi
+        cpu: 150m
+        memory: 1.5Gi
     hpa:
       cpu:
         targetAverageValue: 1000m
