@@ -67,10 +67,10 @@ gitlab:
   sidekiq:
     resources:
       limits:
-        cpu: 500m
+        cpu: 700m
         memory: 3.0Gi
       requests:
-        cpu: 300m
+        cpu: 500m
         memory: 1.5Gi
     hpa:
       cpu:
