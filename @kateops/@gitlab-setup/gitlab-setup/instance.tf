@@ -21,6 +21,7 @@ resource "gitlab_personal_access_token" "registry_push" {
 resource "gitlab_instance_variable" "registry_push_token" {
   key   = "REGISTRY_PUSH_TOKEN"
   value = gitlab_personal_access_token.registry_push.token
+  masked = true
 }
 
 resource "gitlab_instance_variable" "registry_push_user" {
