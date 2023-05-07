@@ -6,7 +6,7 @@ resource "kubectl_manifest" "keda" {
 
 locals {
   scaling_vars = {
-    name = local.name
+    name = "kube-dashboard-kubernetes-dashboard"
     namespace = var.namespace
   }
   scaling = { for v in fileset("${path.module}/keda","*"): v => templatefile("${path.module}/keda/${v}", local.scaling_vars)}
