@@ -22,5 +22,5 @@ spec:
       metadata:
         timezone: Europe/Berlin
         start: 0 6 * * *
-        end: 0 0 * * *
+        end: 59 23 * * *
         desiredReplicas: "1"
