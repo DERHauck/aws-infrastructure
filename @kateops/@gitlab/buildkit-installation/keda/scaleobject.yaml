@@ -22,13 +22,13 @@ spec:
       metadata:
         timezone: Europe/Berlin
         start: 0 14 * * 1-5
-        end: 59 23 * * 1-5
+        end: 0 0 * * 1-5
         desiredReplicas: "1"
     - type: cron
       metadata:
         timezone: Europe/Berlin
         start: 0 7 * * 0,6
-        end: 59 23 * * 0,6
+        end: 0 0 * * 0,6
         desiredReplicas: "1"
     - type: cron
       metadata:
