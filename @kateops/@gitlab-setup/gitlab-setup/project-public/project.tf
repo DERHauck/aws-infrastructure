@@ -1,5 +1,6 @@
 resource "gitlab_project" "this" {
   name = var.name
+  path = replace(lower(var.name), " ", "-")
   description = var.description
   public_builds = false
   remove_source_branch_after_merge = true
