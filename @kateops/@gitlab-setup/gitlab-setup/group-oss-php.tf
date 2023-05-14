@@ -4,6 +4,7 @@ resource "gitlab_group" "oss_php" {
   visibility_level = "public"
   default_branch_protection = 3
   request_access_enabled = true
+  parent_id = module.oss.group_id
 }
 
 
