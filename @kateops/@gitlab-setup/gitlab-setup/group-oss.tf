@@ -20,3 +20,4 @@ module "kubernetes_tutorial" {
   description = "Kubernetes Developer Tutorial"
   group_id = module.oss.group_id
 }
+
