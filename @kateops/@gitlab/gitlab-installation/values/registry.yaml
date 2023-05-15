@@ -5,7 +5,12 @@ registry:
     minReplicas: 1
     maxReplicas: 10
     cpu:
+      targetType: Utilization
       targetAverageUtilization: 75
+    memory:
+      targetType: Utilization
+      targetAverageUtilization: 75
+
   ingress:
     tls:
       secretName: gitlab-registry-tls
