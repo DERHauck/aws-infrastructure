@@ -1,6 +1,6 @@
 locals {
   labels = {
-    "type/pressure" = var.pressure
+    "type/gitlab-runner" = "default"
   }
   vars = {
     concurrency: var.concurrency

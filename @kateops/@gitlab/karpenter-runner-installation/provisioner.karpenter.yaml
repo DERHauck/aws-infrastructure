@@ -1,7 +1,7 @@
 apiVersion: karpenter.sh/v1alpha5
 kind: Provisioner
 metadata:
-  name: runner-${pressure}
+  name: runner-default
 spec:
   requirements:
     - key: karpenter.sh/capacity-type

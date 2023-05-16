@@ -465,11 +465,11 @@ cainjector:
 
   resources:
     requests:
-      cpu: 5m
-      memory: 50Mi
-    limits:
       cpu: 10m
       memory: 60Mi
+    limits:
+      cpu: 20m
+      memory: 70Mi
 
   nodeSelector:
     kubernetes.io/os: linux
