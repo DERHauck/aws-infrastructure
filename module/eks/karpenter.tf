@@ -70,7 +70,7 @@ resource "kubectl_manifest" "this" {
   for_each = { for v in fileset("${path.module}/manifests", "*.karpenter.yaml"): "${path.module}/manifests/${v}" => "${path.module}/manifests/${v}" }
   yaml_body = templatefile(each.value, {
     cluster_name = module.eks.cluster_name
-    availability_zones = distinct([ for  num, subnet in data.aws_subnet.private : subnet.availability_zone ])
+    availability_zones = [distinct([ for  num, subnet in data.aws_subnet.private : subnet.availability_zone ])[0]]
   })
 
   depends_on = [
