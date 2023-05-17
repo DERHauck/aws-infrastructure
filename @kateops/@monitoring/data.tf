@@ -9,3 +9,7 @@ data "vault_generic_secret" "opencost_oidc" {
 data "vault_generic_secret" "prometheus_oidc" {
   path = "kateops/keycloak/oidc/prometheus"
 }
+
+data "vault_generic_secret" "mimir_oidc" {
+  path = "kateops/keycloak/oidc/mimir"
+}

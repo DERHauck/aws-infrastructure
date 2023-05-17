@@ -112,7 +112,6 @@ mimir:
         num_tokens: 512
         tokens_file_path: /data/tokens
         unregister_on_shutdown: false
-        zone_awareness_enabled: true
 
     ingester_client:
       grpc_client_config:
@@ -173,7 +172,7 @@ mimir:
     store_gateway:
       sharding_ring:
         tokens_file_path: /data/tokens
-        zone_awareness_enabled: true
+        zone_awareness_enabled: false
 
     {{- if and .Values.enterprise.enabled .Values.graphite.enabled }}
     graphite:
@@ -212,4 +211,8 @@ mimir:
           secret_access_key: $${${secret_key_name}}
           access_key_id: $${${access_key_name}}
   # -- Additional structured values on top of the text based 'mimir.config'. Applied after the text based config is evaulated for templates. Enables adding and modifying YAML elements in the evaulated 'mimir.config'.
-  structuredConfig: {}
+  structuredConfig:
+    ingester:
+      ring:
+        replication_factor: 2
+        zone_awareness_enabled: false
