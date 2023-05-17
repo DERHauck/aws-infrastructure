@@ -8,11 +8,3 @@ resource "kubernetes_secret" "gitlab_s3_storage_credentials" {
     secretkey: var.secret_key
   }
 }
-
-
-resource "kubectl_manifest" "this" {
-  yaml_body = templatefile("${path.module}/provisioner.karpenter.yaml", {
-    pressure = var.pressure
-    labels = local.labels
-  })
-}

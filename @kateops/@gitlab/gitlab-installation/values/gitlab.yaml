@@ -26,7 +26,10 @@ gitlab:
     maxReplicas: 10
     hpa:
       cpu:
-        targetAverageValue: 100m
+        targetAverageValue: 7m
+      memory:
+        targetType: Utilization
+        targetAverageUtilization: 75
     resources:
       requests:
         cpu: 10m

@@ -1,0 +1,44 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: ${name}
+  namespace: ${namespace}
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: ${kind}
+    name: ${name}
+  pollingInterval: 3
+  cooldownPeriod: 30
+  idleReplicaCount: 0
+  minReplicaCount: 0
+  maxReplicaCount: 10
+  advanced:
+    restoreToOriginalReplicaCount: false
+    horizontalPodAutoscalerConfig:
+
+  triggers:
+    - type: cron
+      metadata:
+        timezone: Europe/Berlin
+        start: 0 14 * * 1-5
+        end: 59 23 * * 1-5
+        desiredReplicas: "1"
+    - type: cron
+      metadata:
+        timezone: Europe/Berlin
+        start: 0 7 * * 0,6
+        end: 59 23 * * 0,6
+        desiredReplicas: "1"
+    - type: cron
+      metadata:
+        timezone: Europe/Berlin
+        start: 0 0 * * 1-5
+        end: 0 1 * * 1-5
+        desiredReplicas: "1"
+    - type: cron
+      metadata:
+        timezone: Europe/Berlin
+        start: 0 0 * * 0,6
+        end: 0 2 * * 0,6
+        desiredReplicas: "1"

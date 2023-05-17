@@ -13,6 +13,7 @@ resource "gitlab_project" "this" {
   issues_enabled = true
   merge_pipelines_enabled = false
   merge_trains_enabled = false
+  ci_separated_caches = false
   only_allow_merge_if_pipeline_succeeds = true
   only_allow_merge_if_all_discussions_are_resolved = true
   namespace_id = var.group_id
