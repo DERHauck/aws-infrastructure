@@ -138,3 +138,6 @@ alertmanager:
   # Extra env variables to pass to the alertmanager container
   env: []
   extraEnvFrom: []
+  zoneAwareReplication:
+    # -- Enable zone-aware replication for alertmanager
+    enabled: false

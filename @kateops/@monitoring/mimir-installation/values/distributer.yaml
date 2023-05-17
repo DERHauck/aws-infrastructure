@@ -67,3 +67,6 @@ distributor:
   extraVolumeMounts: []
   env: []
   extraEnvFrom: []
+  zoneAwareReplication:
+    # -- Enable zone-aware replication for alertmanager
+    enabled: false
