@@ -32,7 +32,7 @@ resource "helm_release" "karpenter" {
   name                = "karpenter"
   repository          = "oci://public.ecr.aws/karpenter"
   chart               = "karpenter"
-  version             = "v0.26.0"
+  version             = "v0.27.3"
 
   values = [
     templatefile("${path.module}/karpenter/values.yaml", {
