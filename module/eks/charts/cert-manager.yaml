@@ -469,7 +469,7 @@ cainjector:
       memory: 60Mi
     limits:
       cpu: 20m
-      memory: 70Mi
+      memory: 170Mi
 
   nodeSelector:
     kubernetes.io/os: linux
