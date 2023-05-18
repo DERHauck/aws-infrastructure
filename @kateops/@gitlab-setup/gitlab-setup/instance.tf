@@ -31,7 +31,7 @@ resource "gitlab_personal_access_token" "registry" {
 resource "gitlab_personal_access_token" "registry_push" {
   name = "registry-push-token"
   user_id = data.gitlab_user.automation.user_id
-  scopes = ["read_registry",  "admin_mode", "read_api", "read_repository", "write_registry"]
+  scopes = ["read_registry",  "admin_mode", "read_api", "read_repository", "write_registry", "api"]
 }
 
 resource "gitlab_instance_variable" "registry_push_token" {
