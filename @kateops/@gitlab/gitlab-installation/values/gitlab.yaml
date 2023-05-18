@@ -26,17 +26,17 @@ gitlab:
     maxReplicas: 10
     hpa:
       cpu:
-        targetAverageValue: 7m
+        targetAverageValue: 10m
       memory:
         targetType: Utilization
-        targetAverageUtilization: 75
+        targetAverageUtilization: 80
     resources:
       requests:
-        cpu: 10m
-        memory: 10M
+        cpu: 15m
+        memory: 30M
       limits:
         cpu: 20m
-        memory: 20M
+        memory: 50M
   webservice:
     ingress:
       tls:
