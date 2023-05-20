@@ -7,3 +7,8 @@ variable "namespace" {
   type = string
   description = "Gitlab namespace"
 }
+
+variable "kubeconfig" {
+  type = string
+  description = "Kubeconfig"
+}

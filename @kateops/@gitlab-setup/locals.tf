@@ -6,4 +6,8 @@ locals {
   oidc_issuer = module.rs_kateops.outputs.clusters.production.oidc_issuer
   oidc_issuer_arn = module.rs_kateops.outputs.clusters.production.oidc_issuer_arn
   default_region = "eu-central-1"
+
+
+
+
 }
