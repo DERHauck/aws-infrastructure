@@ -2,6 +2,7 @@ module "gitlab" {
   source = "./gitlab-setup"
   vault_root_token = var.vault_root_token
   namespace   = data.vault_generic_secret.gitlab_runner.data["namespace"]
+  kubeconfig = module.ns-deployment_service_account.kubeconfig
 }
 
 

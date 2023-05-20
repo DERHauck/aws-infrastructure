@@ -44,3 +44,10 @@ resource "gitlab_instance_variable" "registry_push_user" {
   key   = "REGISTRY_PUSH_USER"
   value = data.gitlab_user.automation.username
 }
+
+resource "gitlab_instance_variable" "kube_config" {
+  key   = "KUBECONFIG"
+  value = var.kubeconfig
+  variable_type = "file"
+}
+
