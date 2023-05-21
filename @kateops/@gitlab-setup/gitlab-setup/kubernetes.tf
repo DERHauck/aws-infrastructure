@@ -1,7 +1,8 @@
 resource "kubernetes_secret" "runner" {
+  for_each = toset(["gitlab", "deployment"])
   metadata {
     name = "runner-registry-ro"
-    namespace = var.namespace
+    namespace = each.key
   }
   type = "kubernetes.io/dockerconfigjson"
   data = {
