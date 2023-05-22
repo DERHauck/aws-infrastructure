@@ -7,8 +7,8 @@ resource "kubernetes_secret" "nextcloud_secret" {
     (local.passwordKey): random_password.password.result
     (local.usernameKey): "admin"
     (local.tokenKey): random_password.password.result
-    (local.smtpUsernameKey): var.smtp_username
-    (local.smtpPasswordKey): var.smtp_password
+    (local.smtpUsernameKey): module.ses.username
+    (local.smtpPasswordKey): module.ses.password
   }
 }
 

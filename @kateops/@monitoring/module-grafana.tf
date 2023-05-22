@@ -6,9 +6,6 @@ module "grafana" {
   oidc_secret = data.vault_generic_secret.grafana_oidc  .data["secret"]
   oidc_id = data.vault_generic_secret.grafana_oidc.data["id"]
   helm_name = "grafana-default"
-  gf_smtp_password = ""
-  gf_smtp_username = ""
-  gf_smtp_host = ""
   rdbs = module.grafana_db
 
   depends_on = [

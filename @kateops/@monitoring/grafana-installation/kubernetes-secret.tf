@@ -14,8 +14,8 @@ resource "kubernetes_secret" "grafana_secret" {
     GF_DATABASE_USER: var.rdbs.username
     GF_DATABASE_PASSWORD: var.rdbs.password
     GF_DATABASE_SSL_MODE: "disable"
-    GF_SMTP_HOST: var.gf_smtp_host
-    GF_SMTP_FROM_ADDRESS: var.gf_smtp_username
+    GF_SMTP_HOST: module.ses.host
+    GF_SMTP_FROM_ADDRESS: "grafana@kateops.com"
     GF_SMTP_STARTTLS_POLICY: "NoStartTLS"
   }
 }
@@ -26,7 +26,7 @@ resource "kubernetes_secret" "grafana_smtp_secret" {
     namespace = var.namespace
   }
   data = {
-    (local.smtp_password_key): var.gf_smtp_password
-    (local.smtp_username_key): var.gf_smtp_username
+    (local.smtp_password_key): module.ses.password
+    (local.smtp_username_key): module.ses.username
   }
 }
