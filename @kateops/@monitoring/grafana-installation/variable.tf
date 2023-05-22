@@ -8,21 +8,6 @@ variable "helm_name" {
   description = "Helm deployment name"
 }
 
-variable "gf_smtp_host" {
-  type = string
-  description = "SMTP mail host"
-}
-
-variable "gf_smtp_password" {
-  type = string
-  description = "SMTP mail password"
-}
-
-variable "gf_smtp_username" {
-  type = string
-  description = "SMTP mail username"
-}
-
 variable "host_domain" {
   type = string
   description = "Public service host domain"

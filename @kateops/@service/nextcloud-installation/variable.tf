@@ -18,22 +18,6 @@ variable "host_domain" {
   description = "Public service host domain"
 }
 
-
-variable "smtp_password" {
-  type = string
-  description = "SMTP mail server login address"
-}
-
-variable "smtp_host" {
-  type = string
-  description = "SMTP mail server endpoint"
-}
-
-variable "smtp_username" {
-  type = string
-  description = "SMTP mail server login username"
-}
-
 variable "redis_host" {
   type = string
   description = "Redis master host"

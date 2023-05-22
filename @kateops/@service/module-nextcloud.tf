@@ -5,9 +5,6 @@ module "nextcloud" {
   helm_name            = "nextcloud"
   monitoring_namespace = "monitoring"
   host_domain          = "cloud.kateops.com"
-  smtp_password        = "" #data.vault_generic_secret.kateops_mail.data["password"]
-  smtp_host            = "" #data.vault_generic_secret.kateops_mail.data["host"]
-  smtp_username        = "" #data.vault_generic_secret.kateops_mail.data["username"]
 
   redis_host     = module.redis.host-master
   redis_port     =  module.redis.port

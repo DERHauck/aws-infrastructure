@@ -32,7 +32,7 @@ locals {
     postgres_secret_name = kubernetes_secret.nextcloud_postgres.metadata[0].name
   }
   secrets = {
-    smtp_host = var.smtp_host
+    smtp_host = module.ses.host
 
     postgres_secret_name = kubernetes_secret.nextcloud_postgres.metadata[0].name
     pq_host = var.rdbs.host
