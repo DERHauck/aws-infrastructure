@@ -14,9 +14,10 @@ resource "kubernetes_secret" "grafana_secret" {
     GF_DATABASE_USER: var.rdbs.username
     GF_DATABASE_PASSWORD: var.rdbs.password
     GF_DATABASE_SSL_MODE: "disable"
-    GF_SMTP_HOST: module.ses.host
+    GF_SMTP_HOST: "${module.ses.host}:465"
     GF_SMTP_FROM_ADDRESS: "grafana@kateops.com"
-    GF_SMTP_STARTTLS_POLICY: "NoStartTLS"
+    GF_SMTP_STARTTLS_POLICY: "OpportunisticStartTLS"
+    GF_SMTP_FROM_NAME: "Grafana Kateops"
   }
 }
 
