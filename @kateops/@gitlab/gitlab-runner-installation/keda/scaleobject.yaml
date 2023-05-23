@@ -42,3 +42,9 @@ spec:
         start: 0 0 * * 0,6
         end: 0 2 * * 0,6
         desiredReplicas: "1"
+    - type: cron
+      metadata:
+        timezone: Europe/Berlin
+        start: 0 0 * * *
+        end: 0 23 * * *
+        desiredReplicas: "1"
