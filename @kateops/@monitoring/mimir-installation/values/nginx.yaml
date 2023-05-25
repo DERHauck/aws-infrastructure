@@ -149,7 +149,7 @@ nginx:
   # Configures the readiness probe for nginx
   readinessProbe:
     httpGet:
-      path: /
+      path: /health
       port: http-metric
     initialDelaySeconds: 15
     timeoutSeconds: 1
@@ -243,10 +243,10 @@ nginx:
           auth_basic_user_file /etc/nginx/secrets/.htpasswd;
           {{- end }}
 
-          #          location = / {
-          #            return 200 'OK';
-          #            auth_basic off;
-          #          }
+          location = /health {
+            return 200 'OK';
+            auth_basic off;
+          }
 
           proxy_set_header X-Scope-OrgID $ensured_x_scope_orgid;
 
