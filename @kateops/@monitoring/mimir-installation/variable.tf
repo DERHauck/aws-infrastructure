@@ -32,3 +32,8 @@ variable "secret_key_name" {
   default = "SECRET_KEY"
 }
 
+variable "tenant_ids" {
+  type = list(string)
+  description = "List of tenant ids"
+  default = []
+}
