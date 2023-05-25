@@ -11,6 +11,7 @@ locals {
     s3_endpoint: local.s3_endpoint
     s3_bucket_name: aws_s3_bucket.this.bucket
     s3_bucket_region: aws_s3_bucket.this.region
+    tenant_ids: join("|", var.tenant_ids)
   }
   templates = [ for v in fileset("${path.module}/values","*.yaml"): templatefile("${path.module}/values/${v}", local.vars) ]
 }
