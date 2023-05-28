@@ -35,5 +35,3 @@ spec:
 #      metricType: Utilization
 #      metadata:
 #        value: "80"
-  max(count_over_time(kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\"}[2m] ))
-  ts=2023-05-28T01:46:42.829338209Z caller=handler.go:303 level=info user=kateops msg="query stats" component=query-frontend method=POST path=/prometheus/api/v1/query user_agent=Go-http-client/1.1 response_time=44.199027ms query_wall_time_seconds=0.158602618 fetched_series_count=0 fetched_chunk_bytes=0 fetched_chunks_count=0 fetched_index_bytes=0 sharded_queries=32 split_queries=0 estimated_series_count=0 param_time=1685238402 param_query="" status=success
