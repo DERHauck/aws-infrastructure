@@ -21,17 +21,19 @@ spec:
       metadata:
         timezone: Europe/Berlin
         start: 0 7 * * *
-        end: 0 1 * * *
+        end: 0 4 * * *
         desiredReplicas: "1"
-    - type: mimir
+    - type: prometheus
       metadata:
-        serverAddress: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
+        serverAddress: http://mimir-nginx.monitoring.svc.cluster.local:80
         metricName: container_memory_max_usage_bytes
-        threshold: '0.5'
-        activationThreshold: '0.4'
+        threshold: '0.8'
+        activationThreshold: '0.6'
         query: (sum by (container) (container_memory_working_set_bytes{container="${container_name}"})) / (sum by (container) (container_memory_allocation_bytes{container="${container_name}"}))
 
 #    - type: memory
 #      metricType: Utilization
 #      metadata:
 #        value: "80"
+  max(count_over_time(kube_pod_container_resource_requests{resource=\"memory\", unit=\"byte\"}[2m] ))
+  ts=2023-05-28T01:46:42.829338209Z caller=handler.go:303 level=info user=kateops msg="query stats" component=query-frontend method=POST path=/prometheus/api/v1/query user_agent=Go-http-client/1.1 response_time=44.199027ms query_wall_time_seconds=0.158602618 fetched_series_count=0 fetched_chunk_bytes=0 fetched_chunks_count=0 fetched_index_bytes=0 sharded_queries=32 split_queries=0 estimated_series_count=0 param_time=1685238402 param_query="" status=success

@@ -1,6 +1,6 @@
 module "vault_setup" {
-  source = "./vault-setup"
-  vault_root_token        = var.vault_root_token
+  source           = "./vault-setup"
+  vault_root_token = var.vault_root_token
 }
 
 
@@ -21,6 +21,8 @@ module "vault_secrets" {
   secret_key              = var.aws_secret_key
   keycloak_rdbs           = {}
   rdbs                    = {}
+  redis                   = module.rs_cluster.outputs.redis
 
   admin_mount_path = module.vault_setup.admin_mount_path
+  kateops_mount_path = module.vault_setup.kateops_mount_path
 }

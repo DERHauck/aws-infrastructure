@@ -26,11 +26,10 @@ locals {
     email_display_name: local.email_display_name
     email_reply_to: local.email_from_address
     email_from_address: local.email_from_address
-    redis_host: var.redis_host
     storage_class: var.storage_class
     oidc_provider_secret: kubernetes_secret.oidc_secret.metadata[0].name
-    #redis_secret_name: kubernetes_secret.redis_secret.metadata[0].name
-    #redis_secret_key: var.secret_key_name
+    redis_secret_name: kubernetes_secret.redis_secret.metadata[0].name
+    redis_secret_key: var.secret_key_name
   }
   secrets= {
     postgresql_host: var.rdbs.host
@@ -39,6 +38,7 @@ locals {
     postgresql_database: var.rdbs.database
     smtp_address: module.ses.host
     smtp_user_name: module.ses.username
+    redis_host: var.redis_host
   }
   open_templates = [for v in fileset("${path.module}/values","*.yaml"): templatefile("${path.module}/values/${v}", local.vars)]
   secret_templates = [for v in fileset("${path.module}/values","*.yml"): templatefile("${path.module}/values/${v}", local.secrets)]

@@ -9,6 +9,10 @@ spec:
   image: grafana/agent:v0.32.1
   logLevel: info
   serviceAccountName: grafana-agent-operator
+  integrations:
+    selector:
+      matchLabels:
+        logging: grafana-agent
   metrics:
     instanceSelector:
       matchLabels:
