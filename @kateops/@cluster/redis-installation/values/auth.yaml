@@ -1,0 +1,26 @@
+
+## Redis&reg; Authentication parameters
+## ref: https://github.com/bitnami/containers/tree/main/bitnami/redis#setting-the-server-password-on-first-run
+##
+auth:
+  ## @param auth.enabled Enable password authentication
+  ##
+  enabled: true
+  ## @param auth.sentinel Enable password authentication on sentinels too
+  ##
+  sentinel: true
+  ## @param auth.password Redis&reg; password
+  ## Defaults to a random 10-character alphanumeric string if not set
+  ##
+  password: ""
+  ## @param auth.existingSecret The name of an existing secret with Redis&reg; credentials
+  ## NOTE: When it's set, the previous `auth.password` parameter is ignored
+  ##
+  existingSecret: "${redis_secret_name}"
+  ## @param auth.existingSecretPasswordKey Password key to be retrieved from existing secret
+  ## NOTE: ignored unless `auth.existingSecret` parameter is set
+  ##
+  existingSecretPasswordKey: "${redis_secret_key}"
+  ## @param auth.usePasswordFiles Mount credentials as files instead of using an environment variable
+  ##
+  usePasswordFiles: true

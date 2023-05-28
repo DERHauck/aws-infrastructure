@@ -1,6 +1,11 @@
 variable "rdbs" {
   type = map(any)
-  description = "Map with Scaleway RDBS instances { name => attributes }"
+  description = "Map with RDBS instances { name => attributes }"
+}
+
+variable "redis" {
+  type = any
+  description = "Map with Redis instances { name => attributes }"
 }
 
 variable "keycloak_rdbs" {
@@ -75,4 +80,9 @@ variable "secret_key" {
 variable "admin_mount_path" {
   type = string
   description = "Vault Admin mount path"
+}
+
+variable "kateops_mount_path" {
+  type = string
+  description = "Vault Kateops mount path"
 }

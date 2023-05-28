@@ -21,14 +21,14 @@ spec:
       metadata:
         timezone: Europe/Berlin
         start: 0 7 * * *
-        end: 0 1 * * *
+        end: 0 4 * * *
         desiredReplicas: "1"
-    - type: mimir
+    - type: prometheus
       metadata:
-        serverAddress: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
+        serverAddress: http://mimir-nginx.monitoring.svc.cluster.local:80
         metricName: container_memory_max_usage_bytes
-        threshold: '0.5'
-        activationThreshold: '0.4'
+        threshold: '0.8'
+        activationThreshold: '0.6'
         query: (sum by (container) (container_memory_working_set_bytes{container="${container_name}"})) / (sum by (container) (container_memory_allocation_bytes{container="${container_name}"}))
 
 #    - type: memory

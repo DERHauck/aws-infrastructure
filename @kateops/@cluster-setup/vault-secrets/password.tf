@@ -20,14 +20,22 @@ resource "vault_kv_secret_v2" "k8_kateops" {
 }
 
 
-resource "vault_kv_secret_v2" "scaleway" {
+resource "vault_kv_secret_v2" "admin" {
   mount     = var.admin_mount_path
-  name      = "scaleway/default"
+  name      = "aws/admin"
   data_json = jsonencode({
     access_key : var.access_key
     secret_key : var.secret_key
   })
 }
+
+
+resource "vault_kv_secret_v2" "redis" {
+  mount     = var.kateops_mount_path
+  name      = "redis/security"
+  data_json = jsonencode(var.redis)
+}
+
 
 resource "vault_token" "terraform_service_token" {
   policies = [

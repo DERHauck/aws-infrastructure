@@ -4,7 +4,7 @@ gitlab:
     backups:
       cron:
         enabled: true
-        schedule: "0 6-23 * * *"
+        schedule: "0 7-23 * * *"
   #      extraArgs: "--maximum-backups 180" # --storage-class ONEZONE_IA"
         persistence:
           enabled: true
@@ -14,7 +14,7 @@ gitlab:
         resources:
           requests:
             cpu: 500m
-            memory: 1G
+            memory: 2G
       objectStorage:
         backend: s3
         config:

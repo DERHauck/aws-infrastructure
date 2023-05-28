@@ -30,7 +30,7 @@ variable "secret_key_name" {
 
 variable "storage_class" {
   type = string
-  default = "efs-sc"
+  default = "gp2"
 }
 
 variable "backup_secret_key_name" {
@@ -41,6 +41,11 @@ variable "backup_secret_key_name" {
 variable "redis_host" {
   type = string
   description = "Redis Host"
+}
+
+variable "redis_password" {
+  type = string
+  description = "Redis password"
 }
 
 variable "access_key_id" {

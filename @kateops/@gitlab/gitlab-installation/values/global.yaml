@@ -45,11 +45,10 @@ global:
       proxyProtocol: true
 
   redis:
-    password:
-      enabled: false
-#      secret: $${redis_secret_name}
-#      key: $${redis_secret_key}
-    host: ${redis_host}
+    auth:
+      enabled: true
+      secret: ${redis_secret_name}
+      key: ${redis_secret_key}
 
   pages:
     enabled: false

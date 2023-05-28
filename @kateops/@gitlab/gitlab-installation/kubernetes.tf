@@ -90,3 +90,12 @@ resource "kubernetes_secret" "oidc_secret" {
   }
 }
 
+resource "kubernetes_secret" "redis_secret" {
+  metadata {
+    name = "gitlab-redis-secret"
+    namespace = var.namespace
+  }
+  data = {
+    (var.secret_key_name) = var.redis_password
+  }
+}
