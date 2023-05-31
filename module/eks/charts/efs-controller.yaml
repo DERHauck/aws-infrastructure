@@ -101,3 +101,13 @@ storageClasses:
       basePath: "/dynamic_provisioning"
     reclaimPolicy: Retain
     volumeBindingMode: Immediate
+  - name: efs-rm-sc
+    parameters:
+      provisioningMode: efs-ap
+      fileSystemId: ${efs_filesystem_id}
+      directoryPerms: "777"
+      gidRangeStart: "1000"
+      gidRangeEnd: "2000"
+      basePath: "/dynamic_provisioning"
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
