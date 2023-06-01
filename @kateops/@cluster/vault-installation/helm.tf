@@ -5,5 +5,5 @@ resource "helm_release" "vault" {
   repository = "https://helm.releases.hashicorp.com"
   chart      = "vault"
   values     = local.templates
-  version    = "0.20.1"
+  version    = "0.24.1"
 }

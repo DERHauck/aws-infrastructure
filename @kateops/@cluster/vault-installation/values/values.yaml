@@ -35,7 +35,7 @@ global:
 injector:
   # True if you want to enable vault agent injection.
   # @default: global.enabled
-  enabled: "-"
+  enabled: true
 
   replicas: 1
 
@@ -45,7 +45,7 @@ injector:
   # If multiple replicas are specified, by default a leader will be determined
   # so that only one injector attempts to create TLS certificates.
   leaderElector:
-    enabled: true
+    enabled: false
 
   # If true, will enable a node exporter metrics endpoint at /metrics.
   metrics:
@@ -57,7 +57,7 @@ injector:
   # image sets the repo and tag of the vault-k8s image to use for the injector.
   image:
     repository: "hashicorp/vault-k8s"
-    tag: "0.16.1"
+    tag: "1.2.1"
     pullPolicy: IfNotPresent
 
   # agentImage sets the repo and tag of the Vault image to use for the Vault Agent
@@ -65,7 +65,7 @@ injector:
   # required.
   agentImage:
     repository: "hashicorp/vault"
-    tag: "1.10.3"
+    tag: "1.13.1"
 
   # The default values for the injected Vault Agent containers.
   agentDefaults:
@@ -324,9 +324,9 @@ server:
 
   image:
     repository: "hashicorp/vault"
-    tag: "1.10.3"
+    tag: "1.13.1"
     # Overrides the default Image Pull Policy
-    pullPolicy: IfNotPresent
+    pullPolicy: Always
 
   # Configure the Update Strategy Type for the StatefulSet
   # See https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/#update-strategies
