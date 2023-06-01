@@ -25,5 +25,5 @@ spec:
   providerRef:
     name: default-spot
   ttlSecondsAfterEmpty: 600
-  ttlSecondsUntilExpired: 2592000
+  ttlSecondsUntilExpired: 6000
   weight: 100
