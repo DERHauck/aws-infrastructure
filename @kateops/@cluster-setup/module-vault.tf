@@ -1,6 +1,8 @@
 module "vault_setup" {
   source           = "./vault-setup"
   vault_root_token = var.vault_root_token
+  kubernetes_host = local.cluster_endpoint
+  kubernetes_ca_cert = base64decode(local.cluster_certificate_authority_data)
 }
 
 
