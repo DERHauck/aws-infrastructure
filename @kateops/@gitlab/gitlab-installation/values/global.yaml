@@ -142,12 +142,10 @@ global:
       connection:
         secret: ${s3_connection_secret_name}
         key: ${secret_key_name}
-    kas:
-      enabled: false
-      service:
-        apiExternalPort: 8153
+
     omniauth:
       enabled: true
+      blockAutoCreatedUsers: false
       allowSingleSignOn:
         - "openid_connect"
       autoSignInWithProvider: "openid_connect"
@@ -180,3 +178,8 @@ global:
 
   registry:
     bucket: ${registry_bucket_name}
+
+  kas:
+    enabled: false
+    service:
+      apiExternalPort: 8153
