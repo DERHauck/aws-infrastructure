@@ -22,3 +22,7 @@ variable "rdbs" {
 variable "redis_endpoint" {
   type = string
 }
+
+variable "redis_password" {
+  type = string
+}

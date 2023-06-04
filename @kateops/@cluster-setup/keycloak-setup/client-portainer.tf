@@ -1,5 +1,5 @@
 resource "keycloak_openid_client" "portainer" {
-  realm_id = data.keycloak_realm.master.id
+  realm_id = keycloak_realm.master.id
   client_id = "portainer"
   name = "portainer"
   access_type = "CONFIDENTIAL"
@@ -11,7 +11,7 @@ resource "keycloak_openid_client" "portainer" {
 }
 
 resource "keycloak_openid_client_default_scopes" "portainer_default_scope" {
-  realm_id = data.keycloak_realm.master.id
+  realm_id = keycloak_realm.master.id
   client_id = keycloak_openid_client.portainer.id
   default_scopes = local.default_scopes
 }

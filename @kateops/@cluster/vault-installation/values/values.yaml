@@ -49,7 +49,7 @@ injector:
 
   # If true, will enable a node exporter metrics endpoint at /metrics.
   metrics:
-    enabled: true
+    enabled: false
 
   # Deprecated: Please use global.externalVaultAddr instead.
   externalVaultAddr: ""
@@ -90,7 +90,7 @@ injector:
 
   # Configures the log verbosity of the injector.
   # Supported log levels include: trace, debug, info, warn, error
-  logLevel: "info"
+  logLevel: "debug"
 
   # Configures the log format of the injector. Supported log formats: "standard", "json".
   logFormat: "standard"
@@ -202,7 +202,6 @@ injector:
     certName: tls.crt
     keyName: tls.key
 
-  # Default pod and container security context for vault-injector
   securityContext:
     pod:
       runAsNonRoot: true
@@ -214,7 +213,6 @@ injector:
       capabilities:
         drop:
           - ALL
-
   resources:
     requests:
       memory: 256Mi

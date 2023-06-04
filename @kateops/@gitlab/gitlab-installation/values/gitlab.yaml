@@ -3,7 +3,7 @@ gitlab:
   toolbox:
     backups:
       cron:
-        enabled: true
+        enabled: false
         schedule: "0 7-23 * * *"
   #      extraArgs: "--maximum-backups 180" # --storage-class ONEZONE_IA"
         persistence:
