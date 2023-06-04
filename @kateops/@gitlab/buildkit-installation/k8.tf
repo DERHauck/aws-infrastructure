@@ -24,8 +24,8 @@ resource "kubernetes_deployment" "buildkit" {
               memory = "3G"
             }
             requests = {
-              cpu = "1000m"
-              memory = "1.5G"
+              cpu = "300m"
+              memory = "2.5G"
             }
           }
           name = local.app
