@@ -13,3 +13,7 @@ data "vault_generic_secret" "prometheus_oidc" {
 data "vault_generic_secret" "mimir_oidc" {
   path = "kateops/keycloak/oidc/mimir"
 }
+
+data "vault_generic_secret" "redis" {
+  path = "kateops/redis/security"
+}

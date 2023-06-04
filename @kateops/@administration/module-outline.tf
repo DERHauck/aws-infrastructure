@@ -3,7 +3,8 @@ module "outline" {
   namespace = kubernetes_namespace.this.metadata[0].name
   host_domain = "outline.kateops.com"
   rdbs = module.outline_db
-  redis_endpoint = module.rs_kateops.outputs.elasticache.address
+  redis_endpoint = local.redis_endpoint
+  redis_password = data.vault_generic_secret.redis.data["password"]
 }
 
 

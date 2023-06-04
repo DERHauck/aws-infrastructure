@@ -1,5 +1,5 @@
 resource "keycloak_openid_client" "gitlab" {
-  realm_id = data.keycloak_realm.master.id
+  realm_id = keycloak_realm.master.id
   client_id = "gitlab"
   name = "Gitlab"
   access_type = "CONFIDENTIAL"
@@ -11,7 +11,7 @@ resource "keycloak_openid_client" "gitlab" {
 }
 
 resource "keycloak_openid_client_default_scopes" "gitlab_default_scope" {
-  realm_id = data.keycloak_realm.master.id
+  realm_id = keycloak_realm.master.id
   client_id = keycloak_openid_client.gitlab.id
   default_scopes = local.default_scopes
 }

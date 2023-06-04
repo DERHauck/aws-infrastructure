@@ -1,5 +1,5 @@
 resource "keycloak_openid_client" "openid_client" {
-  realm_id  = data.keycloak_realm.master.id
+  realm_id  = keycloak_realm.master.id
   client_id = "vault"
 
   name                  = "vault"
@@ -15,28 +15,28 @@ resource "keycloak_openid_client" "openid_client" {
 }
 
 resource "keycloak_role" "admin" {
-  realm_id    = data.keycloak_realm.master.id
+  realm_id    = keycloak_realm.master.id
   client_id   = keycloak_openid_client.openid_client.id
   name        = "admin"
   description = "Administration access role"
 }
 
 resource "keycloak_role" "management_role" {
-  realm_id    = data.keycloak_realm.master.id
+  realm_id    = keycloak_realm.master.id
   client_id   = keycloak_openid_client.openid_client.id
   name        = "management"
   description = "Management role"
 }
 
 resource "keycloak_role" "reader_role" {
-  realm_id    = data.keycloak_realm.master.id
+  realm_id    = keycloak_realm.master.id
   client_id   = keycloak_openid_client.openid_client.id
   name        = "reader"
   description = "Reader role"
 }
 
 resource "keycloak_openid_user_client_role_protocol_mapper" "user_client_role_mapper" {
-  realm_id   = data.keycloak_realm.master.id
+  realm_id   = keycloak_realm.master.id
   client_id  = keycloak_openid_client.openid_client.id
   name       = "user-client-role-mapper"
   claim_name = format(

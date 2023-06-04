@@ -7,5 +7,5 @@ output "vault_client_secret" {
 }
 
 output "realm" {
-  value = data.keycloak_realm.master.id
+  value = keycloak_realm.master.id
 }

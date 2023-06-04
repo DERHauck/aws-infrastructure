@@ -16,7 +16,7 @@ module "opencost-openproxy" {
   oidc_secret = data.vault_generic_secret.opencost_oidc.data["secret"]
   sub_domain  = "opencost"
   redis_secret_name = kubernetes_secret.redis_password.metadata[0].name
-  redis_endpoint = module.rs_kateops.outputs.elasticache.address
+  redis_endpoint = local.redis_endpoint
 }
 resource "kubernetes_secret" "redis_password" {
   metadata {
@@ -24,6 +24,6 @@ resource "kubernetes_secret" "redis_password" {
     namespace = kubernetes_namespace.this.metadata[0].name
   }
   data = {
-    redis-password: ""
+    redis-password: data.vault_generic_secret.redis.data["password"]
   }
 }

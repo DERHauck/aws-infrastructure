@@ -6,9 +6,9 @@ module "nextcloud" {
   monitoring_namespace = "monitoring"
   host_domain          = "cloud.kateops.com"
 
-  redis_host     = module.redis.host-master
-  redis_port     =  module.redis.port
-  redis_password = module.redis.password
+  redis_host     = data.vault_generic_secret.redis.data["host-master"]
+  redis_port     =  data.vault_generic_secret.redis.data["port"]
+  redis_password = data.vault_generic_secret.redis.data["password"]
   efs_id = module.rs_kateops.outputs.clusters.production.efs_id
   oidc_id = data.vault_generic_secret.nextcloud_oidc.data["id"]
   oidc_secret = data.vault_generic_secret.nextcloud_oidc.data["secret"]

@@ -14,5 +14,5 @@ module "mimir-openproxy" {
   oidc_secret = data.vault_generic_secret.mimir_oidc.data["secret"]
   sub_domain  = "mimir"
   redis_secret_name = kubernetes_secret.redis_password.metadata[0].name
-  redis_endpoint = module.rs_kateops.outputs.elasticache.address
+  redis_endpoint = local.redis_endpoint
 }
