@@ -7,6 +7,9 @@ spec:
     - key: karpenter.sh/capacity-type
       operator: In
       values: ["spot", "on-demand"]
+    - key: "karpenter.k8s.aws/instance-cpu"
+      operator: Gt
+      values: ["4"]
 
   labels:
 %{ for key,value in labels }
@@ -21,9 +24,9 @@ spec:
 
   limits:
     resources:
-      cpu: 10
+      cpu: 20
   providerRef:
     name: default-spot
-  ttlSecondsAfterEmpty: 600
+  ttlSecondsAfterEmpty: 60
   ttlSecondsUntilExpired: 6000
   weight: 100
