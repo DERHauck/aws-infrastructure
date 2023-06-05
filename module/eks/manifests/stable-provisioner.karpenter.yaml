@@ -26,8 +26,8 @@ spec:
     name: default-stable
   consolidation:
     enabled: true
-  ttlSecondsUntilExpired: 2592000
-  weight: 100
+  ttlSecondsUntilExpired: 604800 # 7 days
+  weight: 50
 
 
   taints:
