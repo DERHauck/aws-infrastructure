@@ -15,16 +15,19 @@ spec:
 %{ endfor ~}
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
-      values: ["4"]
+      values: ["3"]
+    - key: "karpenter.k8s.aws/instance-cpu"
+      operator: Lt
+      values: ["12"]
   limits:
     resources:
-      cpu: 10
+      cpu: 20
   providerRef:
     name: default-stable
   consolidation:
     enabled: true
   ttlSecondsUntilExpired: 2592000
-  weight: 50
+  weight: 100
 
 
   taints:

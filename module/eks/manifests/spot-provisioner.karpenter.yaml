@@ -15,11 +15,14 @@ spec:
 %{ endfor ~}
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
-      values: ["4"]
+      values: ["2"]
+    - key: "karpenter.k8s.aws/instance-cpu"
+      operator: Lt
+      values: ["12"]
 
   limits:
     resources:
-      cpu: 100
+      cpu: 20
   providerRef:
     name: default-spot
   consolidation:

@@ -5,7 +5,7 @@ resource "kubernetes_secret" "this_connections" {
   }
   data = {
     DATABASE_URL =  "postgres://${var.rdbs.username}:${urlencode(var.rdbs.password)}@${var.rdbs.host}:${var.rdbs.port}/${var.rdbs.database}"
-    REDIS_URL = "redis://${var.redis_password}@${var.redis_endpoint}" #:${data.vault_generic_secret.redis.data["password"]}@${data.vault_generic_secret.redis.data["host-master"]}:${data.vault_generic_secret.redis.data["port"]}"
+    REDIS_URL = "redis://:${var.redis_password}@${var.redis_endpoint}" #:${data.vault_generic_secret.redis.data["password"]}@${data.vault_generic_secret.redis.data["host-master"]}:${data.vault_generic_secret.redis.data["port"]}"
   }
 }
 
