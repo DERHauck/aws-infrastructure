@@ -40,7 +40,7 @@ locals {
     smtp_user_name: module.ses.username
     redis_host: var.redis_host
   }
-  open_templates = [for v in fileset("${path.module}/values","*.yaml"): templatefile("${path.module}/values/${v}", local.vars)]
-  secret_templates = [for v in fileset("${path.module}/values","*.yml"): templatefile("${path.module}/values/${v}", local.secrets)]
+  open_templates = [for v in fileset("${path.module}/values","*.yaml"): (templatefile("${path.module}/values/${v}", local.vars))]
+  secret_templates = [for v in fileset("${path.module}/values","*.yml"): (templatefile("${path.module}/values/${v}", local.secrets))]
   templates = concat(local.secret_templates, local.open_templates)
 }

@@ -6,7 +6,7 @@ spec:
   requirements:
     - key: karpenter.sh/capacity-type
       operator: In
-      values: ["spot"]
+      values: ["spot", "on-demand"]
     - key: "topology.kubernetes.io/zone"
       operator: In
       values:
@@ -27,5 +27,5 @@ spec:
     name: default-spot
   consolidation:
     enabled: true
-  ttlSecondsUntilExpired: 604800 # 7 days
+  ttlSecondsUntilExpired: 10800 # 3 hours
   weight: 100

@@ -38,6 +38,12 @@ gitlab:
         cpu: 20m
         memory: 50M
   webservice:
+    deployments:
+      default:
+        pdb:
+          maxUnavailable: 0
+        ingress:
+          path: /
     ingress:
       tls:
         secretName: gitlab-gitlab-tls
@@ -92,3 +98,11 @@ gitlab:
         secretName: gitlab-pages-tls
   workhorse:
     shutdownTimeout: 2min
+  gitaly:
+    nodeSelector:
+      karpenter.sh/provisioner-name: default-stable
+    tolerations:
+      - key: "provisioner/stable"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
