@@ -22,7 +22,7 @@ spec:
         timezone: Europe/Berlin
         start: 0 7 * * *
         end: 0 4 * * *
-        desiredReplicas: "1"
+        desiredReplicas: "2"
     - type: prometheus
       metadata:
         serverAddress: http://mimir-nginx.monitoring.svc.cluster.local:80
