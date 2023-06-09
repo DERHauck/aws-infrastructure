@@ -14,9 +14,6 @@ spec:
         - ${az}
 %{ endfor ~}
     - key: "karpenter.k8s.aws/instance-cpu"
-      operator: Gt
-      values: ["3"]
-    - key: "karpenter.k8s.aws/instance-cpu"
       operator: Lt
       values: ["12"]
   limits:
@@ -26,7 +23,7 @@ spec:
     name: default-stable
   consolidation:
     enabled: true
-  ttlSecondsUntilExpired: 604800 # 7 days
+  ttlSecondsUntilExpired: 2628000 # 1 month
   weight: 50
 
 
