@@ -79,6 +79,15 @@ pipelines:
         targetStage: build
 
   - type: terraform
+    path: '@kateops/@client'
+    stateName: kateops/client
+    id: client
+    needs:
+      - id: gitlab-setup
+        stage: deploy
+        targetStage: build
+
+  - type: terraform
     path: '@kateops/@administration'
     stateName: kateops/administration
     id: administration
