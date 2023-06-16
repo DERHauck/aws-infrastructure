@@ -1,8 +1,10 @@
 
+# shellcheck disable=SC2046
+export $(cat ".env") &> /dev/null
 cd "${PWD}" || exit 1
 
 # shellcheck disable=SC2046
-export $(cat ".env") 2> /dev/null
+export $(cat ".env") &> /dev/null
 terraform init \
   -backend-config="region=eu-central-1" \
   -backend-config="access_key=${TF_VAR_aws_access_key}" \

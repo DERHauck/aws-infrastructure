@@ -63,28 +63,29 @@ resource "kubernetes_role" "this" {
     namespace = var.namespace
   }
   rule {
-    api_groups = ["*"]
+    api_groups = [""]
     resources = ["*"]
     verbs = ["*"]
+    resource_names = [var.namespace]
   }
 }
 
-resource "kubernetes_cluster_role_binding" "this" {
-  metadata {
-    name = "cicd-crb"
-  }
-  role_ref {
-    api_group = "rbac.authorization.k8s.io"
-    kind      = "ClusterRole"
-    name      = "edit"
-  }
-
-  subject {
-    kind = "ServiceAccount"
-    name = kubernetes_service_account.this.metadata[0].name
-    namespace = kubernetes_service_account.this.metadata[0].namespace
-  }
-}
+#resource "kubernetes_cluster_role_binding" "this" {
+#  metadata {
+#    name = "cicd-crb-${kubernetes_role.this.metadata[0].name}"
+#  }
+#  role_ref {
+#    api_group = "rbac.authorization.k8s.io"
+#    kind      = "ClusterRole"
+#    name      = "edit"
+#  }
+#
+#  subject {
+#    kind = "ServiceAccount"
+#    name = kubernetes_service_account.this.metadata[0].name
+#    namespace = kubernetes_service_account.this.metadata[0].namespace
+#  }
+#}
 
 
 resource "kubernetes_role_binding" "this" {
