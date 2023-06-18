@@ -5,3 +5,8 @@ module "kateops-org" {
   cluster_endpoint = local.cluster_endpoint
   cluster_name = local.cluster_name
 }
+
+module "kateops-org-projects" {
+  source = "./module-kateops-org-projects"
+  group_id = module.kateops-org.group_id
+}
