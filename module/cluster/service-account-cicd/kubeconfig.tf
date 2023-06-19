@@ -63,10 +63,9 @@ resource "kubernetes_role" "this" {
     namespace = var.namespace
   }
   rule {
-    api_groups = [""]
+    api_groups = ["*"]
     resources = ["*"]
     verbs = ["*"]
-    resource_names = [var.namespace]
   }
 }
 

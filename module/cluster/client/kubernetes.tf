@@ -6,7 +6,7 @@ resource "kubernetes_namespace" "this" {
 
 resource "kubernetes_secret" "gitlab_secret" {
   metadata {
-    name = "gitlab-docker-secret"
+    name = "runner-registry-ro"
     namespace = kubernetes_namespace.this.metadata[0].name
   }
   type = "kubernetes.io/dockerconfigjson"
