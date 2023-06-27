@@ -32,16 +32,16 @@ gitlab:
         targetAverageUtilization: 80
     resources:
       requests:
-        cpu: 15m
-        memory: 30M
+        cpu: 25m
+        memory: 60M
       limits:
-        cpu: 20m
-        memory: 50M
+        cpu: 40m
+        memory: 150M
   webservice:
     deployments:
       default:
         pdb:
-          maxUnavailable: 0
+          maxUnavailable: 1
         ingress:
           path: /
     ingress:
@@ -54,7 +54,7 @@ gitlab:
       requests:
         cpu: 300m
         memory: 2.5G
-    minReplicas: 1
+    minReplicas: 2
     maxReplicas: 10
     hpa:
       cpu:
@@ -84,7 +84,7 @@ gitlab:
     hpa:
       cpu:
         targetAverageValue: 1000m
-    minReplicas: 1
+    minReplicas: 2
     maxReplicas: 10
     annotations:
   migrations:

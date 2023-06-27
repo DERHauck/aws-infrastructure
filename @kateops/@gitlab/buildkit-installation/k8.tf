@@ -21,11 +21,11 @@ resource "kubernetes_deployment" "buildkit" {
           resources {
             limits = {
               cpu = "3000m"
-              memory = "3G"
+              memory = "5G"
             }
             requests = {
               cpu = "300m"
-              memory = "2.5G"
+              memory = "3.5G"
             }
           }
           name = local.app

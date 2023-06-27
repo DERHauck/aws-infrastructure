@@ -98,10 +98,13 @@ extraVolumeMounts: []
 
 resources: {}
 
-nodeSelector: {}
-
-tolerations: []
-
+nodeSelector:
+  karpenter.sh/provisioner-name: default-stable
+tolerations:
+  - key: "provisioner/stable"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
 affinity: {}
 
 topologySpreadConstraints: []

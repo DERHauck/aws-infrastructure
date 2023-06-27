@@ -126,10 +126,10 @@ extraEnv: []
 resources:
   requests:
     cpu: 10m
-    memory: 70M
+    memory: 90M
   limits:
     cpu: 25m
-    memory: 110M
+    memory: 140M
 
 # Pod Security Context
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
@@ -465,11 +465,11 @@ cainjector:
 
   resources:
     requests:
-      cpu: 10m
-      memory: 80Mi
-    limits:
       cpu: 20m
-      memory: 170Mi
+      memory: 140Mi
+    limits:
+      cpu: 30m
+      memory: 270Mi
 
   nodeSelector:
     kubernetes.io/os: linux
