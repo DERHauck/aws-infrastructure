@@ -21,3 +21,10 @@ module "kubernetes_tutorial" {
   group_id = module.oss.group_id
 }
 
+
+module "helm" {
+  source = "./project-public"
+  name = "Helm Charts"
+  description = "Simple Helm Chart Deployments"
+  group_id = module.oss.group_id
+}
