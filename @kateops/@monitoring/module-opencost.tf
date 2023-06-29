@@ -18,12 +18,12 @@
 #  redis_secret_name = kubernetes_secret.redis_password.metadata[0].name
 #  redis_endpoint = local.redis_endpoint
 #}
-#resource "kubernetes_secret" "redis_password" {
-#  metadata {
-#    name = "redis-password"
-#    namespace = kubernetes_namespace.this.metadata[0].name
-#  }
-#  data = {
-#    redis-password: data.vault_generic_secret.redis.data["password"]
-#  }
-#}
+resource "kubernetes_secret" "redis_password" {
+  metadata {
+    name = "redis-password"
+    namespace = kubernetes_namespace.this.metadata[0].name
+  }
+  data = {
+    redis-password: data.vault_generic_secret.redis.data["password"]
+  }
+}
