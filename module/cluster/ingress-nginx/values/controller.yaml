@@ -25,7 +25,7 @@ controller:
       memory: 500Mi
   autoscaling:
     enabled: true
-    minReplicas: 1
+    minReplicas: 2
     maxReplicas: 20
     targetCPUUtilizationPercentage: 75
     targetMemoryUtilizationPercentage: 75
@@ -42,3 +42,15 @@ controller:
     type: LoadBalancer
     ipFamilies:
       - ${ip_family}
+  podAntiAffinity:
+   requiredDuringSchedulingIgnoredDuringExecution:
+   - labelSelector:
+       matchExpressions:
+       - key: app.kubernetes.io/name
+         operator: In
+         values:
+         - ingress-nginx
+       - key: app.kubernetes.io/component
+         operator: In
+         values:
+         - controller
