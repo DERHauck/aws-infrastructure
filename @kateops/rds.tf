@@ -47,7 +47,7 @@ resource "aws_db_instance" "postgres" {
   vpc_security_group_ids = [aws_security_group.postgres.id]
   port = local.postgres_port
   iam_database_authentication_enabled = false
-  parameter_group_name = "default.postgres14"
+  parameter_group_name = "defaultpsql14"
   backup_retention_period = 14
   backup_window = "03:00-04:00"
   maintenance_window = "Sat:00:00-Sat:02:00"
