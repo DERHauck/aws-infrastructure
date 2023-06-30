@@ -1,0 +1,36 @@
+image:
+  repository: ghcr.io/cloudnative-pg/cloudnative-pg
+  pullPolicy: IfNotPresent
+  # -- Overrides the image tag whose default is the chart appVersion.
+  tag: ""
+
+replicaCount: 1
+
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+crds:
+  # -- Specifies whether the CRDs should be created when installing the chart.
+  create: true
+
+
+
+# -- Annotations to be added to all other resources.
+commonAnnotations: {}
+# -- Annotations to be added to the pod.
+podAnnotations: {}
+# -- Labels to be added to the pod.
+podLabels: {}
+
+# -- Priority indicates the importance of a Pod relative to other Pods.
+priorityClassName: ""
+
+# -- Nodeselector for the operator to be installed.
+nodeSelector: {}
+
+# -- Tolerations for the operator to be installed.
+tolerations: []
+
+# -- Affinity for the operator to be installed.
+affinity: {}

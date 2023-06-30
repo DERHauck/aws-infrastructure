@@ -1,0 +1,12 @@
+webhook:
+  port: 9443
+  mutating:
+    create: true
+    failurePolicy: Fail
+  validating:
+    create: true
+    failurePolicy: Fail
+  livenessProbe:
+    initialDelaySeconds: 3
+  readinessProbe:
+    initialDelaySeconds: 3
