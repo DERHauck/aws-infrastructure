@@ -1,0 +1,5 @@
+# -- Security Context for the whole pod.
+podSecurityContext:
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
