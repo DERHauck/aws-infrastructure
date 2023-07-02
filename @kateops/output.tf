@@ -10,11 +10,6 @@ output "postgres" {
   sensitive = true
 }
 
-output "elasticache" {
-  value = aws_elasticache_cluster.elasticache.cache_nodes[0]
-  sensitive = true
-}
-
 output "clusters" {
   value = {
     (local.environment_name) = module.eks
