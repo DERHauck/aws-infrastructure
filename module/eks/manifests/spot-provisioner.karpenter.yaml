@@ -27,5 +27,5 @@ spec:
     name: default-spot
   consolidation:
     enabled: true
-  ttlSecondsUntilExpired: 10800 # 3 hours
+  ttlSecondsUntilExpired: 86400 # 24 hours
   weight: 100

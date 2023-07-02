@@ -4,5 +4,5 @@
 single cluster
 ## RDS (Postgresql)
 single cluster
-## Elasticache (Redis)
+## Redis
 single cluster
