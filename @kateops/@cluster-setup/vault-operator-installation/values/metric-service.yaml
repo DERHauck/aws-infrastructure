@@ -1,0 +1,16 @@
+
+# Configure the metrics service ports used by the metrics service.
+# Set the configuration fo the metricsService port.
+# @recurse: true
+# @type: map
+metricsService:
+  # Set the port settings for the metrics service.
+  # For more information on configuring resources, see the K8s documentation:
+  # https://kubernetes.io/docs/concepts/services-networking/service/
+  # @type: map
+  ports:
+    - name: https
+      port: 8443
+      protocol: TCP
+      targetPort: https
+  type: ClusterIP
