@@ -102,11 +102,3 @@ resource "kubectl_manifest" "vault_auth" {
     auth_role       = vault_kubernetes_auth_backend_role.kubernetes.role_name
   })
 }
-
-
-resource "kubectl_manifest" "test" {
-  yaml_body = templatefile("${local.vault_manifests_path}/test.yaml", {
-    namespace       = kubernetes_namespace.this.metadata[0].name
-    service_account = kubernetes_service_account.vault.metadata[0].name
-  })
-}
