@@ -12,6 +12,7 @@ resource "aws_iam_policy" "runner" {
     Version = "2012-10-17"
     Statement = [
       {
+
         Action = [
           "s3:ListBucket",
           "s3:GetBucketLocation",
