@@ -1,8 +1,18 @@
 
 registry:
   enabled: true
+  resources:
+    requests:
+      cpu: 50m
+      memory: 32Mi
+    limits:
+      cpu: 200m
+      memory: 1024Mi
+  affinity:
+    podAntiAffinity:
+      topologyKey: "kubernetes.io/hostname"
   hpa:
-    minReplicas: 1
+    minReplicas: 2
     maxReplicas: 10
     cpu:
       targetType: Utilization
