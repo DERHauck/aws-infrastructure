@@ -8,7 +8,9 @@ headlessService: true
 
 affinity:
   podAntiAffinity:
-    topologyKey: "kubernetes.io/hostname"
+    requiredDuringSchedulingIgnoredDuringExecution:
+      - weight: 100
+        topologyKey: "kubernetes.io/hostname"
 ## See `kubectl explain poddisruptionbudget.spec` for more
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 podDisruptionBudget:
