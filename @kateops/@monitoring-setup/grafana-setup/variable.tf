@@ -8,3 +8,8 @@ variable "redis_password" {
   description = "Redis Password"
   default = ""
 }
+
+variable "redis_url" {
+  type = string
+  description = "Redis connection URL e.g. redis://svc:port"
+}

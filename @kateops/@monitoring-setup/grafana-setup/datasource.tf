@@ -19,15 +19,23 @@ resource "grafana_data_source" "mimir" {
   is_default = true
 }
 #
-#resource "grafana_data_source" "redis" {
-#  name = "Redis"
-#  type = "redis-datasource"
-#  url = "redis://redis-headless.service.svc:6379"
-#  uid = "redis-default"
-#  secure_json_data {
-#    password = var.redis_password
-#  }
-#}
+resource "grafana_data_source" "redis" {
+  name = "Redis"
+  type = "redis-datasource"
+  url = var.redis_url
+  uid = "redis-default"
+  secure_json_data_encoded = jsonencode({
+    password = var.redis_password
+  })
+}
+
+resource "grafana_data_source_permission" "redis" {
+  datasource_id = grafana_data_source.redis.id
+  permissions {
+
+    permission = ""
+  }
+}
 
 #resource "grafana_data_source" "prometheus" {
 #  name = "Prometheus"
