@@ -6,7 +6,9 @@ headlessService: true
 ## Create HorizontalPodAutoscaler object for deployment type
 #
 
-
+affinity:
+  podAntiAffinity:
+    topologyKey: "kubernetes.io/hostname"
 ## See `kubectl explain poddisruptionbudget.spec` for more
 ## ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
 podDisruptionBudget:
@@ -18,8 +20,8 @@ deploymentStrategy:
 
 resources:
   limits:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 200m
+    memory: 512Mi
   requests:
     cpu: 100m
     memory: 128Mi

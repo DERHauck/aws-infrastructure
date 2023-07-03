@@ -26,24 +26,37 @@ gitlab:
     maxReplicas: 10
     hpa:
       cpu:
-        targetAverageValue: 10m
+        targetAverageValue: 40m
       memory:
         targetType: Utilization
         targetAverageUtilization: 80
     resources:
       requests:
-        cpu: 25m
+        cpu: 50m
         memory: 60M
       limits:
-        cpu: 40m
+        cpu: 70m
         memory: 150M
   webservice:
+    affinity:
+      podAntiAffinity:
+        topologyKey: "kubernetes.io/hostname"
     deployments:
       default:
         pdb:
           maxUnavailable: 1
         ingress:
           path: /
+        keda:
+          enabled: true
+          idleReplicaCount: 0
+          triggers:
+            - type: cron
+              metadata:
+                timezone: Europe/Berlin
+                start: 0 1 * * *
+                end: 0 0 * * *
+                desiredReplicas: "2"
     ingress:
       tls:
         secretName: gitlab-gitlab-tls
@@ -54,11 +67,6 @@ gitlab:
       requests:
         cpu: 300m
         memory: 2.5G
-    minReplicas: 2
-    maxReplicas: 10
-    hpa:
-      cpu:
-        targetAverageValue: 1.5
     deployment:
       terminationGracePeriodSeconds: 100
       livenessProbe:
@@ -74,6 +82,19 @@ gitlab:
         additionalLabels:
           logging: grafana-agent
   sidekiq:
+    affinity:
+      podAntiAffinity:
+        topologyKey: "kubernetes.io/hostname"
+    keda:
+      enabled: true
+      idleReplicaCount: 0
+      triggers:
+        - type: cron
+          metadata:
+            timezone: Europe/Berlin
+            start: 0 1 * * *
+            end: 0 0 * * *
+            desiredReplicas: "2"
     resources:
       limits:
         cpu: 700m
@@ -81,11 +102,6 @@ gitlab:
       requests:
         cpu: 500m
         memory: 1.5Gi
-    hpa:
-      cpu:
-        targetAverageValue: 1000m
-    minReplicas: 2
-    maxReplicas: 10
     annotations:
   migrations:
     psql:
