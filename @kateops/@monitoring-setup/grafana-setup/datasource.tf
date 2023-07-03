@@ -29,14 +29,6 @@ resource "grafana_data_source" "redis" {
   })
 }
 
-resource "grafana_data_source_permission" "redis" {
-  datasource_id = grafana_data_source.redis.id
-  permissions {
-
-    permission = ""
-  }
-}
-
 #resource "grafana_data_source" "prometheus" {
 #  name = "Prometheus"
 #  type = "prometheus"
