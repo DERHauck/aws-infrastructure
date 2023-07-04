@@ -9,8 +9,11 @@ compactor:
 
   resources:
     requests:
-      cpu: 100m
-      memory: 512Mi
+      cpu: 120m
+      memory: 40Mi
+    limits:
+      cpu: 600m
+      memory: 120Mi
 
   # Additional compactor container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}

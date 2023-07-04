@@ -9,7 +9,10 @@ store_gateway:
   resources:
     requests:
       cpu: 100m
-      memory: 512Mi
+      memory: 170Mi
+    limits:
+      cpu: 800m
+      memory: 520Mi
 
   # Additional store-gateway container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}

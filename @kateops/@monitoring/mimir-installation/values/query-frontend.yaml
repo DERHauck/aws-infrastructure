@@ -8,11 +8,11 @@ query_frontend:
 
   resources:
     requests:
-      cpu: 250m
-      memory: 256Mi
+      cpu: 30m
+      memory: 56Mi
     limits:
-      cpu: 400m
-      memory: 300Mi
+      cpu: 80m
+      memory: 200Mi
 
   # Additional query-frontend container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}
