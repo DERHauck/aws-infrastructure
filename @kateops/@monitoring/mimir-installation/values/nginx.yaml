@@ -60,7 +60,13 @@ nginx:
       drop: [ALL]
     allowPrivilegeEscalation: false
   # -- Resource requests and limits for the nginx
-  resources: {}
+  resources:
+    requests:
+      cpu: 1m
+      memory: 13Mi
+    limits:
+      cpu: 10m
+      memory: 20Mi
   # -- Grace period to allow the nginx to shutdown before it is killed
   terminationGracePeriodSeconds: 30
   # -- Affinity for nginx pods. Passed through `tpl` and, thus, to be configured as string

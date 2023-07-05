@@ -9,8 +9,11 @@ ruler:
 
   resources:
     requests:
-      cpu: 100m
-      memory: 128Mi
+      cpu: 10m
+      memory: 28Mi
+    limits:
+      cpu: 20m
+      memory: 40Mi
 
   # Additional ruler container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}

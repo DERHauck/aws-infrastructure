@@ -3,7 +3,7 @@
 
 monitoring:
   # -- Specifies whether the monitoring should be enabled. Requires Prometheus Operator CRDs.
-  podMonitorEnabled: false
+  podMonitorEnabled: true
 
 # Default monitoring queries
 monitoringQueriesConfigMap:

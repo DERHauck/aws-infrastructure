@@ -4,6 +4,6 @@ resource "helm_release" "mimir" {
 
   repository = "https://grafana.github.io/helm-charts"
   chart      = "mimir-distributed"
-
+  timeout = 600
   values = local.templates
 }

@@ -22,10 +22,10 @@ spec:
 
   limits:
     resources:
-      cpu: 20
+      cpu: 30
   providerRef:
     name: default-spot
   consolidation:
     enabled: true
-  ttlSecondsUntilExpired: 86400 # 24 hours
+  ttlSecondsUntilExpired: 21600 # 6 hours | 86400 24 hours
   weight: 100

@@ -6,10 +6,18 @@ metadata:
   labels:
     logging: grafana-agent
 spec:
+  scrapeInterval: 30s
+  shards: 3
   remoteWrite:
     - url: ${mimir_service}
       headers:
         X-Scope-OrgID: kateops
+      QueueConfig:
+        capacity: 2500
+        minShards: 10
+        maxShards: 100
+        maxSamplesPerSend: 5000
+
 
 
   # Supply an empty namespace selector to look in all namespaces. Remove

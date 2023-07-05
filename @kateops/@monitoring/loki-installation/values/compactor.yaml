@@ -39,7 +39,13 @@ compactor:
   # -- Volumes to add to the compactor pods
   extraVolumes: []
   # -- Resource requests and limits for the compactor
-  resources: {}
+  resources:
+    requests:
+      cpu: 1m
+      memory: 60Mi
+    limits:
+      cpu: 10m
+      memory: 70Mi
   # -- Containers to add to the compactor pods
   extraContainers: []
   # -- Grace period to allow the compactor to shutdown before it is killed
