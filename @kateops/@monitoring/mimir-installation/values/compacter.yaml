@@ -12,8 +12,8 @@ compactor:
       cpu: 120m
       memory: 40Mi
     limits:
-      cpu: 600m
-      memory: 120Mi
+      cpu: 800m
+      memory: 1120Mi
 
   # Additional compactor container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}

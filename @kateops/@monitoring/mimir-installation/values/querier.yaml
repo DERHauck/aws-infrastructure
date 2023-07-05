@@ -1,6 +1,6 @@
 
 querier:
-  replicas: 2
+  replicas: 1
 
   service:
     annotations: {}
@@ -11,8 +11,8 @@ querier:
       cpu: 180m
       memory: 160Mi
     limits:
-      cpu: 500m
-      memory: 421Mi
+      cpu: 1000m
+      memory: 1421Mi
 
   # Additional querier container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}

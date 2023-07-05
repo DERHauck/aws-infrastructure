@@ -1,0 +1,21 @@
+memcached:
+  image:
+    # -- Memcached Docker image repository
+    repository: memcached
+    # -- Memcached Docker image tag
+    tag: 1.6.19-alpine
+    # -- Memcached Docker image pull policy
+    pullPolicy: IfNotPresent
+
+  # -- The SecurityContext override for memcached pods
+  podSecurityContext: {}
+
+  # -- The name of the PriorityClass for memcached pods
+  priorityClassName: null
+
+  # -- The SecurityContext for memcached containers
+  containerSecurityContext:
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop: [ALL]
+    allowPrivilegeEscalation: false

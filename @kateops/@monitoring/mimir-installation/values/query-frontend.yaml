@@ -1,6 +1,6 @@
 
 query_frontend:
-  replicas: 2
+  replicas: 1
 
   service:
     annotations: {}
@@ -11,8 +11,8 @@ query_frontend:
       cpu: 70m
       memory: 56Mi
     limits:
-      cpu: 580m
-      memory: 500Mi
+      cpu: 880m
+      memory: 1500Mi
 
   # Additional query-frontend container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}
