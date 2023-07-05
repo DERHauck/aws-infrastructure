@@ -7,7 +7,6 @@ metadata:
     logging: grafana-agent
 spec:
   scrapeInterval: 30s
-  shards: 3
   remoteWrite:
     - url: ${mimir_service}
       headers:

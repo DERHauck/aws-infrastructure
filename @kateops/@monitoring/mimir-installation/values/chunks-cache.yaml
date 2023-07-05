@@ -10,7 +10,7 @@ chunks-cache:
   port: 11211
 
   # -- Amount of memory allocated to chunks-cache for object storage (in MB).
-  allocatedMemory: 8192
+  allocatedMemory: 4096
 
   # -- Maximum item memory for chunks-cache (in MB).
   maxItemMemory: 1
@@ -62,10 +62,10 @@ chunks-cache:
   resources:
     requests:
       cpu: 100m
-      memory: 6Gi
+      memory: 3Gi
     limits:
       cpu: 800m
-      memory: 10Gi
+      memory: 5Gi
 
   # -- Service annotations and labels
   service:
