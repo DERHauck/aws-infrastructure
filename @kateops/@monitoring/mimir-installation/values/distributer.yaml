@@ -8,10 +8,10 @@ distributor:
 
   resources:
     requests:
-      cpu: 20m
+      cpu: 50m
       memory: 138Mi
     limits:
-      cpu: 150m
+      cpu: 250m
       memory: 1350Mi
   # Additional distributor container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}
