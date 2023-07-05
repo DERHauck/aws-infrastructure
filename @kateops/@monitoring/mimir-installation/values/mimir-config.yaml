@@ -219,3 +219,4 @@ mimir:
     limits:
       ingestion_rate: 600000
       ingestion_burst_size: 6000000
+      max_global_series_per_user: 10000000
