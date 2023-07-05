@@ -216,3 +216,6 @@ mimir:
       ring:
         replication_factor: 2
         zone_awareness_enabled: false
+    limits:
+      ingestion_rate: 600000
+      ingestion_burst_size: 6000000
