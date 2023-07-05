@@ -1,7 +1,7 @@
 
 results-cache:
   # -- Specifies whether memcached based results-cache should be enabled
-  enabled: false
+  enabled: true
 
   # -- Total number of results-cache replicas
   replicas: 1

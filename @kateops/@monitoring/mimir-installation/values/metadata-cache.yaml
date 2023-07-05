@@ -1,7 +1,7 @@
 
 metadata-cache:
   # -- Specifies whether memcached based metadata-cache should be enabled
-  enabled: false
+  enabled: true
 
   # -- Total number of metadata-cache replicas
   replicas: 1
@@ -59,7 +59,13 @@ metadata-cache:
 
   # -- Resource requests and limits for the metadata-cache
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
-  resources: null
+  resources:
+    requests:
+      cpu: 10m
+      memory: 500Mi
+    limits:
+      cpu: 100m
+      memory: 750Mi
 
   # -- Service annotations and labels
   service:

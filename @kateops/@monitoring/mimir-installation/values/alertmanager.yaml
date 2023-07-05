@@ -1,6 +1,6 @@
 
 alertmanager:
-  enabled: true
+  enabled: false
   replicas: 1
 
   statefulSet:
