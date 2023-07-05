@@ -8,10 +8,10 @@ querier:
 
   resources:
     requests:
-      cpu: 80m
+      cpu: 180m
       memory: 160Mi
     limits:
-      cpu: 350m
+      cpu: 500m
       memory: 421Mi
 
   # Additional querier container arguments, e.g. log level (debug, info, warn, error)
