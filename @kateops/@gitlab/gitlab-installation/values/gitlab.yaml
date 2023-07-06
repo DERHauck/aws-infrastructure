@@ -38,6 +38,8 @@ gitlab:
         cpu: 70m
         memory: 150M
   webservice:
+    shutdown:
+      blackoutSeconds: 25
     affinity:
       podAntiAffinity:
         topologyKey: "kubernetes.io/hostname"
@@ -47,16 +49,22 @@ gitlab:
           maxUnavailable: 1
         ingress:
           path: /
-        keda:
-          enabled: true
-          idleReplicaCount: 0
-          triggers:
-            - type: cron
-              metadata:
-                timezone: Europe/Berlin
-                start: 0 1 * * *
-                end: 0 0 * * *
-                desiredReplicas: "2"
+    keda:
+      enabled: true
+      idleReplicaCount: 0
+      triggers:
+        - type: cron
+          metadata:
+            timezone: Europe/Berlin
+            start: 0 10 * * *
+            end: 0 0 * * *
+            desiredReplicas: "2"
+        - type: cron
+          metadata:
+            timezone: Europe/Berlin
+            start: 0 0 * * *
+            end: 0 11 * * *
+            desiredReplicas: "2"
     ingress:
       tls:
         secretName: gitlab-gitlab-tls
@@ -68,7 +76,7 @@ gitlab:
         cpu: 300m
         memory: 2.5G
     deployment:
-      terminationGracePeriodSeconds: 100
+      terminationGracePeriodSeconds: 30
       livenessProbe:
         initialDelaySeconds: 60
         successThreshold: 1
@@ -92,8 +100,14 @@ gitlab:
         - type: cron
           metadata:
             timezone: Europe/Berlin
-            start: 0 1 * * *
+            start: 0 10 * * *
             end: 0 0 * * *
+            desiredReplicas: "2"
+        - type: cron
+          metadata:
+            timezone: Europe/Berlin
+            start: 0 0 * * *
+            end: 0 11 * * *
             desiredReplicas: "2"
     resources:
       limits:
