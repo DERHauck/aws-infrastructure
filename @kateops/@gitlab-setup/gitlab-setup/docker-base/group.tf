@@ -9,7 +9,7 @@ resource "gitlab_group_access_token" "docker_base" {
   group        = gitlab_group.docker_base.id
   name         = "Service Token"
   access_level = "maintainer"
-
+  expires_at = formatdate("YYYY-MM-DD" ,time_rotating.rotate.rotation_rfc3339)
   scopes = [
     "api",
     "read_registry",
@@ -17,6 +17,9 @@ resource "gitlab_group_access_token" "docker_base" {
   ]
 }
 
+resource "time_rotating" "rotate" {
+  rotation_months = 2
+}
 resource "vault_generic_secret" "docker_base_service_token" {
   path      = "kateops/gitlab/instance/base/service"
   data_json = jsonencode({

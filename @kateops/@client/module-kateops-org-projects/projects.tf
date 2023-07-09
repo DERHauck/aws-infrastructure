@@ -11,3 +11,18 @@ module "environment" {
   visibility = "internal"
   group_id = var.group_id
 }
+
+
+module "infrastructure" {
+  source = "./../../../module/gitlab/project"
+  name = "Infrastructure"
+  visibility = "internal"
+  group_id = var.group_id
+}
+
+module "Services" {
+  source = "./../../../module/gitlab/project"
+  name = "Services"
+  visibility = "internal"
+  group_id = var.group_id
+}
