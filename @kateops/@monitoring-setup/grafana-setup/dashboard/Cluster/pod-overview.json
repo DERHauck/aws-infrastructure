@@ -344,7 +344,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "(max_over_time(container_memory_allocation_bytes{container!=\"\", pod=\"$pod\",namespace=\"$namespace\"}[$__rate_interval]))",
+          "expr": "sum by (container) (max_over_time(container_memory_allocation_bytes{container!=\"\", pod=\"$pod\",namespace=\"$namespace\"}[$__rate_interval]))",
           "hide": false,
           "legendFormat": "requests-{{container}}",
           "range": true,
@@ -513,7 +513,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "rate(container_cpu_usage_seconds_total{pod=\"$pod\",namespace=\"$namespace\", container!=\"\"}[2m])",
+          "expr": "sum by (container) (rate(container_cpu_usage_seconds_total{pod=\"$pod\",namespace=\"$namespace\", container!=\"\"}[2m]))",
           "legendFormat": "usage-{{container}}",
           "range": true,
           "refId": "A"
@@ -524,7 +524,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "container_cpu_allocation{pod=\"$pod\",namespace=\"$namespace\", container!=\"\"}",
+          "expr": "sum by (container) (container_cpu_allocation{pod=\"$pod\",namespace=\"$namespace\", container!=\"\"})",
           "hide": false,
           "legendFormat": "requests-{{container}}",
           "range": true,
@@ -644,7 +644,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "rate(container_network_receive_bytes_total{pod=\"$pod\", namespace=\"$namespace\"}[2m])",
+          "expr": "sum(rate(container_network_receive_bytes_total{pod=\"$pod\", namespace=\"$namespace\"}[2m]))",
           "legendFormat": "Received",
           "range": true,
           "refId": "A"
@@ -655,7 +655,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "- rate(container_network_transmit_bytes_total{pod=\"$pod\", namespace=\"$namespace\"}[2m])",
+          "expr": "- sum (rate(container_network_transmit_bytes_total{pod=\"$pod\", namespace=\"$namespace\",}[2m]))",
           "hide": false,
           "legendFormat": "Sent",
           "range": true,
@@ -676,8 +676,12 @@
       {
         "current": {
           "selected": false,
-          "text": "gitlab",
-          "value": "gitlab"
+          "text": "security",
+          "value": "security"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "mimir-default"
         },
         "definition": "label_values(container_cpu_allocation, namespace)",
         "hide": 0,
@@ -698,8 +702,12 @@
       {
         "current": {
           "selected": false,
-          "text": "gitlab-webservice-default-7d788b6559-pszjp",
-          "value": "gitlab-webservice-default-7d788b6559-pszjp"
+          "text": "redis-replicas-0",
+          "value": "redis-replicas-0"
+        },
+        "datasource": {
+          "type": "prometheus",
+          "uid": "mimir-default"
         },
         "definition": "label_values(container_cpu_allocation{namespace=\"$namespace\"}, pod)",
         "hide": 0,
@@ -720,13 +728,13 @@
     ]
   },
   "time": {
-    "from": "now-12h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Pod Overview",
   "uid": "QAVpgZ9Vz",
-  "version": 5,
+  "version": 9,
   "weekStart": ""
 }
