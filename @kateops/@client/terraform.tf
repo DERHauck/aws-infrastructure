@@ -11,5 +11,9 @@ terraform {
       source = "gitlabhq/gitlab"
       version = "15.11.0"
     }
+    keycloak = {
+      source  = "mrparkers/keycloak"
+      version = ">= 3.0.0"
+    }
   }
 }

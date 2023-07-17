@@ -102,3 +102,39 @@ resource "kubectl_manifest" "vault_auth" {
     auth_role       = vault_kubernetes_auth_backend_role.kubernetes.role_name
   })
 }
+
+data "vault_generic_secret" "oidc" {
+  path = "admin/keycloak/oidc"
+}
+
+resource "vault_jwt_auth_backend_role" "this" {
+  backend       = "oidc"
+  role_name     = local.sanitized_name
+  role_type     = "oidc"
+  token_ttl     = 3600
+  token_max_ttl = 3600
+
+  bound_claims = {
+    "/resource_access/vault/roles" = local.sanitized_name
+  }
+
+  token_policies = [
+    vault_policy.this.name
+  ]
+  bound_audiences = [
+    data.vault_generic_secret.oidc.data.client_id
+  ]
+  user_claim      = "sub"
+  claim_mappings  = {
+    preferred_username = "username"
+    email              = "email"
+  }
+
+  allowed_redirect_uris = [
+    "https://vault.kateops.com/ui/vault/auth/oidc/oidc/callback",
+    "https://vault.kateops.com/oidc/callback",
+    "http://localhost:8250/oidc/callback"
+  ]
+  groups_claim = format("/resource_access/%s/roles",
+    data.vault_generic_secret.oidc.data.client_id  )
+}
