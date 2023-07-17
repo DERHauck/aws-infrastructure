@@ -7,6 +7,21 @@ resource "vault_kv_secret_v2" "keycloak" {
   })
 }
 
+resource "vault_kv_secret_v2" "keycloak_oidc" {
+  mount     = var.admin_mount_path
+  name      = "keycloak/oidc"
+  data_json = jsonencode({
+    client_id = var.keycloak_client_id
+    client_secret = var.keycloak_client_secret
+    redirect_urls = [
+      "https://vault.kateops.com/ui/vault/auth/oidc/oidc/callback",
+      "https://vault.kateops.com/oidc/callback",
+      "http://localhost:8250/oidc/callback"
+    ]
+  })
+}
+
+
 resource "vault_kv_secret_v2" "k8_kateops" {
   mount     = var.admin_mount_path
   name      = "k8/kateops"

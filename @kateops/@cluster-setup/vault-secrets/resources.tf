@@ -51,6 +51,9 @@ resource "vault_jwt_auth_backend_role" "reader" {
     email              = "email"
   }
 
+  bound_claims = {
+    "/resource_access/vault/roles" = "reader,management,admin"
+  }
   allowed_redirect_uris = [
     "https://vault.kateops.com/ui/vault/auth/oidc/oidc/callback",
     "https://vault.kateops.com/oidc/callback",
@@ -70,6 +73,11 @@ resource "vault_jwt_auth_backend_role" "admin" {
   token_policies = [
     vault_policy.admin_policy.name
   ]
+
+  bound_claims = {
+    "/resource_access/vault/roles" = "admin"
+  }
+
   bound_audiences = [var.keycloak_client_id]
   user_claim      = "sub"
   claim_mappings  = {
@@ -103,6 +111,10 @@ resource "vault_jwt_auth_backend_role" "management" {
     email              = "email"
   }
 
+
+  bound_claims = {
+    "/resource_access/vault/roles" = "management,admin"
+  }
   allowed_redirect_uris = [
     "https://vault.kateops.com/ui/vault/auth/oidc/oidc/callback",
     "https://vault.kateops.com/oidc/callback",
