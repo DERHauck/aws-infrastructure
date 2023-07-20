@@ -265,10 +265,10 @@ controller:
     resources:
       limits:
         cpu: 500m
-        memory: 128Mi
+        memory: 512Mi
       requests:
-        cpu: 10m
-        memory: 64Mi
+        cpu: 20m
+        memory: 128Mi
 
   # Sets the configuration settings used by the controller. Any custom changes will be reflected in the
   # data field of the configmap.
