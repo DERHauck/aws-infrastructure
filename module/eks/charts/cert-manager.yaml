@@ -128,8 +128,8 @@ resources:
     cpu: 10m
     memory: 90M
   limits:
-    cpu: 25m
-    memory: 140M
+    cpu: 55m
+    memory: 340M
 
 # Pod Security Context
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
