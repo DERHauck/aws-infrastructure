@@ -20,9 +20,15 @@ spec:
     - type: cron
       metadata:
         timezone: Europe/Berlin
-        start: 0 7 * * *
-        end: 0 4 * * *
+        start: 0 8 * * *
+        end: 0 0 * * *
         desiredReplicas: "2"
+    - type: cron
+      metadata:
+        timezone: Europe/Berlin
+        start: 0 0 * * *
+        end: 0 11 * * *
+        desiredReplicas: "1"
     - type: prometheus
       metadata:
         serverAddress: http://mimir-nginx.monitoring.svc.cluster.local:80
