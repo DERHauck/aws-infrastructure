@@ -56,7 +56,7 @@ gitlab:
         - type: cron
           metadata:
             timezone: Europe/Berlin
-            start: 0 10 * * *
+            start: 0 8 * * *
             end: 0 0 * * *
             desiredReplicas: "2"
         - type: cron
@@ -64,7 +64,7 @@ gitlab:
             timezone: Europe/Berlin
             start: 0 0 * * *
             end: 0 11 * * *
-            desiredReplicas: "2"
+            desiredReplicas: "1"
     ingress:
       tls:
         secretName: gitlab-gitlab-tls
@@ -100,7 +100,7 @@ gitlab:
         - type: cron
           metadata:
             timezone: Europe/Berlin
-            start: 0 10 * * *
+            start: 0 8 * * *
             end: 0 0 * * *
             desiredReplicas: "2"
         - type: cron
@@ -108,7 +108,7 @@ gitlab:
             timezone: Europe/Berlin
             start: 0 0 * * *
             end: 0 11 * * *
-            desiredReplicas: "2"
+            desiredReplicas: "1"
     resources:
       limits:
         cpu: 700m
