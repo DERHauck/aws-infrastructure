@@ -251,7 +251,10 @@ affinity: {}
 
 ## Tolerations for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/
-tolerations: []
+tolerations:
+  - key: type/gitlab-runner
+    operator: Exists
+    effect: NoSchedule
 
 ## Topology spread constraints for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
