@@ -35,16 +35,6 @@ resource "kubernetes_secret" "gitlab_s3_registry_credentials" {
   }
 }
 
-resource "kubernetes_secret" "gitlab_postgresql_secret" {
-  metadata {
-    name = "giltab-postgresql-secret"
-    namespace = var.namespace
-  }
-  data = {
-    (var.secret_key_name): var.rdbs.password
-  }
-}
-
 resource "kubernetes_secret" "gitlab_shell_secret" {
   metadata {
     name = "gitlab-shell-secret"

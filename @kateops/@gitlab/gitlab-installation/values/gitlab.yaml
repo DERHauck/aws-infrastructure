@@ -51,7 +51,7 @@ gitlab:
           path: /
     keda:
       enabled: true
-      idleReplicaCount: 0
+      idleReplicaCount: 1
       triggers:
         - type: cron
           metadata:
@@ -77,13 +77,6 @@ gitlab:
         memory: 2.5G
     deployment:
       terminationGracePeriodSeconds: 30
-      livenessProbe:
-        initialDelaySeconds: 60
-        successThreshold: 1
-        periodSeconds: 60
-      readinessProbe:
-        initialDelaySeconds: 10
-        successThreshold: 4
     metrics:
       serviceMonitor:
         enabled: true
@@ -95,7 +88,7 @@ gitlab:
         topologyKey: "kubernetes.io/hostname"
     keda:
       enabled: true
-      idleReplicaCount: 0
+      idleReplicaCount: 1
       triggers:
         - type: cron
           metadata:
