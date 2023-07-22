@@ -65,18 +65,6 @@ variable "region" {
   description = "Scaleway region default eu-central-1"
 }
 
-
-variable "rdbs" {
-  type = object({
-    host = string
-    username = string
-    password = string
-    port = number
-    database = string
-  })
-  description = "TF resource output of rdbs"
-}
-
 variable "cluster_issuer_arn" {
   type = string
   description = "Cluster issuer arn"
