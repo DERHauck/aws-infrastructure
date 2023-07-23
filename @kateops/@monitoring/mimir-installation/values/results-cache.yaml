@@ -59,7 +59,13 @@ results-cache:
 
   # -- Resource requests and limits for the results-cache
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
-  resources: null
+  resources:
+    requests:
+      cpu: 0.2
+      memory: 700Mi
+    limits:
+      cpu: 0.8
+      memory: 2Gi
 
   # -- Service annotations and labels
   service:

@@ -53,6 +53,7 @@
           },
           "mappings": [],
           "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -105,7 +106,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": " (sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_type_gitlab_runner=\"\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))))",
+          "expr": " (sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -127,6 +128,7 @@
           },
           "mappings": [],
           "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -179,7 +181,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": " (sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))))",
+          "expr": " (sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -291,7 +293,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": " (sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_type_gitlab_runner=\"\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))))",
+          "expr": " (sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))",
           "hide": false,
           "legendFormat": "CPU",
           "range": true,
@@ -403,7 +405,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": " (sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))))",
+          "expr": " (sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))",
           "hide": false,
           "legendFormat": "Memory",
           "range": true,
@@ -482,14 +484,14 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "quantile(0.95, avg(sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_type_gitlab_runner=\"\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))))",
+          "expr": "quantile(0.99, avg(sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))))",
           "hide": false,
           "legendFormat": "CPU",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "CPU 95th percentile",
+      "title": "CPU 99th percentile",
       "type": "stat"
     },
     {
@@ -538,6 +540,85 @@
         "x": 3,
         "y": 9
       },
+      "id": 33,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "quantile(0.50, avg(sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))))",
+          "hide": false,
+          "legendFormat": "CPU",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "CPU 50th percentile",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 9
+      },
       "id": 28,
       "options": {
         "colorMode": "value",
@@ -561,14 +642,93 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": " quantile(0.95, avg(sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))))",
+          "expr": " quantile(0.99, (sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))))",
           "hide": false,
           "legendFormat": "Memory",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "Memory 95th percentile",
+      "title": "Memory 99th percentile",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 9
+      },
+      "id": 32,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": " quantile(0.50, (sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))))",
+          "hide": false,
+          "legendFormat": "Memory",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Memory 50th percentile",
       "type": "stat"
     },
     {
@@ -596,6 +756,7 @@
           },
           "mappings": [],
           "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -648,7 +809,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))",
+          "expr": "(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -670,6 +831,7 @@
           },
           "mappings": [],
           "max": 1,
+          "min": 0,
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -722,7 +884,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))",
+          "expr": "(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -834,7 +996,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))",
+          "expr": "(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))",
           "hide": false,
           "legendFormat": "CPU",
           "range": true,
@@ -946,7 +1108,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"}))))",
+          "expr": "(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))",
           "hide": false,
           "legendFormat": "Memory",
           "range": true,
@@ -1025,14 +1187,14 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "quantile(0.95, avg(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))",
+          "expr": "quantile(0.99, avg(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))",
           "hide": false,
           "legendFormat": "CPU",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "CPU 95th percentile",
+      "title": "CPU 99th percentile",
       "type": "stat"
     },
     {
@@ -1081,6 +1243,85 @@
         "x": 3,
         "y": 22
       },
+      "id": 35,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "quantile(0.50, avg(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))",
+          "hide": false,
+          "legendFormat": "CPU",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "CPU 50th percentile",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 22
+      },
       "id": 31,
       "options": {
         "colorMode": "value",
@@ -1104,14 +1345,93 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "quantile(0.95, avg(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_type_gitlab_runner=\"\"})))))",
+          "expr": "quantile(0.99, avg(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))",
           "hide": false,
           "legendFormat": "Memory",
           "range": true,
           "refId": "B"
         }
       ],
-      "title": "Memory 95th percentile",
+      "title": "Memory 99th percentile",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 9,
+        "y": 22
+      },
+      "id": 34,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "quantile(0.50, avg(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))",
+          "hide": false,
+          "legendFormat": "Memory",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Memory 50th percentile",
       "type": "stat"
     },
     {
@@ -1852,7 +2172,7 @@
       "type": "row"
     }
   ],
-  "refresh": false,
+  "refresh": "",
   "revision": 1,
   "schemaVersion": 38,
   "style": "dark",
@@ -1861,13 +2181,13 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Cluster Overall",
   "uid": "lwCuB194z",
-  "version": 11,
+  "version": 15,
   "weekStart": ""
 }

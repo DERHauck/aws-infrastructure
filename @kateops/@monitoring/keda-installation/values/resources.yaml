@@ -2,8 +2,8 @@
 resources:
   operator:
     limits:
-      cpu: 200m
-      memory: 300Mi
+      cpu: 300m
+      memory: 600Mi
     requests:
       cpu: 100m
       memory: 200Mi
