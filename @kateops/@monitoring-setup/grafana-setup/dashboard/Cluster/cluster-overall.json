@@ -497,12 +497,124 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 1,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 27,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 4,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "log"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 29,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "((sum((rate(container_cpu_usage_seconds_total{pod!=\"\"}[2m])) * on (node) group_left() (((group by (node)(kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) + (sum((container_memory_working_set_bytes{container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))/ (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))))) / 2",
+          "hide": false,
+          "legendFormat": "Memory",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Combined Real Usage",
+      "type": "timeseries"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 13
       },
       "id": 14,
       "panels": [],
@@ -551,7 +663,7 @@
         "h": 8,
         "w": 3,
         "x": 0,
-        "y": 10
+        "y": 14
       },
       "id": 16,
       "options": {
@@ -628,7 +740,7 @@
         "h": 8,
         "w": 3,
         "x": 3,
-        "y": 10
+        "y": 14
       },
       "id": 22,
       "options": {
@@ -705,7 +817,7 @@
         "h": 8,
         "w": 3,
         "x": 6,
-        "y": 10
+        "y": 14
       },
       "id": 27,
       "options": {
@@ -819,7 +931,7 @@
         "h": 4,
         "w": 15,
         "x": 9,
-        "y": 10
+        "y": 14
       },
       "id": 17,
       "options": {
@@ -931,7 +1043,7 @@
         "h": 4,
         "w": 15,
         "x": 9,
-        "y": 14
+        "y": 18
       },
       "id": 23,
       "options": {
@@ -965,12 +1077,124 @@
       "type": "timeseries"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "series",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "axisSoftMax": 1,
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 27,
+            "gradientMode": "scheme",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 4,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "log": 2,
+              "type": "log"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 28,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "((sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))) + (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))) / 2",
+          "hide": false,
+          "legendFormat": "Memory",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Complete Resource Allocation ",
+      "type": "timeseries"
+    },
+    {
       "collapsed": true,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 18
+        "y": 26
       },
       "id": 4,
       "panels": [
@@ -1323,7 +1547,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 27
       },
       "id": 8,
       "panels": [
@@ -1721,6 +1945,6 @@
   "timezone": "",
   "title": "Cluster Overall",
   "uid": "lwCuB194z",
-  "version": 19,
+  "version": 20,
   "weekStart": ""
 }
