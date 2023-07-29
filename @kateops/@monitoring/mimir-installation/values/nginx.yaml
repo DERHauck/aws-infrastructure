@@ -3,7 +3,7 @@
 # Can only be enabled when 'enterprise.enabled' is false.
 nginx:
   # -- Specifies whether nginx should be enabled
-  enabled: true
+  enabled: false
   # -- Number of replicas for nginx
   replicas: 1
   # -- Enable logging of 2xx and 3xx HTTP requests

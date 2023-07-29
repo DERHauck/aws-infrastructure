@@ -1,6 +1,6 @@
 
 store_gateway:
-  replicas: 1
+  replicas: 2
 
   service:
     annotations: {}
@@ -9,10 +9,10 @@ store_gateway:
   resources:
     requests:
       cpu: 100m
-      memory: 170Mi
+      memory: 270Mi
     limits:
       cpu: 800m
-      memory: 520Mi
+      memory: 1Gi
 
   # Additional store-gateway container arguments, e.g. log level (debug, info, warn, error)
   extraArgs: {}
@@ -63,7 +63,7 @@ store_gateway:
 
     # Store-gateway data Persistent Volume size
     #
-    size: 2Gi
+    size: 4Gi
 
     # Subdirectory of Store-gateway data Persistent Volume to mount
     # Useful if the volume's root directory is not empty
