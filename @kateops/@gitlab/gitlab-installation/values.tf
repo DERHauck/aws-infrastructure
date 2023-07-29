@@ -2,7 +2,7 @@
 locals {
   vars = {
     secret_key_name: var.secret_key_name
-    postgresql_password_secret_name: "gitlab-cnpg-app" #kubernetes_secret.gitlab_postgresql_secret.metadata[0].name,
+    postgresql_password_secret_name: "gitlab-cnpg-cluster-app" #kubernetes_secret.gitlab_postgresql_secret.metadata[0].name,
     backup_secret_key_name: var.backup_secret_key_name
     gitlab_host_domain: var.gitlab_host_domain
     gitlab_domain_name: var.gitlab_domain_name
@@ -32,7 +32,7 @@ locals {
     redis_secret_key: var.secret_key_name
   }
   secrets= {
-    postgresql_host: "gitlab-cnpg-rw"#var.rdbs.host
+    postgresql_host: "gitlab-cnpg-cluster-rw"#var.rdbs.host
     postgresql_port: "5432"#var.rdbs.port
     postgresql_username: "app" #var.rdbs.username
     postgresql_database: "app"#var.rdbs.database
