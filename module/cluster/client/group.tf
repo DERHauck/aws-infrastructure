@@ -49,6 +49,13 @@ resource "vault_generic_secret" "docker_base_service_token" {
   })
 }
 
+resource "vault_generic_secret" "kubeconfig" {
+  path      = "${vault_mount.this.path}/kubernetes/production"
+  data_json = jsonencode({
+    KUBECONFIG = module.service-account-cicd.kubeconfig
+  })
+}
+
 resource "gitlab_group_variable" "kubernetes" {
   group = gitlab_group.this.id
   key   = "KUBECONFIG"
