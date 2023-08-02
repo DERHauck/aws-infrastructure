@@ -10,3 +10,7 @@ output "host" {
   value = "email-smtp.eu-central-1.amazonaws.com"
 }
 
+output "port" {
+  value = "465"
+}
+
