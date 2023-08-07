@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 10,
+  "id": 17,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -111,7 +111,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -127,7 +127,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (container) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))",
+          "expr": "sum by (pod) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -208,7 +208,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -224,7 +224,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(sum by (container) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) / (sum by (container) (max_over_time(container_memory_allocation_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval])))",
+          "expr": "(sum by (pod) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) / (sum by (pod) (max_over_time(container_memory_allocation_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval])))",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -317,7 +317,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -333,7 +333,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"\"}[5m])) by (container)    ",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"\"}[5m])) by (pod)    ",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -411,7 +411,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -427,7 +427,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "\n       sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (container) \n      / (sum by (container) (container_cpu_allocation{namespace=\"$namespace\"}))",
+          "expr": "\n       sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (pod) \n      / (sum by (pod) (container_cpu_allocation{namespace=\"$namespace\"}))",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -439,7 +439,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[$__range])) by (container)",
+          "expr": "sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[$__range])) by (pod)",
           "hide": true,
           "legendFormat": "__auto",
           "range": true,
@@ -451,7 +451,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "\n       sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (container) \n      /\n  \n\n      (sum by (container) (kube_pod_container_resource_requests{namespace=\"$namespace\"}) / 1000000000)\n\n",
+          "expr": "\n       sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (pod) \n      /\n  \n\n      (sum by (pod) (kube_pod_container_resource_requests{namespace=\"$namespace\"}) / 1000000000)\n\n",
           "hide": true,
           "legendFormat": "__auto",
           "range": true,
@@ -463,7 +463,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "sum by (container) (kube_pod_container_resource_requests{namespace=\"$namespace\"})",
+          "expr": "sum by (pod) (kube_pod_container_resource_requests{namespace=\"$namespace\"})",
           "hide": true,
           "legendFormat": "__auto",
           "range": true,
@@ -486,7 +486,7 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "monitoring",
           "value": "monitoring"
         },
@@ -521,6 +521,6 @@
   "timezone": "",
   "title": "Namespaces",
   "uid": "2qI55jPVz",
-  "version": 13,
+  "version": 2,
   "weekStart": ""
 }
