@@ -26,3 +26,11 @@ module "Services" {
   visibility = "internal"
   group_id = var.group_id
 }
+
+
+module "operator" {
+  source = "./../../../module/gitlab/project"
+  name = "Logic Operator"
+  visibility = "internal"
+  group_id = var.group_id
+}
