@@ -33,7 +33,7 @@ resource "aws_security_group" "postgres" {
 
 resource "aws_db_instance" "postgres" {
   engine = "postgres"
-  engine_version = "14.6"
+  engine_version = "14.7"
   db_name = "postgres_default"
   identifier = "${local.environment_name}-default"
   username = "master"
