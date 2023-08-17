@@ -41,6 +41,22 @@ resource "kubernetes_service_account" "vault" {
     namespace = kubernetes_namespace.this.metadata[0].name
   }
 }
+
+
+resource "vault_token" "terraform_service_token" {
+  policies = [
+    vault_policy.this.name
+  ]
+  display_name = "vault-service-token-${local.sanitized_name}"
+  ttl              = "700h"
+  renewable        = true
+  no_parent        = true
+  explicit_max_ttl = "700h"
+
+  metadata = {
+    "purpose" = "gitlab"
+  }
+}
 #
 #resource "kubernetes_role" "vault" {
 #  metadata {
