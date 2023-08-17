@@ -10,6 +10,13 @@ resource "time_rotating" "rotate" {
   rotation_months = 2
 }
 
+resource "gitlab_group_variable" "vault_service_token" {
+  group = gitlab_group.this.id
+  key   = "VAULT_SERVICE_TOKEN"
+  value = vault_token.terraform_service_token.client_token
+  variable_type = "env_var"
+}
+
 resource "gitlab_group_access_token" "this" {
   group        = gitlab_group.this.id
   name         = "Service Token"
