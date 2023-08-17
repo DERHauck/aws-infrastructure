@@ -25,7 +25,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 18,
+  "id": 19,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -111,7 +111,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -127,7 +127,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "(sum by (container) (max_over_time(container_memory_allocation_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) - (sum by (container) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) > 0",
+          "expr": "(sum by (pod) (max_over_time(container_memory_allocation_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) - (sum by (pod) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) > 0",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -208,7 +208,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -224,7 +224,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "1 - ((sum by (container) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) / (sum by (container) (max_over_time(container_memory_allocation_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) < 1)",
+          "expr": "1 - ((sum by (pod) (max_over_time(container_memory_working_set_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) / (sum by (pod) (max_over_time(container_memory_allocation_bytes{container!=\"\",namespace=\"$namespace\"}[$__rate_interval]))) < 1)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -317,7 +317,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -333,7 +333,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "((sum by (container) (container_cpu_allocation{namespace=\"$namespace\"})) - sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"\"}[5m])) by (container)) > 0    ",
+          "expr": "((sum by (pod) (container_cpu_allocation{namespace=\"$namespace\"})) - sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\",container!=\"\"}[5m])) by (pod)) > 0    ",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -411,7 +411,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -427,7 +427,7 @@
             "uid": "mimir-default"
           },
           "editorMode": "code",
-          "expr": "1 - (sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (container) \n      / (sum by (container) (container_cpu_allocation{namespace=\"$namespace\"})) < 1)",
+          "expr": "1 - (sum(rate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m])) by (pod) \n      / (sum by (pod) (container_cpu_allocation{namespace=\"$namespace\"})) < 1)",
           "hide": false,
           "legendFormat": "__auto",
           "range": true,
@@ -482,6 +482,6 @@
   "timezone": "",
   "title": "Namespaces Waste",
   "uid": "9UQ1Am34z",
-  "version": 3,
+  "version": 2,
   "weekStart": ""
 }

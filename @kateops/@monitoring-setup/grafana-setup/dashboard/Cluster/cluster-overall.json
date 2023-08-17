@@ -349,9 +349,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 15,
-        "x": 9,
-        "y": 1
+        "w": 24,
+        "x": 0,
+        "y": 9
       },
       "id": 24,
       "options": {
@@ -461,9 +461,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 15,
-        "x": 9,
-        "y": 5
+        "w": 24,
+        "x": 0,
+        "y": 13
       },
       "id": 25,
       "options": {
@@ -575,7 +575,7 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 17
       },
       "id": 29,
       "options": {
@@ -614,7 +614,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 21
       },
       "id": 14,
       "panels": [],
@@ -663,7 +663,7 @@
         "h": 8,
         "w": 3,
         "x": 0,
-        "y": 14
+        "y": 22
       },
       "id": 16,
       "options": {
@@ -740,7 +740,7 @@
         "h": 8,
         "w": 3,
         "x": 3,
-        "y": 14
+        "y": 22
       },
       "id": 22,
       "options": {
@@ -817,7 +817,7 @@
         "h": 8,
         "w": 3,
         "x": 6,
-        "y": 14
+        "y": 22
       },
       "id": 27,
       "options": {
@@ -851,6 +851,348 @@
       ],
       "title": "Combined Resource Allocation ",
       "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 9,
+        "y": 22
+      },
+      "id": 17,
+      "options": {
+        "bucketOffset": 0,
+        "combine": true,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "(sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))",
+          "hide": false,
+          "legendFormat": "CPU",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "CPU Resource Allocation ",
+      "type": "histogram"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 12,
+        "y": 22
+      },
+      "id": 33,
+      "options": {
+        "bucketOffset": 0,
+        "combine": true,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "(sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))",
+          "hide": false,
+          "legendFormat": "Memory",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Memory Resource Allocation ",
+      "type": "histogram"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "fillOpacity": 80,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineWidth": 1
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-red",
+                "value": null
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.3
+              },
+              {
+                "color": "#EAB839",
+                "value": 0.4
+              },
+              {
+                "color": "green",
+                "value": 0.5
+              },
+              {
+                "color": "dark-green",
+                "value": 0.8
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 3,
+        "x": 15,
+        "y": 22
+      },
+      "id": 34,
+      "options": {
+        "bucketOffset": 0,
+        "combine": true,
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        }
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "((sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))) + (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))) / 2",
+          "hide": false,
+          "legendFormat": "Memory",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Complete Resource Allocation ",
+      "type": "histogram"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "mimir-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "dark-green",
+                "value": null
+              },
+              {
+                "color": "semi-dark-green",
+                "value": 0.1
+              },
+              {
+                "color": "green",
+                "value": 0.2
+              },
+              {
+                "color": "orange",
+                "value": 0.3
+              },
+              {
+                "color": "dark-orange",
+                "value": 0.35
+              },
+              {
+                "color": "red",
+                "value": 0.4
+              },
+              {
+                "color": "dark-red",
+                "value": 0.5
+              }
+            ]
+          },
+          "unit": "percentunit"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 22
+      },
+      "id": 35,
+      "options": {
+        "displayMode": "lcd",
+        "minVizHeight": 10,
+        "minVizWidth": 0,
+        "orientation": "horizontal",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "1 - (sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))",
+          "hide": false,
+          "legendFormat": "Memory",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "mimir-default"
+          },
+          "editorMode": "code",
+          "expr": "1 - ((sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))",
+          "hide": false,
+          "legendFormat": "CPU",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Complete Resource Waste",
+      "type": "bargauge"
     },
     {
       "datasource": {
@@ -929,11 +1271,11 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 15,
-        "x": 9,
-        "y": 14
+        "w": 24,
+        "x": 0,
+        "y": 30
       },
-      "id": 17,
+      "id": 32,
       "options": {
         "legend": {
           "calcs": [],
@@ -1041,9 +1383,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 15,
-        "x": 9,
-        "y": 18
+        "w": 24,
+        "x": 0,
+        "y": 34
       },
       "id": 23,
       "options": {
@@ -1155,7 +1497,7 @@
         "h": 4,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 38
       },
       "id": 28,
       "options": {
@@ -1194,7 +1536,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 26
+        "y": 42
       },
       "id": 4,
       "panels": [
@@ -1246,8 +1588,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1308,7 +1649,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 19
+            "y": 27
           },
           "id": 1,
           "options": {
@@ -1415,8 +1756,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1478,7 +1818,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 29
+            "y": 37
           },
           "id": 2,
           "options": {
@@ -1547,7 +1887,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 43
       },
       "id": 8,
       "panels": [
@@ -1596,8 +1936,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1612,7 +1951,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 40
+            "y": 48
           },
           "id": 10,
           "options": {
@@ -1688,8 +2027,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1705,7 +2043,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 47
+            "y": 55
           },
           "id": 6,
           "options": {
@@ -1782,8 +2120,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1799,7 +2136,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 55
+            "y": 63
           },
           "id": 11,
           "options": {
@@ -1876,8 +2213,7 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green",
-                    "value": null
+                    "color": "green"
                   },
                   {
                     "color": "red",
@@ -1893,7 +2229,7 @@
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 62
+            "y": 70
           },
           "id": 12,
           "options": {
@@ -1945,6 +2281,6 @@
   "timezone": "",
   "title": "Cluster Overall",
   "uid": "lwCuB194z",
-  "version": 20,
+  "version": 22,
   "weekStart": ""
 }

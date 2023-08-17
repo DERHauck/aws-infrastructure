@@ -51,3 +51,12 @@ resource "gitlab_instance_variable" "kube_config" {
   variable_type = "file"
 }
 
+resource "gitlab_instance_variable" "vault_service_token" {
+  key   = "VAULT_SERVICE_TOKEN"
+  value = data.vault_generic_secret.vault_service_token.data["terraform"]
+  variable_type = "file"
+}
+
+data "vault_generic_secret" "vault_service_token" {
+  path = "admin/service"
+}
