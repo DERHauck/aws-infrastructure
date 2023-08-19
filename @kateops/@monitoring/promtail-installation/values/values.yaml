@@ -135,7 +135,7 @@ tolerations:
     effect: NoSchedule
   - key: type/gitlab-runner
     operator: Exists
-    effect: NoSchedule
+    effect: NoExecute
 
 # -- Default volumes that are mounted into pods. In most cases, these should not be changed.
 # Use `extraVolumes`/`extraVolumeMounts` for additional custom volumes.
