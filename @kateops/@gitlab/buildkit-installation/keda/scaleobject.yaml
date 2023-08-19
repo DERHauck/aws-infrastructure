@@ -10,23 +10,15 @@ spec:
     name: ${name}
   pollingInterval: 3
   cooldownPeriod: 30
-  idleReplicaCount: 0
-  minReplicaCount: 0
+  idleReplicaCount: 1
+  minReplicaCount: 1
   maxReplicaCount: 10
   advanced:
     restoreToOriginalReplicaCount: false
-    horizontalPodAutoscalerConfig:
-
   triggers:
-    - type: cron
+    - type: prometheus
       metadata:
-        timezone: Europe/Berlin
-        start: 0 10 * * *
-        end: 0 9 * * *
-        desiredReplicas: "1"
-    - type: cron
-      metadata:
-        timezone: Europe/Berlin
-        start: 0 5 * * *
-        end: 0 4 * * *
-        desiredReplicas: "1"
+        serverAddress: http://mimir-query-frontend.monitoring.svc.cluster.local:8080/prometheus
+        query: sum(rate(container_cpu_usage_seconds_total{pod=~"buildkitd-.*", cpu="total"}[2m])) / sum(container_cpu_allocation{pod=~"buildkitd-.*"})
+        threshold: '2'
+        customHeaders: X-Scope-OrgID=kateops

@@ -25,7 +25,7 @@ resource "kubernetes_deployment" "buildkit" {
             }
             requests = {
               cpu = "300m"
-              memory = "3.5G"
+              memory = "1.5G"
             }
           }
           name = local.app
@@ -136,5 +136,19 @@ resource "kubernetes_service" "buildkit" {
       protocol = "TCP"
     }
     selector = local.labels
+  }
+}
+
+resource "kubernetes_pod_disruption_budget" "buildkit" {
+  metadata {
+    labels = local.labels
+    namespace = local.namespace
+    name = "${local.app}-pdb"
+  }
+  spec {
+    selector {
+      match_labels = local.labels
+    }
+    min_available = "1"
   }
 }
