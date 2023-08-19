@@ -69,22 +69,33 @@ resource "kubernetes_role" "this" {
   }
 }
 
-#resource "kubernetes_cluster_role_binding" "this" {
-#  metadata {
-#    name = "cicd-crb-${kubernetes_role.this.metadata[0].name}"
-#  }
-#  role_ref {
-#    api_group = "rbac.authorization.k8s.io"
-#    kind      = "ClusterRole"
-#    name      = "edit"
-#  }
-#
-#  subject {
-#    kind = "ServiceAccount"
-#    name = kubernetes_service_account.this.metadata[0].name
-#    namespace = kubernetes_service_account.this.metadata[0].namespace
-#  }
-#}
+resource "kubernetes_cluster_role" "this" {
+  metadata {
+    name = "${kubernetes_role.this.metadata[0].name}-cluster"
+  }
+  rule {
+    api_groups = [""]
+    resources = ["pods"]
+    verbs = ["list"]
+  }
+}
+
+resource "kubernetes_cluster_role_binding" "this" {
+  metadata {
+    name = "cicd-crb-${kubernetes_role.this.metadata[0].name}"
+  }
+  role_ref {
+    api_group = "rbac.authorization.k8s.io"
+    kind      = "ClusterRole"
+    name      = "edit"
+  }
+
+  subject {
+    kind = "ServiceAccount"
+    name = kubernetes_service_account.this.metadata[0].name
+    namespace = kubernetes_service_account.this.metadata[0].namespace
+  }
+}
 
 
 resource "kubernetes_role_binding" "this" {
