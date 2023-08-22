@@ -17,6 +17,13 @@ resource "kubernetes_deployment" "buildkit" {
         }
       }
       spec {
+        affinity {
+          pod_anti_affinity {
+            required_during_scheduling_ignored_during_execution {
+              topology_key = "kubernetes.io/hostname"
+            }
+          }
+        }
         container {
           resources {
             limits = {
