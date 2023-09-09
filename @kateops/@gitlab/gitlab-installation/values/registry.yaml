@@ -3,7 +3,7 @@ registry:
   enabled: true
   resources:
     requests:
-      cpu: 50m
+      cpu: 90m
       memory: 32Mi
     limits:
       cpu: 200m
@@ -16,10 +16,10 @@ registry:
     maxReplicas: 10
     cpu:
       targetType: Utilization
-      targetAverageUtilization: 75
+      targetAverageUtilization: 95
     memory:
       targetType: Utilization
-      targetAverageUtilization: 75
+      targetAverageUtilization: 95
 
   ingress:
     tls:
