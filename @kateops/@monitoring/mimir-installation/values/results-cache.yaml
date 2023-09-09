@@ -61,7 +61,7 @@ results-cache:
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
-      cpu: 0.2
+      cpu: 0.050
       memory: 700Mi
     limits:
       cpu: 0.8
