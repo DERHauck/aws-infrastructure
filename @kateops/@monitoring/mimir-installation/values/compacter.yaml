@@ -1,7 +1,7 @@
 
 
 compactor:
-  replicas: 1
+  replicas: 2
 
   service:
     annotations: {}
@@ -9,7 +9,7 @@ compactor:
 
   resources:
     requests:
-      cpu: 120m
+      cpu: 20m
       memory: 40Mi
     limits:
       cpu: 800m

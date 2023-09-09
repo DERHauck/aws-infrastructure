@@ -1,6 +1,6 @@
 
 querier:
-  replicas: 1
+  replicas: 2
 
   service:
     annotations: {}
@@ -8,7 +8,7 @@ querier:
 
   resources:
     requests:
-      cpu: 180m
+      cpu: 20m
       memory: 160Mi
     limits:
       cpu: 1000m
