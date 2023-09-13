@@ -34,3 +34,10 @@ module "operator" {
   visibility = "internal"
   group_id = var.group_id
 }
+
+module "kapigen" {
+  source = "./../../../module/gitlab/project"
+  name = "Kapigen"
+  visibility = "internal"
+  group_id = var.group_id
+}
