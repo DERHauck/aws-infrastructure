@@ -22,6 +22,7 @@ module "gitlab_runner" {
   memory_limit = each.value["memory_limit"]
   service_memory_limit = try(each.value["service_memory_limit"], null)
   helper_memory_limit = try(each.value["helper_memory_limit"], null)
+  anti_affinity = try(each.value["anti_affinity"], null)
 }
 
 locals {
@@ -33,6 +34,16 @@ locals {
     high = {
       cpu_limit = "1000m"
       memory_limit = "4Gi"
+    }
+    buildkit = {
+      cpu_limit = "1000m"
+      memory_limit = "4Gi"
+      anti_affinity = {
+        topology_key = "kubernetes.io/hostname"
+        key = "type/gitlab-runner"
+        operator = "In"
+        values = ["buildkit"]
+      }
     }
   }
 }

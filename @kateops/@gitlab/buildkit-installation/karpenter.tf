@@ -1,10 +1,7 @@
-locals {
-  labels = {
-    "type/gitlab-runner" = "buildkit"
-  }
-}
-resource "kubectl_manifest" "buildkit" {
-  yaml_body = templatefile("${path.module}/buildkit/provsioner.karpenter.yaml", {
-    labels = local.labels
+resource "kubectl_manifest" "karpenter" {
+  yaml_body = templatefile("${path.module}/karpenter/provisioner.karpenter.yaml", {
+    labels = {
+      "type/gitlab-runner" = "buildkit"
+    }
   })
 }

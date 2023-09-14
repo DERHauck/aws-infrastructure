@@ -90,3 +90,15 @@ variable "helper_memory_limit" {
   default = "300Mi"
   nullable = false
 }
+
+variable "anti_affinity" {
+  type = object({
+    topology_key = string
+    key = string
+    operator = string
+    values = list(string)
+  })
+  description = "anti affinity for runner pods"
+  default = null
+  nullable = true
+}

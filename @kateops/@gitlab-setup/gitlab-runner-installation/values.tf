@@ -19,6 +19,7 @@ locals {
     service_cpu_limit = var.service_cpu_limit
     service_memory_limit = var.service_memory_limit
 
+    anti_affinity = var.anti_affinity
 
   }
   secrets = {
