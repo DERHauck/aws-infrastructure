@@ -36,7 +36,16 @@ runners:
             BucketLocation = "${region}"
             Insecure = false
             AuthenticationType = "access-key"
-
+      %{ if anti_affinity != null }
+          [runners.kubernetes.affinity.pod_anti_affinity]
+            [[runners.kubernetes.affinity.pod_anti_affinity.required_during_scheduling_ignored_during_execution]]
+              topology_key = "${anti_affinity.topology_key}"
+              [runners.kubernetes.affinity.pod_anti_affinity.required_during_scheduling_ignored_during_execution.label_selector]
+              [[runners.kubernetes.affinity.pod_anti_affinity.required_during_scheduling_ignored_during_execution.label_selector.match_expressions]]
+                key = "${anti_affinity.key}"
+                operator = "${anti_affinity.operator}"
+                values = ${jsonencode(anti_affinity.values)}  
+      %{ endif }
   ## Which executor should be used
   ##
   executor: kubernetes

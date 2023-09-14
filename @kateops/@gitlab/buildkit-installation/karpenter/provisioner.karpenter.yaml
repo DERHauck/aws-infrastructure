@@ -1,0 +1,36 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: runner-buildkit
+spec:
+  requirements:
+    - key: "topology.kubernetes.io/zone"
+      operator: In
+      values:
+        - "eu-central-1a"
+    - key: karpenter.sh/capacity-type
+      operator: In
+      values: ["spot", "on-demand"]
+    - key: "karpenter.k8s.aws/instance-cpu"
+      operator: Gt
+      values: ["4"]
+
+  labels:
+%{ for key,value in labels }
+    ${key}: ${value}
+%{ endfor }
+  taints:
+%{ for key,value in labels }
+    - key: ${key}
+      effect: NoExecute
+      value: "${value}"
+%{ endfor }
+
+  limits:
+    resources:
+      cpu: 20
+  providerRef:
+    name: default-spot
+  ttlSecondsAfterEmpty: 60
+  ttlSecondsUntilExpired: 6000
+  weight: 100
