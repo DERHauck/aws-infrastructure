@@ -37,8 +37,8 @@ locals {
       memory_limit = "4Gi"
     }
     buildkit = {
-      cpu_limit = "1000m"
-      memory_limit = "4Gi"
+      cpu_limit = "3000m"
+      memory_limit = "8Gi"
       provisioner_name = "buildkit"
       anti_affinity = {
         topology_key = "kubernetes.io/hostname"

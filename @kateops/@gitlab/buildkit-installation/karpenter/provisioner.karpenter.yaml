@@ -13,7 +13,13 @@ spec:
       values: ["spot", "on-demand"]
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
-      values: ["4"]
+      values: ["3"]
+    - key: "karpenter.k8s.aws/instance-cpu"
+      operator: Lt
+      values: ["9"]
+    - key: "karpenter.k8s.aws/instance-memory"
+      operator: Gt
+      values: ["10000"]
 
   labels:
 %{ for key,value in labels }
@@ -28,9 +34,9 @@ spec:
 
   limits:
     resources:
-      cpu: 20
+      cpu: 40
   providerRef:
     name: default-spot
-  ttlSecondsAfterEmpty: 60
+  ttlSecondsAfterEmpty: 6
   ttlSecondsUntilExpired: 6000
   weight: 100
