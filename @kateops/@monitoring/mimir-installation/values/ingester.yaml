@@ -1,6 +1,6 @@
 
 ingester:
-  replicas: 3
+  replicas: 4
 
   statefulSet:
     enabled: true
