@@ -22,6 +22,10 @@ runners:
 %{ for key,value in node_selector }
         "${key}=${value}" = "NoExecute"
 %{ endfor }
+      [runners.kubernetes.pod_labels]
+        %{ for key,value in node_selector }
+          "${key}" = "${value}"
+        %{ endfor }
         [runners.cache]
           Type = "s3"
           Path = "runner"

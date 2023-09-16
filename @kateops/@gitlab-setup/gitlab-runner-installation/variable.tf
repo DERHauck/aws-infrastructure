@@ -102,3 +102,10 @@ variable "anti_affinity" {
   default = null
   nullable = true
 }
+
+variable "provisioner_name" {
+  type = string
+  default = "default"
+  nullable = false
+  description = "karpenter provisioner to use for type/gitlab-runner"
+}
