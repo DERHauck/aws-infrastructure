@@ -1,6 +1,6 @@
 locals {
   labels = {
-    "type/gitlab-runner" = "default"
+    "type/gitlab-runner" = var.provisioner_name
   }
   vars = {
     concurrency: var.concurrency
