@@ -254,7 +254,7 @@ affinity: {}
 tolerations:
   - key: type/gitlab-runner
     operator: Exists
-    effect: NoSchedule
+    effect: NoExecute
 
 ## Topology spread constraints for pod assignment
 ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
