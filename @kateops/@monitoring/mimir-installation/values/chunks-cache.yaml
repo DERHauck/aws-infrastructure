@@ -61,7 +61,7 @@ chunks-cache:
   # By default a safe memory limit will be requested based on allocatedMemory value (floor (* 1.2 allocatedMemory)).
   resources:
     requests:
-      cpu: 100m
+      cpu: 10m
       memory: 1Gi
     limits:
       cpu: 800m
