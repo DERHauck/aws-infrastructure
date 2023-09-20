@@ -23,7 +23,8 @@ distributor:
   podAnnotations: {}
 
   # Pod Disruption Budget
-  podDisruptionBudget: {}
+  podDisruptionBudget:
+    maxUnavailable: 1
 
   # -- The name of the PriorityClass for distributor pods
   priorityClassName: null

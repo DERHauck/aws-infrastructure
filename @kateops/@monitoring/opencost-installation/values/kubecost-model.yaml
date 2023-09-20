@@ -28,8 +28,8 @@ kubecostModel:
   maxQueryConcurrency: 5
   resources:
     requests:
-      cpu: "150m"
-      memory: "364Mi"
+      cpu: "50m"
+      memory: "164Mi"
     limits:
       cpu: "220m"
       memory: "556Mi"

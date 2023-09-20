@@ -25,7 +25,8 @@ compactor:
   podAnnotations: {}
 
   # Pod Disruption Budget
-  podDisruptionBudget: {}
+  podDisruptionBudget:
+    maxUnavailable: 1
 
   # -- The name of the PriorityClass for compactor pods
   priorityClassName: null
