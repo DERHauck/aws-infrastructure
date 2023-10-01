@@ -2,7 +2,7 @@
 
 ## EKS
 single cluster
-## RDS (Postgresql)
+## RDS (Postgresql) TODO remove
 single cluster
 ## Redis
 single cluster
