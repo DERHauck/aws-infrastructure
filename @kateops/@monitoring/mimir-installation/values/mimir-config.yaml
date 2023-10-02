@@ -214,7 +214,7 @@ mimir:
   structuredConfig:
     ingester:
       ring:
-        replication_factor: 2
+        replication_factor: 3
         zone_awareness_enabled: false
     limits:
       ingestion_rate: 600000
