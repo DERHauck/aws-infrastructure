@@ -1,6 +1,6 @@
 
 ingester:
-  replicas: 4
+  replicas: 5
 
   statefulSet:
     enabled: true
@@ -30,7 +30,7 @@ ingester:
 
   # Pod Disruption Budget
   podDisruptionBudget:
-    maxUnavailable: 2
+    maxUnavailable: 1
 
   podManagementPolicy: Parallel
 
