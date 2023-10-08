@@ -1522,7 +1522,7 @@
           "editorMode": "code",
           "expr": "((sum((kube_pod_container_resource_requests{resource=\"cpu\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_cpu_cores{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))) + (sum((kube_pod_container_resource_requests{resource=\"memory\", pod!~\"ksm.*\", container!=\"\"}) * on (node) group_left() (((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"})))))) / sum((kube_node_status_allocatable_memory_bytes{}) * on (node) group_left() ((group by (node) (kube_node_labels{label_karpenter_sh_provisioner_name=\"default-spot\"}))))) / 2",
           "hide": false,
-          "legendFormat": "Memory",
+          "legendFormat": "Complete",
           "range": true,
           "refId": "B"
         }
@@ -1588,7 +1588,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -1649,7 +1650,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 43
           },
           "id": 1,
           "options": {
@@ -1660,7 +1661,7 @@
               "showLegend": true
             },
             "tooltip": {
-              "mode": "single",
+              "mode": "multi",
               "sort": "none"
             }
           },
@@ -1756,7 +1757,8 @@
                 "mode": "absolute",
                 "steps": [
                   {
-                    "color": "green"
+                    "color": "green",
+                    "value": null
                   },
                   {
                     "color": "red",
@@ -1818,7 +1820,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 37
+            "y": 53
           },
           "id": 2,
           "options": {
@@ -1829,7 +1831,7 @@
               "showLegend": true
             },
             "tooltip": {
-              "mode": "single",
+              "mode": "multi",
               "sort": "none"
             }
           },
@@ -2281,6 +2283,6 @@
   "timezone": "",
   "title": "Cluster Overall",
   "uid": "lwCuB194z",
-  "version": 22,
+  "version": 26,
   "weekStart": ""
 }
