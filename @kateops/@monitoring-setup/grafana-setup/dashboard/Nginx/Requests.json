@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 7,
+  "id": 4,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -86,7 +86,8 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         }
       },
       "pluginVersion": "9.0.5",
@@ -150,7 +151,7 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "9.0.5",
+      "pluginVersion": "9.4.7",
       "targets": [
         {
           "datasource": {
@@ -215,6 +216,8 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
             "axisLabel": "",
             "axisPlacement": "auto",
             "barAlignment": 0,
@@ -270,10 +273,11 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom"
+          "placement": "bottom",
+          "showLegend": true
         },
         "tooltip": {
-          "mode": "single",
+          "mode": "multi",
           "sort": "none"
         }
       },
@@ -289,9 +293,126 @@
           "legendFormat": "{{http_status}}",
           "queryType": "range",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "sum (sum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[1m] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 600)))\n",
+          "hide": false,
+          "legendFormat": "Total",
+          "queryType": "range",
+          "refId": "B"
         }
       ],
       "title": "Status per Minute",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 16
+      },
+      "id": 18,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.0.5",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "\nsum by (service) (count_over_time(\n{app=\"ingress-nginx\"}[1m] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 600))\n",
+          "legendFormat": "{{service}}",
+          "queryType": "range",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "sum (sum by (http_status) (count_over_time(\n{app=\"ingress-nginx\"}[1m] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 600)))\n",
+          "hide": false,
+          "legendFormat": "Total",
+          "queryType": "range",
+          "refId": "B"
+        }
+      ],
+      "title": "Service per Minute",
       "type": "timeseries"
     },
     {
@@ -300,7 +421,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 24
       },
       "id": 4,
       "panels": [
@@ -348,172 +469,173 @@
       "type": "row"
     },
     {
-      "collapsed": true,
+      "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 25
       },
       "id": 10,
-      "panels": [
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki-default"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 24,
-            "x": 0,
-            "y": 28
-          },
-          "id": 15,
-          "options": {
-            "colorMode": "background",
-            "graphMode": "none",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.0.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "loki",
-                "uid": "loki-default"
-              },
-              "editorMode": "code",
-              "expr": "\nsum by (service) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 600 |service!=\"\"))\n",
-              "legendFormat": "{{service}}",
-              "queryType": "range",
-              "refId": "A"
-            }
-          ],
-          "title": "Requests by Services",
-          "type": "stat"
-        },
-        {
-          "datasource": {
-            "type": "loki",
-            "uid": "loki-default"
-          },
-          "fieldConfig": {
-            "defaults": {
-              "color": {
-                "mode": "thresholds"
-              },
-              "mappings": [],
-              "thresholds": {
-                "mode": "absolute",
-                "steps": [
-                  {
-                    "color": "green",
-                    "value": null
-                  },
-                  {
-                    "color": "yellow",
-                    "value": 10
-                  },
-                  {
-                    "color": "orange",
-                    "value": 100
-                  },
-                  {
-                    "color": "red",
-                    "value": 1000
-                  },
-                  {
-                    "color": "dark-red",
-                    "value": 10000
-                  }
-                ]
-              }
-            },
-            "overrides": []
-          },
-          "gridPos": {
-            "h": 8,
-            "w": 24,
-            "x": 0,
-            "y": 37
-          },
-          "id": 17,
-          "options": {
-            "colorMode": "background",
-            "graphMode": "area",
-            "justifyMode": "center",
-            "orientation": "auto",
-            "reduceOptions": {
-              "calcs": [
-                "lastNotNull"
-              ],
-              "fields": "",
-              "values": false
-            },
-            "textMode": "auto"
-          },
-          "pluginVersion": "9.0.5",
-          "targets": [
-            {
-              "datasource": {
-                "type": "loki",
-                "uid": "loki-default"
-              },
-              "editorMode": "code",
-              "expr": "\nsum by (service) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 300 or http_status < 200 |service!=\"\"))\n",
-              "legendFormat": "{{service}}",
-              "queryType": "range",
-              "refId": "A"
-            }
-          ],
-          "title": "Errors",
-          "type": "stat"
-        }
-      ],
+      "panels": [],
       "title": "Services",
       "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 26
+      },
+      "id": 15,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "none",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "\nsum by (service) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 100 | http_status < 600 |service!=\"\"))\n",
+          "legendFormat": "{{service}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Requests by Services",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "loki",
+        "uid": "loki-default"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 10
+              },
+              {
+                "color": "orange",
+                "value": 100
+              },
+              {
+                "color": "red",
+                "value": 1000
+              },
+              {
+                "color": "dark-red",
+                "value": 10000
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 35
+      },
+      "id": 17,
+      "options": {
+        "colorMode": "background",
+        "graphMode": "area",
+        "justifyMode": "center",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "9.4.7",
+      "targets": [
+        {
+          "datasource": {
+            "type": "loki",
+            "uid": "loki-default"
+          },
+          "editorMode": "code",
+          "expr": "\nsum by (service) (count_over_time(\n{app=\"ingress-nginx\"}[24h] | pattern `<_> [<time>] \"<method> <request_uri> <http_version>\" <http_status> <_> \"<_>\" \"<agent>\" <_> [<service>]` |http_status=~\"^[0-9]*$\" |http_status >= 300 or http_status < 200 |service!=\"\"))\n",
+          "legendFormat": "{{service}}",
+          "queryType": "range",
+          "refId": "A"
+        }
+      ],
+      "title": "Errors",
+      "type": "stat"
     }
   ],
-  "schemaVersion": 36,
+  "refresh": false,
+  "revision": 1,
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": []
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "Logs",
   "uid": "BMMc7jOVk",
-  "version": 4,
+  "version": 1,
   "weekStart": ""
 }
