@@ -342,11 +342,11 @@ server:
 
   resources:
     requests:
-      memory: 256Mi
-      cpu: 50m
+      memory: 80Mi
+      cpu: 30m
     limits:
       memory: 300Mi
-      cpu: 300m
+      cpu: 100m
 
   # Ingress allows ingress services to be created to allow external access
   # from Kubernetes to access Vault pods.
