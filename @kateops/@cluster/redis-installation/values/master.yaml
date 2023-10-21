@@ -114,7 +114,7 @@ master:
       memory: 128Mi
     requests:
       cpu: 50m
-      memory: 100Mi
+      memory: 50Mi
 
   ## Configure Pods Security Context
   ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/#set-the-security-context-for-a-pod

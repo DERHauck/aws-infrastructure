@@ -3,7 +3,7 @@ resource "helm_release" "gitlab" {
   name  = "gitlab"
   namespace = var.namespace
 
-  version = "7.5.0"
+  version = "7.4.1"
   repository = "https://charts.gitlab.io/"
   values = local.templates
   timeout = 600

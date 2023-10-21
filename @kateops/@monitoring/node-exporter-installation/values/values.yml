@@ -346,6 +346,9 @@ tolerations:
   - key: type/gitlab-runner
     operator: Exists
     effect: NoExecute
+  - key: provisioner/stable
+    operator: Exists
+    effect: NoSchedule
 ## Configure extra options for liveness probe
 ## ref: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-probes/#configure-probes
 ## @param livenessProbe.enabled Enable livenessProbe

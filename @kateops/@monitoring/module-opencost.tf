@@ -3,7 +3,7 @@ module "opencost" {
   namespace = kubernetes_namespace.this.metadata[0].name
 
   host_domain = "opencost.kateops.com"
-  fqdn_prometheus_service = "http://mimir-nginx:80"
+  fqdn_prometheus_service = "http://mimir-gateway:80"
   grafana_service = "grafana-default:80"
   storage_class = "efs-sc"
 }

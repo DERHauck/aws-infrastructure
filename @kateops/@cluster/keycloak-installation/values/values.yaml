@@ -136,8 +136,12 @@ keycloakConfigCli:
     enabled: true
     fsGroup: 1001
   resources:
-    limits: { }
-    requests: { }
+    limits:
+      cpu: 100m
+      memory: 2Gi
+    requests:
+      cpu: 10m
+      memory: 750Mi
 kubeVersion: ""
 lifecycleHooks: { }
 livenessProbe:
