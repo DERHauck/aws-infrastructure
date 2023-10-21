@@ -1,0 +1,16 @@
+
+# External Redis parameters
+externalRedis:
+  # -- External Redis server host
+  host: "${redis_host}"
+  # -- External Redis username
+  username: ""
+  # -- External Redis password
+  password: ""
+  # -- External Redis server port
+  port: ${redis_port}
+  # -- The name of an existing secret with Redis credentials (must contain key `redis-password`).
+  # When it's set, the `externalRedis.password` parameter is ignored
+  existingSecret: "${redis_secret_name}"
+  # -- External Redis Secret annotations
+  secretAnnotations: {}
