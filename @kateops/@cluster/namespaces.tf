@@ -15,4 +15,3 @@ resource "kubernetes_namespace" "security" {
     }
   }
 }
-
