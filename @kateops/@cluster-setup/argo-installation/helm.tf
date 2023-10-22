@@ -6,4 +6,8 @@ resource "helm_release" "argo" {
   chart      = "argo-cd"
   values     = local.templates
   version    = "5.46.8"
+  depends_on = [
+    kubernetes_config_map.cm,
+    kubernetes_secret.argo
+  ]
 }

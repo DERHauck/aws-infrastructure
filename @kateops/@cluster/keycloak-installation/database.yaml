@@ -1,0 +1,72 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: keycloak-cluster
+  namespace: ${namespace}
+spec:
+  affinity:
+    podAntiAffinityType: preferred
+    topologyKey: 'kubernetes.io/hostname'
+  bootstrap:
+    initdb:
+      import:
+        databases:
+          - keycloak_db
+        source:
+          externalCluster: rds
+        type: microservice
+  externalClusters:
+    - name: rds
+      connectionParameters:
+        host: production-default.ckjdxrw2nivd.eu-central-1.rds.amazonaws.com
+        user: master
+        dbname: postgres_default
+      password:
+        name: rds
+        key: password
+  enableSuperuserAccess: true
+  failoverDelay: 0
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.3
+  imagePullPolicy: Always
+  instances: 1
+  logLevel: info
+  maxSyncReplicas: 0
+  minSyncReplicas: 0
+  postgresGID: 26
+  postgresUID: 26
+  postgresql:
+    parameters:
+      archive_mode: 'on'
+      archive_timeout: 5min
+      dynamic_shared_memory_type: posix
+      log_destination: csvlog
+      log_directory: /controller/log
+      log_filename: postgres
+      log_rotation_age: '0'
+      log_rotation_size: '0'
+      log_truncate_on_rotation: 'false'
+      logging_collector: 'on'
+      max_parallel_workers: '32'
+      max_replication_slots: '32'
+      max_worker_processes: '32'
+      shared_memory_type: mmap
+      shared_preload_libraries: ''
+      wal_keep_size: 512MB
+      wal_receiver_timeout: 5s
+      wal_sender_timeout: 5s
+    syncReplicaElectionConstraint:
+      enabled: false
+  primaryUpdateMethod: restart
+  primaryUpdateStrategy: unsupervised
+  replicationSlots:
+    highAvailability:
+      enabled: false
+      slotPrefix: _ha_
+    updateInterval: 3
+  resources: {}
+  startDelay: 30
+  stopDelay: 30
+  storage:
+    resizeInUseVolumes: true
+    size: 6Gi
+  switchoverDelay: 40000000

@@ -1,4 +1,3 @@
-
 ## Dex
 dex:
   # -- Enable dex
@@ -7,16 +6,16 @@ dex:
   name: dex-server
 
   # -- Additional command line arguments to pass to the Dex server
-  extraArgs: []
+  extraArgs: [ ]
 
   metrics:
     # -- Deploy metrics service
     enabled: false
     service:
       # -- Metrics service annotations
-      annotations: {}
+      annotations: { }
       # -- Metrics service labels
-      labels: {}
+      labels: { }
       # -- Metrics service port name
       portName: http-metrics
     serviceMonitor:
@@ -25,23 +24,23 @@ dex:
       # -- Prometheus ServiceMonitor interval
       interval: 30s
       # -- Prometheus [RelabelConfigs] to apply to samples before scraping
-      relabelings: []
+      relabelings: [ ]
       # -- Prometheus [MetricRelabelConfigs] to apply to samples before ingestion
-      metricRelabelings: []
+      metricRelabelings: [ ]
       # -- Prometheus ServiceMonitor selector
-      selector: {}
+      selector: { }
       # prometheus: kube-prometheus
 
       # -- Prometheus ServiceMonitor scheme
       scheme: ""
       # -- Prometheus ServiceMonitor tlsConfig
-      tlsConfig: {}
+      tlsConfig: { }
       # -- Prometheus ServiceMonitor namespace
       namespace: "" # "monitoring"
       # -- Prometheus ServiceMonitor labels
-      additionalLabels: {}
+      additionalLabels: { }
       # -- Prometheus ServiceMonitor annotations
-      annotations: {}
+      annotations: { }
 
   ## Dex Pod Disruption Budget
   ## Ref: https://kubernetes.io/docs/tasks/run-application/configure-pdb/
@@ -49,9 +48,9 @@ dex:
     # -- Deploy a [PodDisruptionBudget] for the Dex server
     enabled: false
     # -- Labels to be added to Dex server pdb
-    labels: {}
+    labels: { }
     # -- Annotations to be added to Dex server pdb
-    annotations: {}
+    annotations: { }
     # -- Number of pods that are available after eviction as number or percentage (eg.: 50%)
     # @default -- `""` (defaults to 0 if not specified)
     minAvailable: ""
@@ -71,7 +70,7 @@ dex:
 
   # -- Secrets with credentials to pull images from a private registry
   # @default -- `[]` (defaults to global.imagePullSecrets)
-  imagePullSecrets: []
+  imagePullSecrets: [ ]
 
   # Argo CD init image that creates Dex config
   initImage:
@@ -95,11 +94,11 @@ dex:
         memory: 144Mi
 
   # -- Environment variables to pass to the Dex server
-  env: []
+  env: [ ]
 
   # -- envFrom to pass to the Dex server
   # @default -- `[]` (See [values.yaml])
-  envFrom: []
+  envFrom: [ ]
   # - configMapRef:
   #     name: config-map-name
   # - secretRef:
@@ -107,17 +106,17 @@ dex:
 
   # -- Additional containers to be added to the dex pod
   ## Note: Supports use of custom Helm templates
-  extraContainers: []
+  extraContainers: [ ]
 
   # -- Init containers to add to the dex pod
   ## Note: Supports use of custom Helm templates
-  initContainers: []
+  initContainers: [ ]
 
   # -- Additional volumeMounts to the dex main container
-  volumeMounts: []
+  volumeMounts: [ ]
 
   # -- Additional volumes to the dex pod
-  volumes: []
+  volumes: [ ]
 
   # TLS certificate configuration via Secret
   ## Ref: https://argo-cd.readthedocs.io/en/stable/operator-manual/tls/#configuring-tls-to-argocd-dex-server
@@ -126,9 +125,9 @@ dex:
     # -- Create argocd-dex-server-tls secret
     enabled: false
     # -- Labels to be added to argocd-dex-server-tls secret
-    labels: {}
+    labels: { }
     # -- Annotations to be added to argocd-dex-server-tls secret
-    annotations: {}
+    annotations: { }
     # -- Certificate authority. Required for self-signed certificates.
     ca: ''
     # -- Certificate private key
@@ -137,22 +136,22 @@ dex:
     crt: ''
 
   # -- Annotations to be added to the Dex server Deployment
-  deploymentAnnotations: {}
+  deploymentAnnotations: { }
 
   # -- Annotations to be added to the Dex server pods
-  podAnnotations: {}
+  podAnnotations: { }
 
   # -- Labels to be added to the Dex server pods
-  podLabels: {}
+  podLabels: { }
 
   # -- Resource limits and requests for dex
-  resources: {}
-  #  limits:
-  #    cpu: 50m
-  #    memory: 64Mi
-  #  requests:
-  #    cpu: 10m
-  #    memory: 32Mi
+  resources:
+    limits:
+      cpu: 50m
+      memory: 64Mi
+    requests:
+      cpu: 10m
+      memory: 32Mi
 
   # Dex container ports
   # NOTE: These ports are currently hardcoded and cannot be changed
@@ -165,7 +164,7 @@ dex:
     metrics: 5558
 
   # -- [DNS configuration]
-  dnsConfig: {}
+  dnsConfig: { }
   # -- Alternative DNS policy for Dex server pods
   dnsPolicy: "ClusterFirst"
 
@@ -217,7 +216,7 @@ dex:
     # -- Dex service account name
     name: argocd-dex-server
     # -- Annotations applied to created service account
-    annotations: {}
+    annotations: { }
     # -- Automount API credentials for the Service Account
     automountServiceAccountToken: true
 
@@ -238,29 +237,29 @@ dex:
 
   # -- [Node selector]
   # @default -- `{}` (defaults to global.nodeSelector)
-  nodeSelector: {}
+  nodeSelector: { }
 
   # -- [Tolerations] for use with node taints
   # @default -- `[]` (defaults to global.tolerations)
-  tolerations: []
+  tolerations: [ ]
 
   # -- Assign custom [affinity] rules to the deployment
   # @default -- `{}` (defaults to global.affinity preset)
-  affinity: {}
+  affinity: { }
 
   # -- Assign custom [TopologySpreadConstraints] rules to dex
   # @default -- `[]` (defaults to global.topologySpreadConstraints)
   ## Ref: https://kubernetes.io/docs/concepts/workloads/pods/pod-topology-spread-constraints/
   ## If labelSelector is left out, it will default to the labelSelector configuration of the deployment
-  topologySpreadConstraints: []
-    # - maxSkew: 1
+  topologySpreadConstraints: [ ]
+  # - maxSkew: 1
   #   topologyKey: topology.kubernetes.io/zone
   #   whenUnsatisfiable: DoNotSchedule
 
   # -- Deployment strategy to be added to the Dex server Deployment
-  deploymentStrategy: {}
+  deploymentStrategy: { }
     # type: RollingUpdate
-    # rollingUpdate:
+  # rollingUpdate:
   #   maxSurge: 25%
   #   maxUnavailable: 25%
 

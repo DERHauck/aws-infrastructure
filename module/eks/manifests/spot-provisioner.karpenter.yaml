@@ -15,7 +15,7 @@ spec:
 %{ endfor ~}
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
-      values: ["1"]
+      values: ["2"]
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Lt
       values: ["12"]

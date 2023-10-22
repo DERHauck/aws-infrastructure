@@ -4,7 +4,7 @@ module "eks" {
   version = "19.10.0"
 
   cluster_name    = local.cluster_name
-  cluster_version = "1.24"
+  cluster_version = "1.27"
 
   vpc_id     = var.vpc_id
   subnet_ids = [ for key, id in var.subnet_id_map: id ]
@@ -105,6 +105,7 @@ resource "aws_eks_addon" "vpc_cni" {
   cluster_name = module.eks.cluster_name
   addon_name = "vpc-cni"
   resolve_conflicts    = "OVERWRITE"
+  addon_version = "v1.15.1-eksbuild.1"
   configuration_values = jsonencode({
     env = {
       # Reference docs https://docs.aws.amazon.com/eks/latest/userguide/cni-increase-ip-addresses.html
@@ -119,6 +120,7 @@ resource "aws_eks_addon" "vpc_cni" {
 resource "aws_eks_addon" "coredns" {
   cluster_name = module.eks.cluster_name
   addon_name = "coredns"
+  addon_version = "v1.10.1-eksbuild.4"
   resolve_conflicts    = "OVERWRITE"
   depends_on = [
     helm_release.karpenter,
