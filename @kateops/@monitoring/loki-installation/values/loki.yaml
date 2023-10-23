@@ -55,10 +55,12 @@ loki:
   # @default -- See values.yaml
   config: |
     auth_enabled: true
-
-
+    
     server:
-      http_listen_port: 3100
+      {{- toYaml .Values.loki.server | nindent 6 }}
+    
+    common:
+      compactor_address: http://{{ include "loki.compactorFullname" . }}:3100
 
     distributor:
       ring:
@@ -101,6 +103,12 @@ loki:
     {{- $_ := set .Values.loki.storageConfig.boltdb_shipper "index_gateway_client" $indexGatewayClient }}
     {{- end}}
     {{- toYaml .Values.loki.storageConfig | nindent 2}}
+    {{- if .Values.memcachedIndexQueries.enabled }}
+      index_queries_cache_config:
+        memcached_client:
+          addresses: dnssrv+_memcached-client._tcp.{{ include "loki.memcachedIndexQueriesFullname" . }}.{{ .Release.Namespace }}.svc.{{ .Values.global.clusterDomain }}
+          consistent_hash: true
+    {{- end}}
     {{- end}}
 
     chunk_store_config:

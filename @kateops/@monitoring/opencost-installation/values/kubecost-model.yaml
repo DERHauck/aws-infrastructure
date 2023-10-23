@@ -34,3 +34,5 @@ kubecostModel:
       cpu: "220m"
       memory: "556Mi"
   extraArgs: []
+  nodeExporter:
+    enabled: false

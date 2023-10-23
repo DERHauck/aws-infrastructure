@@ -3,3 +3,5 @@ serviceMonitor:
   enabled: true
   additionalLabels:
     logging: grafana-agent
+  networkCosts:
+    enabled: true

@@ -5,6 +5,33 @@ ingester:
   kind: StatefulSet
   # -- Number of replicas for the ingester
   replicas: 1
+  autoscaling:
+    # -- Enable autoscaling for the ingester
+    enabled: true
+    # -- Minimum autoscaling replicas for the ingester
+    minReplicas: 1
+    # -- Maximum autoscaling replicas for the ingester
+    maxReplicas: 3
+    # -- Target CPU utilisation percentage for the ingester
+    targetCPUUtilizationPercentage: 100
+    # -- Target memory utilisation percentage for the ingester
+    targetMemoryUtilizationPercentage: 100
+    # -- Allows one to define custom metrics using the HPA/v2 schema (for example, Pods, Object or External metrics)
+    customMetrics: [ ]
+    # - type: Pods
+    #   pods:
+    #     metric:
+    #       name: loki_lines_total
+    #     target:
+    #       type: AverageValue
+    #       averageValue: 10k
+    behavior:
+      # -- Enable autoscaling behaviours
+      enabled: false
+      # -- define scale down policies, must conform to HPAScalingRules
+      scaleDown: { }
+      # -- define scale up policies, must conform to HPAScalingRules
+      scaleUp: { }
   image:
     # -- The Docker registry for the ingester image. Overrides `loki.image.registry`
     registry: null
@@ -44,11 +71,11 @@ ingester:
   # -- Resource requests and limits for the ingester
   resources:
     requests:
-      cpu: 10m
-      memory: 130Mi
+      cpu: 25m
+      memory: 250Mi
     limits:
-      cpu: 20m
-      memory: 200Mi
+      cpu: 40m
+      memory: 400Mi
   # -- Containers to add to the ingester pods
   extraContainers: []
   # -- Grace period to allow the ingester to shutdown before it is killed. Especially for the ingestor,
@@ -75,14 +102,31 @@ ingester:
   nodeSelector: {}
   # -- Tolerations for ingester pods
   tolerations: []
+
   persistence:
     # -- Enable creating PVCs which is required when using boltdb-shipper
     enabled: true
-    # -- Size of persistent disk
-    size: 1Gi
     # -- Storage class to be used.
     # If defined, storageClassName: <storageClass>.
     # If set to "-", storageClassName: "", which disables dynamic provisioning.
     # If empty or set to null, no storageClassName spec is
     # set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
     storageClass: ${storage_class}
+    inMemory: false
+    # -- List of the ingester PVCs
+    # @notationType -- list
+    claims:
+      - name: data
+        size: 1Gi
+        #   -- Storage class to be used.
+        #   If defined, storageClassName: <storageClass>.
+        #   If set to "-", storageClassName: "", which disables dynamic provisioning.
+        #   If empty or set to null, no storageClassName spec is
+        #   set, choosing the default provisioner (gp2 on AWS, standard on GKE, AWS, and OpenStack).
+        storageClass: ${storage_class}
+      # - name: wal
+      #   size: 150Gi
+    # -- Enable StatefulSetAutoDeletePVC feature
+    enableStatefulSetAutoDeletePVC: true
+    whenDeleted: Retain
+    whenScaled: Retain

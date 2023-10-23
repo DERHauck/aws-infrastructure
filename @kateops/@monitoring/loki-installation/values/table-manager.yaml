@@ -2,7 +2,7 @@
 # Configuration for the table-manager
 tableManager:
   # -- Specifies whether the table-manager should be enabled
-  enabled: true
+  enabled: false
   image:
     # -- The Docker registry for the table-manager image. Overrides `loki.image.registry`
     registry: null
@@ -33,12 +33,8 @@ tableManager:
           key:
             ${secret_key_name}
   extraEnvFrom: []
-  extraVolumes:
-    - name: tablemanager
-      emptyDir: { }
-  extraVolumeMounts:
-    - name: tablemanager
-      mountPath: /var/loki
+  extraVolumes: []
+  extraVolumeMounts: []
   # -- Resource requests an limits for the table-manager
   resources: {}
   # -- Containers to add to the table-manager pods

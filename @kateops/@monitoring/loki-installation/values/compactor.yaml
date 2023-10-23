@@ -44,8 +44,8 @@ compactor:
       cpu: 1m
       memory: 60Mi
     limits:
-      cpu: 10m
-      memory: 70Mi
+      cpu: 15m
+      memory: 170Mi
   # -- Containers to add to the compactor pods
   extraContainers: []
   # -- Grace period to allow the compactor to shutdown before it is killed

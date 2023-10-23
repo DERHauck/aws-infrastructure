@@ -4,7 +4,8 @@ resource "helm_release" "loki" {
 
   repository = "https://grafana.github.io/helm-charts"
   chart      = "loki-distributed"
-  version = "0.56.6"
+  version = "0.76.0"
+  timeout = "3000"
 
   values = local.templates
 }
