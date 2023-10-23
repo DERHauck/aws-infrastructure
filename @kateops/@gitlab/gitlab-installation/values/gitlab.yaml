@@ -49,6 +49,7 @@ gitlab:
           maxUnavailable: 1
         ingress:
           path: /
+    minReplicas: 1
     keda:
       enabled: true
       idleReplicaCount: 1

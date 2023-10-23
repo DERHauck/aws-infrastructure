@@ -10,3 +10,4 @@ tolerations: []
 #    effect: "NoSchedule|PreferNoSchedule|NoExecute(1.6 only)"
 
 affinity: {}
+

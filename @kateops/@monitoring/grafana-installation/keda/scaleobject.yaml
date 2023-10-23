@@ -14,8 +14,6 @@ spec:
   maxReplicaCount: 10
   advanced:
     restoreToOriginalReplicaCount: false
-    horizontalPodAutoscalerConfig:
-
   triggers:
     - type: cron
       metadata:
@@ -31,7 +29,7 @@ spec:
         desiredReplicas: "1"
     - type: prometheus
       metadata:
-        serverAddress: http://mimir-nginx.monitoring.svc.cluster.local:80
+        serverAddress: http://mimir-gateway.monitoring.svc.cluster.local:80
         metricName: container_memory_max_usage_bytes
         threshold: '0.8'
         activationThreshold: '0.6'

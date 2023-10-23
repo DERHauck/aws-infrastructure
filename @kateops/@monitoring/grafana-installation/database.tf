@@ -4,9 +4,9 @@ resource "kubectl_manifest" "database" {
   })
 }
 
-data "kubernetes_secret" "keycloak-cluster-app" {
+data "kubernetes_secret" "grafana-cluster-app" {
   metadata {
-    name = "keycloak-cluster-app"
+    name = "grafana-cluster-app"
     namespace = var.namespace
   }
   depends_on = [
@@ -14,10 +14,10 @@ data "kubernetes_secret" "keycloak-cluster-app" {
   ]
 }
 locals {
-  db_secret_list = split(":",data.kubernetes_secret.keycloak-cluster-app.data["pgpass"])
+  db_secret_list = split(":",data.kubernetes_secret.grafana-cluster-app.data["pgpass"])
   db_host = nonsensitive(local.db_secret_list[0])
   db_port = nonsensitive(local.db_secret_list[1])
   db_name = nonsensitive(local.db_secret_list[2])
   db_user = nonsensitive(local.db_secret_list[3])
-  db_password = data.kubernetes_secret.keycloak-cluster-app.data["password"]
+  db_password = data.kubernetes_secret.grafana-cluster-app.data["password"]
 }

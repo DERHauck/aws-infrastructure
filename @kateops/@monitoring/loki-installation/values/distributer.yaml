@@ -11,9 +11,9 @@ distributor:
     # -- Maximum autoscaling replicas for the distributor
     maxReplicas: 3
     # -- Target CPU utilisation percentage for the distributor
-    targetCPUUtilizationPercentage: 60
+    targetCPUUtilizationPercentage: 80
     # -- Target memory utilisation percentage for the distributor
-    targetMemoryUtilizationPercentage:
+    targetMemoryUtilizationPercentage: 80
   image:
     # -- The Docker registry for the distributor image. Overrides `loki.image.registry`
     registry: null

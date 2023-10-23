@@ -9,10 +9,10 @@ resource "kubernetes_secret" "grafana_secret" {
     GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: var.oidc_secret
     GF_AUTH_GENERIC_OAUTH_CLIENT_ID: var.oidc_id
     GF_DATABASE_TYPE: "postgres"
-    GF_DATABASE_HOST: "${var.rdbs.host}:${var.rdbs.port}"
-    GF_DATABASE_NAME: var.rdbs.database
-    GF_DATABASE_USER: var.rdbs.username
-    GF_DATABASE_PASSWORD: var.rdbs.password
+    GF_DATABASE_HOST: "${local.db_host}:${local.db_port}"
+    GF_DATABASE_NAME: local.db_name
+    GF_DATABASE_USER: local.db_user
+    GF_DATABASE_PASSWORD: local.db_password
     GF_DATABASE_SSL_MODE: "disable"
     GF_SMTP_HOST: "${module.ses.host}:${module.ses.port}"
     GF_SMTP_FROM_ADDRESS: "grafana@kateops.com"
