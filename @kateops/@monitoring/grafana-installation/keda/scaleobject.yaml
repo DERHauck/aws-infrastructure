@@ -19,12 +19,12 @@ spec:
       metadata:
         timezone: Europe/Berlin
         start: 0 8 * * *
-        end: 0 0 * * *
+        end: 0 22 * * *
         desiredReplicas: "2"
     - type: cron
       metadata:
         timezone: Europe/Berlin
-        start: 0 0 * * *
+        start: 0 21 * * *
         end: 0 11 * * *
         desiredReplicas: "1"
     - type: prometheus
