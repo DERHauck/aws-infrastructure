@@ -14,6 +14,9 @@ spec:
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
       values: ["4"]
+    - key: "karpenter.k8s.aws/instance-family"
+      operator: In
+      values: ["m6i", "c7i", "c7a"]
 
   labels:
 %{ for key,value in labels }

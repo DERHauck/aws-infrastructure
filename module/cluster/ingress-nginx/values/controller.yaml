@@ -21,7 +21,10 @@ controller:
   minAvailable: 1
   resources:
     requests:
-      cpu: 100m
+      cpu: 31m
+      memory: 272Mi
+    limits:
+      cpu: 200m
       memory: 500Mi
   autoscaling:
     enabled: true

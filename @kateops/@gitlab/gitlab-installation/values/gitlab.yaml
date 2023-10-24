@@ -72,10 +72,10 @@ gitlab:
     resources:
       limits:
         cpu: 600m
-        memory: 3G
+        memory: 3Gi
       requests:
         cpu: 100m
-        memory: 2.5G
+        memory: 2.5Gi
     deployment:
       terminationGracePeriodSeconds: 30
     metrics:
