@@ -8,3 +8,5 @@ module "ingress_controller" {
     22 = "gitlab/gitlab-gitlab-shell:22:PROXY"
   }
 }
+
+# updated ingress
