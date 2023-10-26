@@ -42,7 +42,7 @@ locals {
       memory_limit = "2Gi"
       provisioner_name = "buildkit"
       service_memory_limit = "4Gi"
-      service_memory_limit = "3000m"
+      service_cpu_limit = "3000m"
       anti_affinity = {
         topology_key = "kubernetes.io/hostname"
         key = "type/gitlab-runner"
