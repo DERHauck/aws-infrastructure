@@ -15,7 +15,7 @@ spec:
 %{ endfor ~}
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
-      values: ["1"]
+      values: ["2"]
     - key: "beta.kubernetes.io/os"
       operator: In
       values: ["linux"]
@@ -39,4 +39,4 @@ spec:
   ttlSecondsUntilExpired: 864000 # 10800 3 hours | 21600 6 hours | 86400 24 hours
   weight: 100
   kubeletConfiguration:
-    evictionMaxPodGracePeriod: 100
+    evictionMaxPodGracePeriod: 180
