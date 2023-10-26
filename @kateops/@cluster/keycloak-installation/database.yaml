@@ -28,7 +28,7 @@ spec:
   failoverDelay: 0
   imageName: ghcr.io/cloudnative-pg/postgresql:15.3
   imagePullPolicy: Always
-  instances: 1
+  instances: 2
   logLevel: info
   maxSyncReplicas: 0
   minSyncReplicas: 0
