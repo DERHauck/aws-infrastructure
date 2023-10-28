@@ -143,10 +143,10 @@ ingress:
         - ${full_domain}
 
 resources:
-   limits:
+   requests:
      cpu: 5m
      memory: 50Mi
-   requests:
+   limits:
      cpu: 50m
      memory: 100Mi
 
