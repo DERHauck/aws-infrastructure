@@ -91,13 +91,13 @@ ingester:
             matchLabels:
               {{- include "loki.ingesterSelectorLabels" . | nindent 10 }}
           topologyKey: kubernetes.io/hostname
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                {{- include "loki.ingesterSelectorLabels" . | nindent 12 }}
-            topologyKey: failure-domain.beta.kubernetes.io/zone
+#      preferredDuringSchedulingIgnoredDuringExecution:
+#        - weight: 100
+#          podAffinityTerm:
+#            labelSelector:
+#              matchLabels:
+#                {{- include "loki.ingesterSelectorLabels" . | nindent 12 }}
+#            topologyKey: failure-domain.beta.kubernetes.io/zone
   # -- Node selector for ingester pods
   nodeSelector: {}
   # -- Tolerations for ingester pods

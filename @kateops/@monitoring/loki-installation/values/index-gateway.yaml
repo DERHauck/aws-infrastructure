@@ -44,13 +44,13 @@ indexGateway:
             matchLabels:
               {{- include "loki.indexGatewaySelectorLabels" . | nindent 10 }}
           topologyKey: kubernetes.io/hostname
-      preferredDuringSchedulingIgnoredDuringExecution:
-        - weight: 100
-          podAffinityTerm:
-            labelSelector:
-              matchLabels:
-                {{- include "loki.indexGatewaySelectorLabels" . | nindent 12 }}
-            topologyKey: failure-domain.beta.kubernetes.io/zone
+#      preferredDuringSchedulingIgnoredDuringExecution:
+#        - weight: 100
+#          podAffinityTerm:
+#            labelSelector:
+#              matchLabels:
+#                {{- include "loki.indexGatewaySelectorLabels" . | nindent 12 }}
+#            topologyKey: failure-domain.beta.kubernetes.io/zone
   # -- Node selector for index-gateway pods
   nodeSelector: {}
   # -- Tolerations for index-gateway pods
