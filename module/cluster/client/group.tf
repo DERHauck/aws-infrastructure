@@ -1,7 +1,7 @@
 resource "gitlab_group" "this" {
   name = var.name
   path = local.sanitized_name
-  visibility_level = "internal"
+  visibility_level = var.visibility
   default_branch_protection = 3
   request_access_enabled = true
 }

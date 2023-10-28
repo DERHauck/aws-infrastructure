@@ -56,16 +56,12 @@ pipelines:
         stage: deploy
         targetStage: build
 
-##################################################
-## Fourth Level
-##################################################
-
   - type: terraform
     path: '@kateops/@gitlab'
     stateName: kateops/gitlab
     id: gitlab
     needs:
-      - id: monitoring-setup
+      - id: cluster-setup
         stage: deploy
         targetStage: build
 
@@ -77,6 +73,10 @@ pipelines:
       - id: gitlab
         stage: deploy
         targetStage: build
+
+##################################################
+## Fourth Level
+##################################################
 
   - type: terraform
     path: '@kateops/@client'

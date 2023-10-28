@@ -3,8 +3,8 @@ registry:
   enabled: true
   resources:
     requests:
-      cpu: 90m
-      memory: 32Mi
+      cpu: 20m
+      memory: 132Mi
     limits:
       cpu: 200m
       memory: 1024Mi

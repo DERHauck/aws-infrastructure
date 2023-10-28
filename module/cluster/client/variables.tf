@@ -17,3 +17,12 @@ variable "cluster_name" {
   type = string
   description = "Cluster Name"
 }
+
+variable "visibility" {
+  type = string
+  default = "internal"
+  validation {
+    condition = contains(["public", "internal", "private"], var.visibility)
+    error_message = "Must be one of public, internal, private"
+  }
+}
