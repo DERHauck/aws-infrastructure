@@ -36,7 +36,7 @@ gitlab:
         memory: 60M
       limits:
         cpu: 70m
-        memory: 150M
+        memory: 250M
   webservice:
     shutdown:
       blackoutSeconds: 25

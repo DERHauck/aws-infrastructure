@@ -142,13 +142,13 @@ ingress:
       hosts:
         - ${full_domain}
 
-resources: {}
-  # limits:
-  #   cpu: 100m
-  #   memory: 300Mi
-  # requests:
-  #   cpu: 100m
-#   memory: 300Mi
+resources:
+   limits:
+     cpu: 5m
+     memory: 50Mi
+   requests:
+     cpu: 50m
+     memory: 100Mi
 
 extraVolumes: []
   # - name: ca-bundle-cert
@@ -213,7 +213,7 @@ replicaCount: 1
 ## PodDisruptionBudget settings
 ## ref: https://kubernetes.io/docs/concepts/workloads/pods/disruptions/
 podDisruptionBudget:
-  enabled: true
+  enabled: false
   minAvailable: 1
 
 # Configure Kubernetes security context for pod
