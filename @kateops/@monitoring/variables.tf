@@ -10,4 +10,5 @@ variable "aws_secret_key" {
 
 variable "vault_root_token" {
   type = string
+  description = "vault access token"
 }
