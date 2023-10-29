@@ -3,6 +3,13 @@
 compactor:
   # -- Specifies whether compactor should be enabled
   enabled: true
+  affinity: |
+    podAntiAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchLabels:
+              {{- include "loki.compactorSelectorLabels" . | nindent 10 }}
+          topologyKey: kubernetes.io/hostname
   image:
     # -- The Docker registry for the compactor image. Overrides `loki.image.registry`
     registry: null
