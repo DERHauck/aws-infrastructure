@@ -10,5 +10,6 @@ resource "helm_release" "gitlab" {
   depends_on = [
     kubernetes_secret.gitlab_s3_storage_credentials,
     kubernetes_secret.gitlab_shell_secret,
+    kubectl_manifest.database,
   ]
 }

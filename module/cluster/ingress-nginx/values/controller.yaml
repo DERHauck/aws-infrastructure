@@ -21,16 +21,16 @@ controller:
   minAvailable: 1
   resources:
     requests:
-      cpu: 31m
+      cpu: 50m
       memory: 272Mi
     limits:
-      cpu: 200m
+      cpu: 100m
       memory: 500Mi
   autoscaling:
     enabled: true
     minReplicas: 2
     maxReplicas: 20
-    targetCPUUtilizationPercentage: 75
+    targetCPUUtilizationPercentage: 100
     targetMemoryUtilizationPercentage: 75
   service:
     annotations:

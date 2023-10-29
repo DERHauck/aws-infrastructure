@@ -18,6 +18,7 @@ runners:
         helper_memory_limit = "${helper_memory_limit}"
         helper_cpu_limit = "${helper_cpu_limit}"
         pull_policy = ["always", "always", "always"]
+        poll_timeout = 900
       [runners.kubernetes.node_tolerations]
 %{ for key,value in node_selector }
         "${key}=${value}" = "NoExecute"
