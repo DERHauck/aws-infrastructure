@@ -25,7 +25,9 @@ spec:
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Lt
       values: ["16"]
-
+    - key: "karpenter.k8s.aws/instance-hypervisor"
+      operator: In
+      values: ["nitro"]
   limits:
     resources:
       cpu: 40
@@ -36,5 +38,4 @@ spec:
   ttlSecondsUntilExpired: 864000 # 10800 3 hours | 21600 6 hours | 86400 24 hours
   weight: 100
   kubeletConfiguration:
-    podsPerCore: 25
     evictionMaxPodGracePeriod: 180
