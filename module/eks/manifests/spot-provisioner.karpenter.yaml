@@ -15,7 +15,7 @@ spec:
 %{ endfor ~}
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Gt
-      values: ["2"]
+      values: ["1"]
     - key: "beta.kubernetes.io/os"
       operator: In
       values: ["linux"]
@@ -25,9 +25,6 @@ spec:
     - key: "karpenter.k8s.aws/instance-cpu"
       operator: Lt
       values: ["16"]
-    - key: "karpenter.k8s.aws/instance-family"
-      operator: In
-      values: ["m5", "m4", "t3", "t3a"]
 
   limits:
     resources:
@@ -39,4 +36,5 @@ spec:
   ttlSecondsUntilExpired: 864000 # 10800 3 hours | 21600 6 hours | 86400 24 hours
   weight: 100
   kubeletConfiguration:
+    podsPerCore: 25
     evictionMaxPodGracePeriod: 180
