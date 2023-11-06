@@ -1,0 +1,13 @@
+kind: AppProject
+apiVersion: argoproj.io/v1alpha1
+metadata:
+  name: ${name}
+  namespace: argo
+spec:
+  permitOnlyProjectScopedClusters: true
+  destinations:
+    - namespace: ${namespace}
+      server: https://kubernetes.default.svc
+      name: in-cluster
+  sourceNamespaces:
+    - ${namespace}

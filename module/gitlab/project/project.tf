@@ -26,3 +26,7 @@ resource "gitlab_branch_protection" "this" {
   push_access_level  = "no one"
   unprotect_access_level = "maintainer"
 }
+
+data "gitlab_group" "this" {
+  group_id = var.group_id
+}
