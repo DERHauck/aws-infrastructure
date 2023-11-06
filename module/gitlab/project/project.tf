@@ -25,8 +25,23 @@ resource "gitlab_branch_protection" "this" {
   project            = gitlab_project.this.id
   push_access_level  = "no one"
   unprotect_access_level = "maintainer"
+  allowed_to_push {
+    user_id = 1
+  }
+  allow_force_push = true
 }
 
 data "gitlab_group" "this" {
   group_id = var.group_id
+}
+
+resource "gitlab_repository_file" "argo" {
+  branch         = gitlab_project.this.default_branch
+  commit_message = "use argo"
+  content        = ""
+  file_path      = ".argo/.gitkeep"
+  project        = gitlab_project.this.id
+  depends_on = [
+    gitlab_branch_protection.this
+  ]
 }
