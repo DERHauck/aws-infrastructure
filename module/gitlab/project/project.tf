@@ -2,7 +2,7 @@ resource "gitlab_project" "this" {
   name = var.name
   path = replace(lower(var.name), " ", "-")
   description = var.description
-  public_builds = var.visibility == "public" ? true : false
+  public_jobs = var.visibility == "public" ? true : false
   remove_source_branch_after_merge = true
   shared_runners_enabled = true
   visibility_level = var.visibility
@@ -21,8 +21,24 @@ resource "gitlab_project" "this" {
 
 resource "gitlab_branch_protection" "this" {
   branch             = "main"
-  merge_access_level = "developer"
+  merge_access_level = "maintainer"
   project            = gitlab_project.this.id
-  push_access_level  = "no one"
   unprotect_access_level = "maintainer"
+  push_access_level = "no one"
+  allow_force_push = true
+}
+
+data "gitlab_group" "this" {
+  group_id = var.group_id
+}
+
+resource "gitlab_repository_file" "argo" {
+  branch         = gitlab_project.this.default_branch
+  commit_message = "use argo"
+  content        = ""
+  file_path      = ".argo/.gitkeep"
+  project        = gitlab_project.this.id
+  depends_on = [
+    gitlab_branch_protection.this
+  ]
 }

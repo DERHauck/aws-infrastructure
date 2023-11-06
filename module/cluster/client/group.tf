@@ -28,7 +28,18 @@ resource "gitlab_group_access_token" "this" {
     "write_registry",
   ]
 }
-
+resource "gitlab_group_access_token" "argo" {
+  group        = gitlab_group.this.id
+  name         = "Argo"
+  access_level = "maintainer"
+  expires_at = formatdate("YYYY-MM-DD" ,time_rotating.rotate.rotation_rfc3339)
+  scopes = [
+    "read_repository",
+    "write_repository",
+    "read_api",
+    "api",
+  ]
+}
 
 resource "gitlab_group_label" "version_patch" {
   color = "#36454f"

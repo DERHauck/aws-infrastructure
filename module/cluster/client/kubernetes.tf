@@ -34,3 +34,24 @@ module "service-account-cicd" {
   cluster_endpoint = var.cluster_endpoint
   cluster_name = var.cluster_name
 }
+
+
+resource "kubernetes_secret" "argo" {
+  metadata {
+    name = "credentials-${local.sanitized_name}"
+    namespace = "argo"
+    labels = {
+      "argocd.argoproj.io/secret-type": "repo-creds"
+    }
+  }
+  data = {
+    type = "git"
+    url = "https://gitlab.kateops.com/${gitlab_group.this.full_path}"
+    password = gitlab_group_access_token.argo.token
+    username = gitlab_group_access_token.argo.name
+  }
+}
+
+data "gitlab_group" "this" {
+  group_id = gitlab_group.this.id
+}

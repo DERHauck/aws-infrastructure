@@ -13,6 +13,7 @@ resource "kubernetes_config_map" "cm" {
   data = {
     "admin.enabled" = false
     "application.instanceLabelKey" = "argocd.argoproj.io/instance"
+    "application.resourceTrackingMethod": "annotation+label"
     "exec.enabled" = false
     "server.rbac.log.enforce.enable" = false
     "timeout.hard.reconciliation" = "0s"
