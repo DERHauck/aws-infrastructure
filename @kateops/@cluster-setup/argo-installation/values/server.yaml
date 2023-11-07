@@ -118,10 +118,10 @@ server:
     resources:
       limits:
         cpu: 50m
-        memory: 128Mi
+        memory: 256Mi
       requests:
         cpu: 10m
-        memory: 64Mi
+        memory: 96Mi
 
   # -- Additional containers to be added to the server pod
   ## Note: Supports use of custom Helm templates
