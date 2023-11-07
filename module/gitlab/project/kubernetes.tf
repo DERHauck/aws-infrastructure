@@ -18,4 +18,7 @@ resource "kubectl_manifest" "argo_application" {
     repo_url = gitlab_project.this.http_url_to_repo
     application_name = gitlab_project.this.path
   })
+  depends_on = [
+    gitlab_repository_file.argo,
+  ]
 }
