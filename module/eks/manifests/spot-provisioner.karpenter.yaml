@@ -35,7 +35,7 @@ spec:
     name: default-spot
   consolidation:
     enabled: true
-  ttlSecondsUntilExpired: 864000 # 10800 3 hours | 21600 6 hours | 86400 24 hours
+  ttlSecondsUntilExpired: 86400 # 10800 3 hours | 21600 6 hours | 86400 24 hours
   weight: 100
   kubeletConfiguration:
     evictionMaxPodGracePeriod: 180

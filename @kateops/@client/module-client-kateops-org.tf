@@ -9,4 +9,7 @@ module "kateops-org" {
 module "kateops-org-projects" {
   source = "./module-kateops-org-projects"
   group_id = module.kateops-org.group_id
+  depends_on = [
+    module.kateops-org
+  ]
 }

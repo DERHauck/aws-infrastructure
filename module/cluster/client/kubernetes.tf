@@ -52,10 +52,6 @@ resource "kubernetes_secret" "argo" {
   }
 }
 
-locals {
-  gitlab_project_url = "https://gitlab.kateops.com/${gitlab_group.this.full_path}"
-}
-
 data "gitlab_group" "this" {
   group_id = gitlab_group.this.id
 }

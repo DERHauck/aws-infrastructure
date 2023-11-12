@@ -7,8 +7,8 @@ spec:
   project: ${namespace}
   source:
     repoURL: ${repo_url}
-    targetRevision: HEAD
-    path: .argo
+    targetRevision: ${default_branch}
+    path: ${application_name}
     directory:
       recurse: true
       include: '*'

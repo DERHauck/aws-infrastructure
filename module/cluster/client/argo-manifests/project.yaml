@@ -4,6 +4,7 @@ metadata:
   name: ${namespace}
   namespace: argo
 spec:
+  permitOnlyProjectScopedClusters: false
   destinations:
     - namespace: ${namespace}
       server: https://kubernetes.default.svc
@@ -14,3 +15,5 @@ spec:
 
   sourceNamespaces:
     - ${namespace}
+  sourceRepos:
+    - '${gitlab_project_url}/argo'

@@ -9,4 +9,7 @@ module "it-scharfenberger" {
 module "it-scharfenberger-projects" {
   source = "./module-it-scharfenberger-projects"
   group_id = module.it-scharfenberger.group_id
+  depends_on = [
+    module.it-scharfenberger
+  ]
 }
