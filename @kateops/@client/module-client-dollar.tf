@@ -9,4 +9,7 @@ module "dollar" {
 module "dollar-projects" {
   source = "./module-dollar-projects"
   group_id = module.dollar.group_id
+  depends_on = [
+    module.dollar
+  ]
 }

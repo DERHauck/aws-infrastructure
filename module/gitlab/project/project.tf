@@ -42,3 +42,10 @@ resource "gitlab_repository_file" "argo" {
     gitlab_branch_protection.this
   ]
 }
+resource "gitlab_repository_file" "argo_project" {
+  branch         = data.gitlab_project.argo.default_branch
+  commit_message = "use argo"
+  content        = ""
+  file_path      = "${gitlab_project.this.path}/.gitkeep"
+  project        = data.gitlab_project.argo.id
+}

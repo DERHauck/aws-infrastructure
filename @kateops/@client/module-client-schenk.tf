@@ -9,4 +9,7 @@ module "schenk" {
 module "schenk-projects" {
   source = "./module-schenk-projects"
   group_id = module.schenk.group_id
+  depends_on = [
+    module.schenk
+  ]
 }
