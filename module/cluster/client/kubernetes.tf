@@ -46,10 +46,14 @@ resource "kubernetes_secret" "argo" {
   }
   data = {
     type = "git"
-    url = "https://gitlab.kateops.com/${gitlab_group.this.full_path}"
+    url = local.gitlab_project_url
     password = gitlab_group_access_token.argo.token
     username = gitlab_group_access_token.argo.name
   }
+}
+
+locals {
+  gitlab_project_url = "https://gitlab.kateops.com/${gitlab_group.this.full_path}"
 }
 
 data "gitlab_group" "this" {

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ${application_name}
+  name: ${namespace}-${application_name}
   namespace: argo
 spec:
   project: ${namespace}
@@ -12,6 +12,7 @@ spec:
     directory:
       recurse: true
       include: '*'
+      exclude: '*.dev.yaml'
   destination:
-    server: "https://kubernetes.default.svc"
+    name: in-cluster
     namespace: ${namespace}
